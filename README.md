@@ -1,0 +1,2 @@
+# Minishell
+ *LET'S START :)*
