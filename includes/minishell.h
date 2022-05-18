@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:53:50 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/05/16 18:24:32 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/05/16 19:45:49 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@
 # include <unistd.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+
 #include <stdlib.h>
 #include <errno.h>
 #include <sys/types.h>
-# include "./libft/libft.h"
+// # include "./libft/libft.h"
 
 //every constant is equal to its position in enum
 typedef enum type_s
@@ -46,6 +47,7 @@ typedef struct token_s
     char *data;
     unsigned int type;
     struct token_s *next;
+    struct token_s *prev;
 }token_t;
 
 // typedef struct cmd_s
