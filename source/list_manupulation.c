@@ -10,6 +10,7 @@ token_t *new_token(unsigned int type, char *data)
 	token->data = data;
 	token->next = NULL;
 	token->prev = NULL;
+	return token;
 }
 
 void	add_at_end(token_t *tokens_head, token_t *token)
