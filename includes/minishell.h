@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:53:50 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/05/18 14:49:43 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/05/18 19:38:31 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef enum type_s
     DOLLAR
 } type_t;
 
+//    WORD,
 //the linked list to store the tokens
 
 typedef struct token_s
@@ -55,5 +56,12 @@ typedef struct token_s
     
 // } cmd_t;
 
+/*********************************/
+/********** TOKENS LIST **********/
+/*********************************/
+
+token_t *new_token(unsigned int type, char *data);
+void	add_at_end(token_t *tokens_head, token_t *token);
+void	add_token_last(token_t *token_head, unsigned int type, char *data);
 
 #endif
