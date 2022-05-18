@@ -21,8 +21,10 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <sys/types.h>
-// # include "./libft/libft.h"
-
+# include "./libft/libft.h"
+# include <termios.h>
+# include <signal.h>
+// # include "./libft/libft.h
 //every constant is equal to its position in enum
 typedef enum type_s
 {
@@ -50,11 +52,10 @@ typedef struct token_s
     struct token_s *prev;
 }token_t;
 
-// typedef struct cmd_s
-// {
+typedef struct shell_s
+{
     
-    
-// } cmd_t;
 
+} shell_t;
 
 #endif
