@@ -129,7 +129,7 @@ token_t *tokenize(char *line)
     }
     return (tmp);
 }
-
+execv -> waitpid]wait -> 'status' -> macro value return pros $?*
 int main(void)
 {
     char *line;
@@ -143,6 +143,10 @@ int main(void)
             add_history(line);
             tokens = tokenize(line);
         }
+		else
+		{
+			exit(0); //last status
+		}
     }
     return (0);
 }
