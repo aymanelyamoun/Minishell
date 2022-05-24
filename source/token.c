@@ -97,7 +97,7 @@ void    get_token(token_t **tokens, char **str)
 			add_token_last(tokens, DQUOTE, ft_substr(*str, 0, get_quote(str, '\"')));
 		else if (**str == '\'')
 			add_token_last(tokens, QUOTE, ft_substr(*str, 0, get_quote(str, '\'')));
-		else if (**str == ' ')
+		else if (**str == ' ') // IS SPACE!
 			add_token_last(tokens, SPACE, get_char(str, " ", 1));
 		else if (**str == '>')
 			get_sympol_great(tokens, str);
