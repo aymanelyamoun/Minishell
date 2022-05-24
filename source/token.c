@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 19:19:26 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/05/24 16:05:10 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/05/24 18:07:55 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 #include "../includes/minishell.h"
 #include "../../libft/libft.h"
 
-int	get_len_q(char *str, char q)
-{
-	int i;
+// int	get_len_q(char *str, char q)
+// {
+// 	int i;
 
-	i = 0;
-	while (str[i] && str[i] != q)
-	{
-		i++;
-	}
-	return (i);
-}
+// 	i = 0;
+// 	while (str[i] && str[i] != q)
+// 	{
+// 		i++;
+// 	}
+// 	return (i);
+// }
 
-int single_or_double(char *str, char sample)
-{
-    if (*str == sample && *(str + 1) == sample)
-       return (2);
-    return (1);
-}
+// int single_or_double(char *str, char sample)
+// {
+//     if (*str == sample && *(str + 1) == sample)
+//        return (2);
+//     return (1);
+// }
 
 int	get_quote(char **str, char c)
 {
@@ -41,7 +41,7 @@ int	get_quote(char **str, char c)
     while ((*str)[i] != '\0' && (*str)[i] != c)
         i++;
     *str = *str + i + 1;
-	return (i);
+	return (i + 1);
 }
 
 int	get_word(char **str, char c)
@@ -93,27 +93,26 @@ void    get_token(token_t **tokens, char **str)
 {
 	while (**str != '\0')
 	{
-	
-    if (**str == '\"')
-		add_token_last(tokens, DQUOTE, ft_substr(*str, 0, get_quote(str, '\"')));
-    else if (**str == '\'')
-		add_token_last(tokens, QUOTE, ft_substr(*str, 0, get_quote(str, '\'')));
-	else if (**str == '\\')
-		add_token_last(tokens, BACKSLASH, get_char(str, "\\", 1));
-	else if (**str == ' ')
-		add_token_last(tokens, SPACE, get_char(str, " ", 1));
-	else if (**str == '\n')
-		add_token_last(tokens, NEWLINE, get_char(str, "\n", 1));
-	else if (**str == '>')
-		get_sympol_great(tokens, str);
-	else if (**str == '<')
-		get_sympol_less(tokens, str);
-	else if (**str == '|')
-		add_token_last(tokens, PIPE, get_char(str, "|", 1));
-	else if (**str == '$')
-		add_token_last(tokens, DOLLAR, get_char(str, "$", 1));
-	else
-		add_token_last(tokens, WORD, ft_substr(*str, 0, get_word(str, ' ')));
+		if (**str == '\"')
+			add_token_last(tokens, DQUOTE, ft_substr(*str, 0, get_quote(str, '\"')));
+		else if (**str == '\'')
+			add_token_last(tokens, QUOTE, ft_substr(*str, 0, get_quote(str, '\'')));
+		else if (**str == '\\')
+			add_token_last(tokens, BACKSLASH, get_char(str, "\\", 1));
+		else if (**str == ' ')
+			add_token_last(tokens, SPACE, get_char(str, " ", 1));
+		else if (**str == '\n')
+			add_token_last(tokens, NEWLINE, get_char(str, "\n", 1));
+		else if (**str == '>')
+			get_sympol_great(tokens, str);
+		else if (**str == '<')
+			get_sympol_less(tokens, str);
+		else if (**str == '|')
+			add_token_last(tokens, PIPE, get_char(str, "|", 1));
+		else if (**str == '$')
+			add_token_last(tokens, DOLLAR, get_char(str, "$", 1));
+		else
+			add_token_last(tokens, WORD, ft_substr(*str, 0, get_word(str, ' ')));
 	}
 }
 
@@ -124,15 +123,12 @@ token_t *tokenize(char *line)
     token_t *tmp;
 
     i = 0;
-    // while (*line != '\0')
-    // {
-        get_token(&tokens, &line);
-		// printf("%s\n", line);
-    // }
+    get_token(&tokens, &line);
     tmp = tokens;
+	int j = 0;
     while (tokens != NULL)
     {
-        printf("data: %s ... type: %d\n", tokens->data, tokens->type);
+        printf("type: %d ... data: %s\n",tokens->type, tokens->data);
         tokens = tokens->next;
     }
     return (tmp);
