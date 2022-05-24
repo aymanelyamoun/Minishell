@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 19:19:26 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/05/18 22:18:33 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:05:10 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,87 +33,108 @@ int single_or_double(char *str, char sample)
     return (1);
 }
 
-void    get_token(token_t *tokens, char *str)
+int	get_quote(char **str, char c)
 {
-    int tmp;
+    int	i;
 
-    if (*str == '\'')
+    i = 1;
+    while ((*str)[i] != '\0' && (*str)[i] != c)
+        i++;
+    *str = *str + i + 1;
+	return (i);
+}
+
+int	get_word(char **str, char c)
+{
+    int	i;
+
+    i = 0;
+    while ((*str)[i] != '\0' && (*str)[i] != c)
+        i++;
+    *str = *str + i;
+	return (i);
+}
+
+char *get_char(char **str, char *c, int increment)
+{
+	*str = *str + increment;
+	return (ft_strdup(c));
+}
+
+void	get_sympol_great(token_t **tokens, char **str)
+{
+	if (**str == '>' && *(*str + 1) != '\0' && *(*str + 1) == '>')
 	{
-        add_token_last(tokens, QUOTE, ft_substr(str, 0, get_len_q(str, '\'')));
-		str = str + get_len_q(str, '\'');
+		add_token_last(tokens, DGREAT, ft_strdup(">>"));
+		*str = *str + 2;
 	}
-    else if (*str == '\"')
+	else
 	{
-        add_token_last(tokens, DQUOTE, ft_substr(str, 0, get_len_q(str, '\"')));
-		str = str + get_len_q(str, '\"');
+		add_token_last(tokens, GREAT, ft_strdup(">"));
+		*str = *str + 1;
 	}
-	else if (*str == '<')
-    {
-        tmp = single_or_double(str, '<');
-        if (tmp == 1)
-		    add_token_last(tokens, LESS, ft_substr(str, 0, tmp));
-        else
-		    add_token_last(tokens, DLESS, ft_substr(str, 0, tmp));
-        str = str + tmp;
-    }
-	else if (*str == '>')
-    {
-        tmp = single_or_double(str, '<');
-        if (tmp == 1)
-		    add_token_last(tokens, GREAT, ft_substr(str, 0, single_or_double(str, '<')));
-        else
-		    add_token_last(tokens, DGREAT, ft_substr(str, 0, single_or_double(str, '<')));
-        str = str + tmp;
-    }
-	else if (*str == '|')
-    {
-		add_token_last(tokens, PIPE, ft_strdup("|"));
-        str++;   
-    }
-	else if (*str == '\\')
-    {
-		add_token_last(tokens, BACKSLASH, ft_strdup("\\"));
-        str++;
-    }
-    else if (*str == '\n')
-    {
-		add_token_last(tokens, NEWLINE, ft_strdup("\n"));
-        str++;   
-    }
-    else if (*str == ' ')
-    {
-		add_token_last(tokens, SPACE, ft_strdup(" "));
-        str++;
-    }
-    else if (*str == '$')
-    {
-		add_token_last(tokens, SPACE, ft_strdup("$"));
-        str++;
-    }
-    else
-    {
-        add_token_last(tokens, WORD, ft_substr(str, 0, get_len_q(str, ' ')));
-        str += get_len_q(str, ' ');
-    }
+}
+
+void	get_sympol_less(token_t **tokens, char **str)
+{
+	if (**str == '<' && *(*str + 1) != '\0' && *(*str + 1) == '<')
+	{
+		add_token_last(tokens, DLESS, ft_strdup("<<"));
+		*str = *str + 2;
+	}
+	else
+	{
+		add_token_last(tokens, LESS, ft_strdup("<"));
+		*str = *str + 1;
+	}
+}
+
+void    get_token(token_t **tokens, char **str)
+{
+	while (**str != '\0')
+	{
+	
+    if (**str == '\"')
+		add_token_last(tokens, DQUOTE, ft_substr(*str, 0, get_quote(str, '\"')));
+    else if (**str == '\'')
+		add_token_last(tokens, QUOTE, ft_substr(*str, 0, get_quote(str, '\'')));
+	else if (**str == '\\')
+		add_token_last(tokens, BACKSLASH, get_char(str, "\\", 1));
+	else if (**str == ' ')
+		add_token_last(tokens, SPACE, get_char(str, " ", 1));
+	else if (**str == '\n')
+		add_token_last(tokens, NEWLINE, get_char(str, "\n", 1));
+	else if (**str == '>')
+		get_sympol_great(tokens, str);
+	else if (**str == '<')
+		get_sympol_less(tokens, str);
+	else if (**str == '|')
+		add_token_last(tokens, PIPE, get_char(str, "|", 1));
+	else if (**str == '$')
+		add_token_last(tokens, DOLLAR, get_char(str, "$", 1));
+	else
+		add_token_last(tokens, WORD, ft_substr(*str, 0, get_word(str, ' ')));
+	}
 }
 
 token_t *tokenize(char *line)
 {
     int i;
-    token_t *tokens;
+    token_t *tokens = NULL;
     token_t *tmp;
 
     i = 0;
-    while (*line)
-    {
-        get_token(tokens, line);
-    }
-    tmp = tokens;
-    // while (tokens != NULL)
+    // while (*line != '\0')
     // {
-    //     printf("data: %s ... type: %d\n", tokens->data, tokens->type);
-    //     tokens = tokens->next;
+        get_token(&tokens, &line);
+		// printf("%s\n", line);
     // }
+    tmp = tokens;
+    while (tokens != NULL)
+    {
+        printf("data: %s ... type: %d\n", tokens->data, tokens->type);
+        tokens = tokens->next;
+    }
     return (tmp);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:53:50 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/05/18 19:58:41 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/05/24 12:58:54 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct token_s
 /*********************************/
 
 token_t *new_token(unsigned int type, char *data);
-void	add_at_end(token_t *tokens_head, token_t *token);
-void	add_token_last(token_t *token_head, unsigned int type, char *data);
+void	add_at_end(token_t **tokens_head, token_t *token);
+void	add_token_last(token_t **token_head, unsigned int type, char *data);
 
 #endif
