@@ -97,12 +97,8 @@ void    get_token(token_t **tokens, char **str)
 			add_token_last(tokens, DQUOTE, ft_substr(*str, 0, get_quote(str, '\"')));
 		else if (**str == '\'')
 			add_token_last(tokens, QUOTE, ft_substr(*str, 0, get_quote(str, '\'')));
-		else if (**str == '\\')
-			add_token_last(tokens, BACKSLASH, get_char(str, "\\", 1));
-		else if (**str == ' ')
+		else if (**str == ' ') // IS SPACE!
 			add_token_last(tokens, SPACE, get_char(str, " ", 1));
-		else if (**str == '\n')
-			add_token_last(tokens, NEWLINE, get_char(str, "\n", 1));
 		else if (**str == '>')
 			get_sympol_great(tokens, str);
 		else if (**str == '<')
@@ -133,7 +129,7 @@ token_t *tokenize(char *line)
     }
     return (tmp);
 }
-
+execv -> waitpid]wait -> 'status' -> macro value return pros $?*
 int main(void)
 {
     char *line;
@@ -147,6 +143,10 @@ int main(void)
             add_history(line);
             tokens = tokenize(line);
         }
+		else
+		{
+			exit(0); //last status
+		}
     }
     return (0);
 }
