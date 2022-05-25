@@ -13,7 +13,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror 
 NAME = minishell
-SRC = main 
+SRC = main list_manipuation token 
 DIRBUILD = objdir
 INC  = -I ./includes
 HEADERS = includes/minishell.h
