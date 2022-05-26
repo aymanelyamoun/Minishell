@@ -74,11 +74,11 @@ int	check_quotes(char *line)
     dquote = 0;
 	squote = 0;
 
-	while (line[index])
+	while (*(line + index))
 	{
-		if (line[index] == '"')
+		if (*(line + index) == '"')
 			dquote++;
-		if (line[index] == '\'')
+		if (*(line + index) == '\'')
 			squote++;
 		index++;
 	}

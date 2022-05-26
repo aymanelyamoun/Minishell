@@ -72,6 +72,7 @@ typedef struct s_gen
     char *read;
 }t_gen;
 
+t_gen envi;  //this global variable has the variables that we use inmultiple files at once
 
 /*********************************/
 /********** TOKENS LIST **********/
