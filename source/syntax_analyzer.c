@@ -82,24 +82,12 @@ int	check_quotes(char *line)
 			squote++;
 		index++;
 	}
-	squote = squote % 2;
-	dquote = dquote % 2;
-	if (dquote == 1 || squote == 1)
+	if ((squote % 2) != 0 || (dquote % 2) != 0)
 	{
 		handle_herdoc(envi, squote, dquote);
 	}	
 	return (0);
 }
 
-
-// int handle_dq(char *line)
-// {
-// 	int index;
-
-// 	while(line[index] != '\0')
-// 	{
-// 		ft_strchr("")
-// 	}
-// }
 
 //if you find a quote search the last
