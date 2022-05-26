@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:53:50 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/05/24 12:58:54 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/05/24 21:42:06 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@ typedef struct token_s
     struct token_s *prev;
 }token_t;
 
-typedef struct shell_s
-{
+// typedef struct shell_s
+// {
+// }
     
 
 /*********************************/
