@@ -8,7 +8,7 @@ token_t *syntax_ana(token_t tokens)
     token_t *tmp;
     
     tmp = tokens;
-    if(ft_str                                                   bnnnnnnncmp(tmp->data, "|", 1) \
+    if(ft_strcmp(tmp->data, "|", 1) \
     || ft_strncmp(tmp->data, "&", 1) || ft_strncmp(tmp->data, ")"))
         return (error_free(tmp->data, tokens));
     while(tmp->next)
@@ -83,6 +83,8 @@ int	check_quotes(char *line)
 	squote = squote % 2;
 	dquote = dquote % 2;
 	if (dquote == 1 || squote == 1)
-		//handle herdoc dquote
+		//handle dquote
 	return (1);
 }
+
+//if you find a quote search the last

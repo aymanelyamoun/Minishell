@@ -1,9 +1,9 @@
 # Minishell
  *Tokenezation*
 - [X] Read all ressources
-- [ ] Create prompt handeler 
-- [ ] handle signals
-- [ ] handle tokens
+- [X] Create prompt handeler 
+- [X] handle signals
+- [X] handle tokens
 - [ ] handle syntax error
 - [ ] send tokens to parsing (expander)
 
