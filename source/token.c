@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
+// #include <readline/readline.h>
 #include "../includes/minishell.h"
 
 
@@ -95,14 +95,14 @@ void    get_token(token_t **tokens, char **str)
 
 token_t *tokenize(char *line)
 {
-    int i;
+    // int i;
     token_t *tokens = NULL;
     token_t *tmp;
 
-    i = 0;
+    // i = 0;
     get_token(&tokens, &line);
     tmp = tokens;
-	int j = 0;
+	// int j = 0;
     while (tokens != NULL)
     {
         printf("type: %d ... data: %s\n",tokens->type, tokens->data);
