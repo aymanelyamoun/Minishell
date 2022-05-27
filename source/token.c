@@ -12,26 +12,7 @@
 
 #include <readline/readline.h>
 #include "../includes/minishell.h"
-#include "../../libft/libft.h"
 
-// int	get_len_q(char *str, char q)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	while (str[i] && str[i] != q)
-// 	{
-// 		i++;
-// 	}
-// 	return (i);
-// }
-
-// int single_or_double(char *str, char sample)
-// {
-//     if (*str == sample && *(str + 1) == sample)
-//        return (2);
-//     return (1);
-// }
 
 int	get_quote(char **str, char c)
 {
@@ -97,12 +78,8 @@ void    get_token(token_t **tokens, char **str)
 			add_token_last(tokens, DQUOTE, ft_substr(*str, 0, get_quote(str, '\"')));
 		else if (**str == '\'')
 			add_token_last(tokens, QUOTE, ft_substr(*str, 0, get_quote(str, '\'')));
-		else if (**str == '\\')
-			add_token_last(tokens, BACKSLASH, get_char(str, "\\", 1));
-		else if (**str == ' ')
+		else if (**str == ' ') // IS SPACE!
 			add_token_last(tokens, SPACE, get_char(str, " ", 1));
-		else if (**str == '\n')
-			add_token_last(tokens, NEWLINE, get_char(str, "\n", 1));
 		else if (**str == '>')
 			get_sympol_great(tokens, str);
 		else if (**str == '<')
@@ -133,20 +110,4 @@ token_t *tokenize(char *line)
     }
     return (tmp);
 }
-
-int main(void)
-{
-    char *line;
-    token_t *tokens;
-
-    while (1)
-    {
-        line = readline("ENTER PROMPT   ");
-        if (line != NULL)
-        {
-            add_history(line);
-            tokens = tokenize(line);
-        }
-    }
-    return (0);
-}
+//execv -> waitpid]wait -> 'status' -> macro value return pros $?*

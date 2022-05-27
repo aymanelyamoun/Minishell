@@ -14,9 +14,9 @@
 # define MINISHELL_H
 
 #include <stdio.h>
-# include <unistd.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <unistd.h>
 
 #include <stdlib.h>
 #include <errno.h>
@@ -31,9 +31,9 @@ typedef enum type_s
     WORD,
     QUOTE,
     DQUOTE,
-    BACKSLASH,
+    // BACKSLASH,
     SPACE,
-    NEWLINE,
+    // NEWLINE,
     GREAT,
     DGREAT,
     LESS,
@@ -53,11 +53,18 @@ typedef struct token_s
     struct token_s *prev;
 }token_t;
 
+<<<<<<< HEAD:includes/minishell.h
 // typedef struct shell_s
 // {
 // }
     
+=======
+// typedef struct s_gen
+// {
 
+>>>>>>> 310e4d91931bcadc3785da201adf34230f87f70f:libft/minishell.h
+
+// }t_gen;
 /*********************************/
 /********** TOKENS LIST **********/
 /*********************************/
@@ -65,6 +72,20 @@ typedef struct token_s
 token_t *new_token(unsigned int type, char *data);
 void	add_at_end(token_t **tokens_head, token_t *token);
 void	add_token_last(token_t **token_head, unsigned int type, char *data);
+char **set_env(char **envp);
+void    handler(int sig);
+void handle_signals(void);
+void    terminal_settings(void);
+
+token_t *tokenize(char *line);
+void    get_token(token_t **tokens, char **str);
+
+void	get_sympol_less(token_t **tokens, char **str);
+void	get_sympol_great(token_t **tokens, char **str);
+char *get_char(char **str, char *c, int increment);
+int	get_word(char **str, char c);
+int	get_quote(char **str, char c);
+
 
 
 #endif
