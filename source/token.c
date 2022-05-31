@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 19:19:26 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/05/24 18:07:55 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/05/31 00:02:20 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void    get_token(token_t **tokens, char **str)
 			add_token_last(tokens, DOLLAR, get_char(str, "$", 1));
 		else
 			add_token_last(tokens, WORD, ft_substr(*str, 0, get_word(str, ' ')));
+		//fix the word if it is folowed by a spectial char as < > | ...
 	}
 }
 
@@ -105,7 +106,6 @@ token_t *tokenize(char *line)
 	int j = 0;
     while (tokens != NULL)
     {
-        printf("type: %d ... data: %s\n",tokens->type, tokens->data);
         tokens = tokens->next;
     }
     return (tmp);
