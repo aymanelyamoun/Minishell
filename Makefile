@@ -6,7 +6,7 @@
 #    By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/24 17:24:53 by yel-mrab          #+#    #+#              #
-#    Updated: 2022/06/01 11:17:46 by oufisaou         ###   ########.fr        #
+#    Updated: 2022/06/01 16:55:15 by oufisaou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,11 @@ DIRBUILD = objdir
 INC  = -I ./includes
 HEADERS = includes/minishell.h
 LIBFT = includes/libft/libft.a
-SRC = main list_manupulation token syntax_ana error_free
+SRC = main list_manupulation token syntax_ana error_free signals
 OBJ = $(addprefix $(DIRBUILD)/, $(SRC:=.o))
 all : $(NAME)
 $(NAME) : $(OBJ) $(LIBFT)
-	@gcc $(CFLAGS) $^ -o $(NAME) -L/usr/include -lreadline $(LIBFT) 
+	@gcc $(CFLAGS) $^ -o $(NAME) -lreadline -L .brew/opt/readline/lib -I .brew/opt/readline/include $(LIBFT) 
 	@echo "MINISHELL────▒▒▒▒▒▒▒▒"
 	@echo "─────────▒▒▒──────▒▒▒"
 	@echo "──BY────▒▒───▒▒▒▒──▒░▒"

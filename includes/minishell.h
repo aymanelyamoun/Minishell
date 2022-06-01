@@ -6,7 +6,7 @@
 /*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:53:50 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/06/01 15:49:42 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/06/01 17:31:49 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ void	add_at_end(token_t **tokens_head, token_t *token);
 void	add_token_last(token_t **token_head, unsigned int type, char *data);
 char **set_env(char **envp);
 void    handler(int sig);
-void handle_signals(void);
-void    terminal_settings(void);
+int handle_signals(void);
+int     terminal_settings(void);
 
 
 token_t *tokenize(char *line);
@@ -106,5 +106,6 @@ token_t *error_free(char *str, token_t *tokens);
 void	free_all(token_t *tokens);
 void    check_redirection(token_t *c);
 void    check_newline(token_t *c);
-
+int ctrld(void);
+void    check_operators(token_t *c);
 #endif
