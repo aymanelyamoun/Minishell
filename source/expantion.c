@@ -22,6 +22,59 @@ char    *find_value(char *str, char **env)
     return (ft_strdup(""));
 }
 
+char	*rm_quotes(char *str, char c)
+{
+	int	i;
+	char	*new;
+
+	if (str[0] == c)
+	{
+		str[ft_strlen(str) - 2] = '\0';
+		new = ft_strdup(&str[1]);
+		free(str);
+	}
+	else
+		new = str;
+	return (new);
+}
+
+void	join_mix(char *str1, char *str2)
+{
+	if (str1[0] == '\"' || str1[0] == '\'')
+	{
+        printf("before : %s\n", str1);
+		str1 = rm_quotes(str1, str1[0]);
+        printf("after : %s\n", str1);
+	}
+	if (str2[0] == '\"' || str2[0] == '\'')
+	{
+        printf("i got here\n");
+		str2 = rm_quotes(str2, str2[0]);
+	}
+    ft_strjoin(str1, str2);
+}
+
+void    join_word(token_t **tokens)
+{
+    token_t *tmp;
+
+    tmp = *tokens;
+    while (tmp != NULL)
+    {
+        if (tmp->type == WORD || tmp->type == DQUOTE || tmp->type == QUOTE)
+        {
+            if ( tmp->next != NULL &&
+            (tmp->next->type == WORD || tmp->next->type == DQUOTE || tmp->next->type == QUOTE))
+            {
+                join_mix(tmp->data, tmp->next->data);
+                free(&(tmp->next));
+            }
+        }
+        tmp = tmp->next;
+    }
+    
+}
+
 void    rm_token(token_t **tokens)
 {
     token_t *token;
@@ -138,7 +191,9 @@ int main(int argc, char **argv, char **envp)
             tokens = tokenize(line);
 			tok = tokens;
             expander(&tokens, env);
-            rm_spaces(&tokens);
+
+            // join_word(&tokens);
+            // rm_spaces(&tokens);
             while (tokens != NULL)
             {
                 printf("from main : -- %d ---> %s\n", tokens->type, tokens->data);
@@ -151,6 +206,12 @@ int main(int argc, char **argv, char **envp)
     }
     return (0);
 }
+
+// tastks : 
+// fix the tokens
+// add the expantion to vars inside DQUOTE
+// fix the join cmd
+
 // t_cmd   *parsing(token_t *kokens)
 // {
     
