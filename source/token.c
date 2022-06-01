@@ -91,7 +91,8 @@ void    get_token(token_t **tokens, char **str)
 		else if (**str == '$')
 			add_token_last(tokens, DOLLAR, get_char(str, "$", 1));
 		else
-			add_token_last(tokens, WORD, ft_substr(*str, 0, get_word(str)));
+			add_token_last(tokens, WORD, ft_substr(*str, 0, get_word(str, ' ')));
+		//fix the word if it is folowed by a spectial char as < > | ...
 	}
 }
 
@@ -107,7 +108,6 @@ token_t *tokenize(char *line)
 	// int j = 0;
     while (tokens != NULL)
     {
-        printf("type: %d ... data: %s\n",tokens->type, tokens->data);
         tokens = tokens->next;
     }
     return (tmp);

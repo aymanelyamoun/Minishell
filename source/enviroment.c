@@ -20,7 +20,7 @@ char **set_env(char **envp)
     index = 0;
     while(envp[index])
     {
-        tmp[index] = ft_strdup(envp[index])
+        tmp[index] = ft_strdup(envp[index]);
         index++;
     }
     tmp[index] = NULL;
