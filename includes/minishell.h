@@ -6,7 +6,7 @@
 /*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:53:50 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/06/01 10:51:23 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/06/01 11:04:52 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void    get_token(token_t **tokens, char **str);
 void	get_sympol_less(token_t **tokens, char **str);
 void	get_sympol_great(token_t **tokens, char **str);
 char *get_char(char **str, char *c, int increment);
-int	get_word(char **str, char c);
+int	get_word(char **str);
 int	get_quote(char **str, char c);
 int	check_parant(char *line);
 int	check_quotes(char *line);

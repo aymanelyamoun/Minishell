@@ -6,7 +6,7 @@
 /*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 19:19:26 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/06/01 10:50:19 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/06/01 11:04:32 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ int	get_word(char **str)
     int	i;
 
     i = 0;
-    while ((*str)[i] != '\0' && *(str)[i] != ' ' && )
+    while ((*str)[i] != '\0' \
+	   && ((*str)[i] != '\n' && (*str)[i] != '\t' && (*str)[i] != '\v' \
+	       && (*str)[i] != '\f' && (*str)[i] != ' '))
+
         i++;
     *str = *str + i;
 	return (i);
@@ -89,7 +92,7 @@ void    get_token(token_t **tokens, char **str)
 		else if (**str == '$')
 			add_token_last(tokens, DOLLAR, get_char(str, "$", 1));
 		else
-			add_token_last(tokens, WORD, ft_substr(*str, 0, get_word(str, ' ')));
+			add_token_last(tokens, WORD, ft_substr(*str, 0, get_word(str)));
 	}
 }
 
