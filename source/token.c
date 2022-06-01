@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 19:19:26 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/05/24 18:07:55 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/06/01 11:30:43 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
+// #include <readline/readline.h>
 #include "../includes/minishell.h"
 
 
@@ -25,12 +25,14 @@ int	get_quote(char **str, char c)
 	return (i + 1);
 }
 
-int	get_word(char **str, char c)
+int	get_word(char **str)
 {
     int	i;
 
     i = 0;
-    while ((*str)[i] != '\0' && (*str)[i] != c)
+    while ((*str)[i] != '\0' \
+	    && (*str)[i] != '\t' && (*str)[i] != '\v' \
+	       && (*str)[i] != '\f' && (*str)[i] != ' ')
         i++;
     *str = *str + i;
 	return (i);
@@ -90,22 +92,22 @@ void    get_token(token_t **tokens, char **str)
 			add_token_last(tokens, DOLLAR, get_char(str, "$", 1));
 		else
 			add_token_last(tokens, WORD, ft_substr(*str, 0, get_word(str, ' ')));
+		//fix the word if it is folowed by a spectial char as < > | ...
 	}
 }
 
 token_t *tokenize(char *line)
 {
-    int i;
+    // int i;
     token_t *tokens = NULL;
     token_t *tmp;
 
-    i = 0;
+    // i = 0;
     get_token(&tokens, &line);
     tmp = tokens;
-	int j = 0;
+	// int j = 0;
     while (tokens != NULL)
     {
-        printf("type: %d ... data: %s\n",tokens->type, tokens->data);
         tokens = tokens->next;
     }
     return (tmp);
