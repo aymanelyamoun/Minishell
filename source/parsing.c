@@ -22,77 +22,6 @@ char    *find_value(char *str, char **env)
     return (ft_strdup(""));
 }
 
-// void    rm_token(token_t **tokens)
-// {
-//     token_t *tmp;
-
-//     if (*tokens == NULL)
-//         return ;
-// 	if ((*tokens)->prev == NULL && (*tokens)->next == NULL)
-// 	{
-// 		tmp = *tokens;
-// 		(*tokens) = NULL; 
-// 	}
-
-//     if ((*tokens)->prev == NULL)
-//     {
-//         tmp = *tokens;
-// 		(*tokens)->next->prev = NULL;
-//         (*tokens) = (*tokens)->next;
-//         // free(tmp);
-//     }
-// 	else if ((*tokens)->next == NULL)
-// 	{
-// 		tmp = *tokens;
-// 		(*tokens)->prev->next = NULL;
-// 		// (*tokens)->next->prev = (*tokens)->prev;
-// 	}
-// 	else
-// 	{
-// 		tmp = *tokens;
-// 		(*tokens)->prev->next = (*tokens)->next;
-// 		(*tokens)->next->prev = (*tokens)->prev;
-// 		(*tokens) = (*tokens)->next;
-// 	}
-// 	free(tmp);
-// }
-
-// void	free_nodes(token_t **tokens)
-// {
-// 	token_t *tmp;
-
-// 	// while (*tokens != NULL)
-// 	// {
-// 		tmp = (*tokens)->next;
-// 		free((*tokens)->data);
-// 		free((*tokens));
-// 		(*tokens) = tmp;
-// 		free((*tokens)->data);
-// 		free((*tokens));
-// 	// }
-// }
-
-void	add_to_tokens(token_t **tokens, token_t **token)
-{
-	token_t *tmp;
-
-
-    // if ((*tokens) == NULL)
-    //     (*tokens) = *token;
-    // if ((*tokens)->prev == NULL)
-    // {
-    //     (*token)->next = (*tokens);
-    //     (*tokens)->prev = *token;
-    // }
-    // else
-    // {
-    //     (*token)->next = (*tokens);
-    //     (*token)->prev = (*tokens)->prev;
-    //     (*tokens)->prev->next = (*token);
-    //     (*tokens)->prev = *token;
-    // }
-}
-
 void    rm_token(token_t **tokens)
 {
     token_t *token;
@@ -119,34 +48,6 @@ void    rm_token(token_t **tokens)
     free(token->data);
     free(token);
 }
-// void    rm_token(token_t **tokens, token_t *token)
-// {
-//     if (token->prev == NULL && token->next == NULL)
-//     {
-
-//         *tokens = NULL;
-//     }
-//     if (token->prev == NULL)
-//     {
-//         *tokens = token->next;
-//         printf("%s  0\n", token->data);
-//         // (*tokens) = (*tokens)->prev;
-//     }
-//     if (token->next == NULL)
-//     {
-//         (*tokens)->prev->next = NULL;
-//         // (*tokens) = (*tokens)->prev;
-//         printf("%s  1\n", (*tokens)->data);
-//     }
-//     else
-//     {
-//         // printf("%s  2\n", token->data);
-//         (*tokens)->next->prev = token->prev;
-//         (*tokens)->prev->next = token->next;
-//         (*tokens) = (*tokens)->prev;
-//     }
-//     free(token);
-// }
 
 void    change_data(token_t **tokens, char *data)
 {
@@ -214,17 +115,7 @@ int main(int argc, char **argv, char **envp)
             add_history(line);
             tokens = tokenize(line);
 			tok = tokens;
-			// while (tok != NULL)
-            // {
-    		// 	printf("from main : -- %d ---> %s\n", tok->type, tok->data);
-            //     tok = tok->next;
-            // }
             expander(&tokens, env);
-			// rm_token((tokens));
-			// rm_token((tokens->next));
-			// rm_token((tokens->next));
-			// printf("____________\n");
-			// rm_token((tokens->next));
             while (tokens != NULL)
             {
                 printf("from main : -- %d ---> %s\n", tokens->type, tokens->data);
