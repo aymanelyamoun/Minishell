@@ -1,3 +1,4 @@
+
 #include "../includes/minishell.h"
 
 void    terminal_settings(void)

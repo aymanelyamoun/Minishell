@@ -13,7 +13,6 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror 
 NAME = minishell
-SRC = main list_manipuation token 
 DIRBUILD = objdir
 INC  = -I ./includes
 HEADERS = includes/minishell.h
@@ -22,7 +21,7 @@ LIBFT = includes/libft/libft.a
 OBJ = $(addprefix $(DIRBUILD)/, $(SRC:=.o))
 all : $(NAME)
 $(NAME) : $(OBJ) $(LIBFT)
-	@gcc $(CFLAGS) $^ -o $(NAME) -lreadline $(LIBFT)
+	@gcc $(CFLAGS) $^ -o $(NAME) -L/usr/include -lreadline $(LIBFT) 
 	@echo "MINISHELL────▒▒▒▒▒▒▒▒"
 	@echo "─────────▒▒▒──────▒▒▒"
 	@echo "──BY────▒▒───▒▒▒▒──▒░▒"
