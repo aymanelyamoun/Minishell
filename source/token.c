@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 19:19:26 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/05/24 18:07:55 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/06/01 10:50:19 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ int	get_quote(char **str, char c)
 	return (i + 1);
 }
 
-int	get_word(char **str, char c)
+int	get_word(char **str)
 {
     int	i;
 
     i = 0;
-    while ((*str)[i] != '\0' && (*str)[i] != c)
+    while ((*str)[i] != '\0' && *(str)[i] != ' ' && )
         i++;
     *str = *str + i;
 	return (i);

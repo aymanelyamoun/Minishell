@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:53:50 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/05/24 21:42:06 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/06/01 10:51:23 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <sys/types.h>
-# include "./libft/libft.h"
+# include "..includes/libft/libft.h"
 # include <termios.h>
 # include <signal.h>
 // # include "./libft/libft.h
