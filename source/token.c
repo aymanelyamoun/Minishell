@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 19:19:26 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/05/31 00:02:20 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/06/01 11:30:43 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
+// #include <readline/readline.h>
 #include "../includes/minishell.h"
 
 
@@ -25,12 +25,14 @@ int	get_quote(char **str, char c)
 	return (i + 1);
 }
 
-int	get_word(char **str, char c)
+int	get_word(char **str)
 {
     int	i;
 
     i = 0;
-    while ((*str)[i] != '\0' && (*str)[i] != c)
+    while ((*str)[i] != '\0' \
+	    && (*str)[i] != '\t' && (*str)[i] != '\v' \
+	       && (*str)[i] != '\f' && (*str)[i] != ' ')
         i++;
     *str = *str + i;
 	return (i);
@@ -96,14 +98,14 @@ void    get_token(token_t **tokens, char **str)
 
 token_t *tokenize(char *line)
 {
-    int i;
+    // int i;
     token_t *tokens = NULL;
     token_t *tmp;
 
-    i = 0;
+    // i = 0;
     get_token(&tokens, &line);
     tmp = tokens;
-	int j = 0;
+	// int j = 0;
     while (tokens != NULL)
     {
         tokens = tokens->next;
