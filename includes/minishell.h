@@ -6,7 +6,7 @@
 /*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:53:50 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/06/01 11:04:52 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/06/01 12:27:20 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 # define MINISHELL_H
 
 #include <stdio.h>
-// #include <readline/readline.h>
-// #include <readline/history.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 #include <unistd.h>
 
 #include <stdlib.h>
 #include <errno.h>
 #include <sys/types.h>
-# include "..includes/libft/libft.h"
+# include "../includes/minishell.h"
 # include <termios.h>
 # include <signal.h>
-// # include "./libft/libft.h
-//every constant is equal to its position in enum
+# include "../includes/libft/libft.h"
+
 
 typedef enum type_s
 {
@@ -40,6 +40,7 @@ typedef enum type_s
     PIPE,
     DOLLAR
 } type_t;
+
 
 //    WORD,
 //the linked list to store the tokens
@@ -100,9 +101,10 @@ void	get_sympol_great(token_t **tokens, char **str);
 char *get_char(char **str, char *c, int increment);
 int	get_word(char **str);
 int	get_quote(char **str, char c);
-int	check_parant(char *line);
-int	check_quotes(char *line);
-
-
+void    check_quotes(token_t *c);
+int tokensize(token_t *token);
+token_t *error_free(char *str, token_t *tokens);
+void	free_all(token_t *tokens);
+int ft_strchr1(char *str, int c);
 
 #endif
