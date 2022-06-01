@@ -31,7 +31,7 @@ void    rm_token(token_t **tokens)
     {
         *tokens = NULL;
     }
-    if (token->prev == NULL)
+    else if (token->prev == NULL)
     {
         *tokens = token->next;
         (*tokens)->prev = NULL;
@@ -47,6 +47,28 @@ void    rm_token(token_t **tokens)
     }
     free(token->data);
     free(token);
+}
+
+void    rm_spaces(token_t **tokens)
+{
+    token_t *tmp;
+    int i = 0;
+
+    while ((*tokens) != NULL && (*tokens)->type == SPACE)
+    {
+        rm_token(tokens);
+        i++;
+    }
+    tmp = *tokens;
+    while (tmp != NULL)
+    {
+        if (tmp->type == SPACE)
+        {
+            rm_token(&tmp);
+            i++;
+        }
+        tmp = tmp->next;
+    }
 }
 
 void    change_data(token_t **tokens, char *data)
@@ -116,6 +138,7 @@ int main(int argc, char **argv, char **envp)
             tokens = tokenize(line);
 			tok = tokens;
             expander(&tokens, env);
+            rm_spaces(&tokens);
             while (tokens != NULL)
             {
                 printf("from main : -- %d ---> %s\n", tokens->type, tokens->data);
