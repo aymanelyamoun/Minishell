@@ -91,7 +91,7 @@ void    get_token(token_t **tokens, char **str)
 		else if (**str == '$')
 			add_token_last(tokens, DOLLAR, get_char(str, "$", 1));
 		else
-			add_token_last(tokens, WORD, ft_substr(*str, 0, get_word(str, ' ')));
+			add_token_last(tokens, WORD, ft_substr(*str, 0, get_word(str)));
 	}
 }
 
