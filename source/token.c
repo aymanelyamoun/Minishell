@@ -25,12 +25,14 @@ int	get_quote(char **str, char c)
 	return (i + 1);
 }
 
-int	get_word(char **str, char c)
+int	get_word(char **str)
 {
     int	i;
 
     i = 0;
-    while ((*str)[i] != '\0' && (*str)[i] != c)
+    while ((*str)[i] != '\0' \
+	   && ((*str)[i] != '\n' && (*str)[i] != '\t' && (*str)[i] != '\v' \
+	       && (*str)[i] != '\f' && (*str)[i] != ' '))
         i++;
     *str = *str + i;
 	return (i);
