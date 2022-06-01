@@ -19,7 +19,7 @@ char    *find_value(char *str, char **env)
             return (ft_strdup(&env[i][ft_strlen(str) + 1]));
         i++;
     }
-    return (NULL);
+    return (ft_strdup(""));
 }
 
 // void    rm_token(token_t **tokens)
@@ -76,24 +76,28 @@ void	add_to_tokens(token_t **tokens, token_t **token)
 {
 	token_t *tmp;
 
-    if ((*tokens) == NULL)
-        (*tokens) = *token;
-    if ((*tokens)->prev == NULL)
-    {
-        (*token)->next = (*tokens);
-        (*tokens)->prev = *token;
-    }
-    else
-    {
-        (*token)->next = (*tokens);
-        (*token)->prev = (*tokens)->prev;
-        (*tokens)->prev->next = (*token);
-        (*tokens)->prev = *token;
-    }
+
+    // if ((*tokens) == NULL)
+    //     (*tokens) = *token;
+    // if ((*tokens)->prev == NULL)
+    // {
+    //     (*token)->next = (*tokens);
+    //     (*tokens)->prev = *token;
+    // }
+    // else
+    // {
+    //     (*token)->next = (*tokens);
+    //     (*token)->prev = (*tokens)->prev;
+    //     (*tokens)->prev->next = (*token);
+    //     (*tokens)->prev = *token;
+    // }
 }
 
-void    rm_token(token_t **tokens, token_t *token)
+void    rm_token(token_t **tokens)
 {
+    token_t *token;
+
+    token = *tokens;
     if (token->prev == NULL && token->next == NULL)
     {
         *tokens = NULL;
@@ -101,19 +105,18 @@ void    rm_token(token_t **tokens, token_t *token)
     if (token->prev == NULL)
     {
         *tokens = token->next;
-        // (*tokens) = (*tokens)->prev;
+        (*tokens)->prev = NULL;
     }
-    if (token->next == NULL)
+    else if (token->next == NULL)
     {
         (*tokens)->prev->next = NULL;
-        *tokens = (*tokens)->prev;
     }
     else
     {   
         (*tokens)->next->prev = token->prev;
         (*tokens)->prev->next = token->next;
-        (*tokens) = (*tokens)->next;
     }
+    free(token->data);
     free(token);
 }
 // void    rm_token(token_t **tokens, token_t *token)
@@ -145,19 +148,31 @@ void    rm_token(token_t **tokens, token_t *token)
 //     free(token);
 // }
 
+void    change_data(token_t **tokens, char *data)
+{
+    free((*tokens)->data);
+    (*tokens)->data = data;
+    (*tokens)->type = WORD;
+}
 void    play_with_tokens(token_t **tokens, char *str, char **env)
 {
     char    *env_var;
-    token_t *token;
 
     env_var = find_value(str, env);
-    if (env_var != NULL)
+    if ((*tokens)->next->type == WORD)
     {
-        token = new_token(WORD, env_var);
-		add_to_tokens(tokens, &token);
+        if (env_var != NULL)
+        {
+            change_data(tokens, env_var);
+        }
     }
-    rm_token(tokens, *tokens);
-    rm_token(tokens, *tokens);
+    else if ((*tokens)->next->type == DQUOTE)
+    {
+        free((*tokens)->data);
+        (*tokens)->data = ft_strdup((*tokens)->next->data);
+        (*tokens)->type = WORD;
+    }
+    rm_token(&((*tokens)->next));
 
 }
 
@@ -171,15 +186,15 @@ void    expander(token_t **tokens, char **env)
     {
         if (tmp->type == DOLLAR)
         {
-            if (tmp->next != NULL && tmp->next->type != SPACE && tmp->next->type == WORD)
+            if (tmp->next != NULL && tmp->next->type != SPACE && 
+            (tmp->next->type == WORD || tmp->next->type == DQUOTE))
                 play_with_tokens(&tmp, ft_strdup(tmp->next->data), env);
-            if (tmp->next != NULL && tmp->next->type != SPACE && tmp->next->type == DQUOTE)
-                rm_token(&tmp, tmp);
             if (tmp->next != NULL && tmp->next->type == SPACE)
                 tmp->type = WORD;
         }
         tmp = tmp->next;
     }
+    
 }
 
 int main(int argc, char **argv, char **envp)
