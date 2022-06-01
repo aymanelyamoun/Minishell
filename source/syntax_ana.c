@@ -6,26 +6,11 @@
 /*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 11:18:11 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/06/01 13:06:32 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/06/01 13:09:56 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int tokensize(token_t *token)
-{
-    int c;
-    
-    c = 1;
-    if(!token)
-        return (0);
-    while(token->next)
-    {
-        token = token->next;
-        c++;
-    }
-    return (c);
-}
 
 void    check_quotes(token_t *c)
 {
@@ -56,4 +41,10 @@ void    check_quotes(token_t *c)
        error_free("QUOTES", c);
     }
     return ;
+}
+
+void    syntax_check(token_t *c)
+{
+    token_t *tmp;
+    
 }

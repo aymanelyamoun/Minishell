@@ -6,7 +6,7 @@
 /*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:53:50 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/06/01 12:27:20 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/06/01 13:10:06 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,7 @@ char *get_char(char **str, char *c, int increment);
 int	get_word(char **str);
 int	get_quote(char **str, char c);
 void    check_quotes(token_t *c);
-int tokensize(token_t *token);
 token_t *error_free(char *str, token_t *tokens);
 void	free_all(token_t *tokens);
-int ft_strchr1(char *str, int c);
 
 #endif
