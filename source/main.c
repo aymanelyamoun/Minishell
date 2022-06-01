@@ -6,7 +6,7 @@
 /*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:28:41 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/06/01 13:07:47 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/06/01 15:52:01 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ int main(int argc, char **argv, char **envp)
             add_history(line);
             tokens = tokenize(line);
             check_quotes(tokens);
-            syntax_check(tokens);
+            //check_operators(tokens);
+            check_redirection(tokens);
+            check_newline(tokens);
             //return 1;
             //syntax_ana(tokens);
         }
