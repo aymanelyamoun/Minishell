@@ -3,6 +3,7 @@
 token_t *error_free(char *str, token_t *tokens)
 {
     ft_putstr_fd("syntax error near ", 2);
+    ft_putstr_fd("parse error near ", 2);
     ft_putstr_fd("\'", 2);
     ft_putstr_fd(str, 2);
     ft_putstr_fd("\'", 2);

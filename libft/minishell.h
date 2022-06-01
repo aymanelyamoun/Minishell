@@ -14,8 +14,8 @@
 # define MINISHELL_H
 
 #include <stdio.h>
-// #include <readline/readline.h>
-// #include <readline/history.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 #include <unistd.h>
 
 #include <stdlib.h>
@@ -26,13 +26,14 @@
 # include <signal.h>
 // # include "./libft/libft.h
 //every constant is equal to its position in enum
-
 typedef enum type_s
 {
     WORD,
     QUOTE,
     DQUOTE,
+    // BACKSLASH,
     SPACE,
+    // NEWLINE,
     GREAT,
     DGREAT,
     LESS,
@@ -52,33 +53,18 @@ typedef struct token_s
     struct token_s *prev;
 }token_t;
 
-typedef struct env_outil_s
-{
-    char *data; //data after =
-    char *name; //name of env var
-    struct env_s *next_env; //next env
-}env_outil_t;
-
-typedef struct env_s
-{
-    env_outil_t envi; //the enviroment variable structure
-    int shlvl; //the increnented value in env
-} env_t;
-
-typedef struct s_gen
-{
-    env_t env;
-    int status;
-    char *read;
-}t_gen;
-
-t_gen envi;  //this global variable has the variables that we use inmultiple files at once
-
+<<<<<<< HEAD:includes/minishell.h
 // typedef struct shell_s
 // {
 // }
-   
+    
+=======
+// typedef struct s_gen
+// {
 
+>>>>>>> 310e4d91931bcadc3785da201adf34230f87f70f:libft/minishell.h
+
+// }t_gen;
 /*********************************/
 /********** TOKENS LIST **********/
 /*********************************/
@@ -91,7 +77,6 @@ void    handler(int sig);
 void handle_signals(void);
 void    terminal_settings(void);
 
-
 token_t *tokenize(char *line);
 void    get_token(token_t **tokens, char **str);
 
@@ -100,8 +85,6 @@ void	get_sympol_great(token_t **tokens, char **str);
 char *get_char(char **str, char *c, int increment);
 int	get_word(char **str, char c);
 int	get_quote(char **str, char c);
-int	check_parant(char *line);
-int	check_quotes(char *line);
 
 
 
