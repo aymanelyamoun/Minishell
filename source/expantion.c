@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 15:42:03 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/06/02 21:30:24 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/06/02 21:35:18 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,9 +206,13 @@ char	*get_var(char **str, char *final_quote, char **env)
 		while ((*str)[i] != '\0' && (*str)[i] != ' ' && (*str)[i] != '\t' 
         && (*str)[i] != '\v' && (*str)[i] != '\f' && ft_isalnum((*str)[i]))
 			i++;
-	}
-    // printf("hm---%s---\n", ft_substr(*str, 1, i - 1));
 	env_var = find_value(ft_substr(*str, 1, i - 1), env);
+	}
+    else
+    {
+        env_var = ft_strdup("$");
+    }
+    
 	*str = *str + i;
 	return (join(final_quote, env_var));
 }
@@ -228,7 +232,7 @@ void    expander_in_quotes_utils(token_t **token, char **env)
         if (str[i] == '$')
 		{
 			tmp = ft_substr(str, 0, i);
-            printf("tmp: %s\n", tmp);
+            // printf("tmp: %s\n", tmp);
 			final_quote = join(final_quote, tmp);
             str = str + i;
 			final_quote = get_var(&str, final_quote, env);
