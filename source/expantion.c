@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expantion.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/27 15:42:03 by ael-yamo          #+#    #+#             */
+/*   Updated: 2022/06/02 16:21:30 by ael-yamo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 #include "../includes/libft/libft.h"
 
@@ -29,7 +41,7 @@ char	*rm_quotes(char *str, char c)
 
 	if (str[0] == c)
 	{
-		str[ft_strlen(str) - 2] = '\0';
+		str[ft_strlen(str) - 1] = '\0';
 		new = ft_strdup(&str[1]);
 		free(str);
 	}
@@ -38,20 +50,17 @@ char	*rm_quotes(char *str, char c)
 	return (new);
 }
 
-void	join_mix(char *str1, char *str2)
+char    *join_mix(token_t *token1, token_t *token2)
 {
-	if (str1[0] == '\"' || str1[0] == '\'')
+	if (token1->data[0] == '\"' || token1->data[0] == '\'')
 	{
-        printf("before : %s\n", str1);
-		str1 = rm_quotes(str1, str1[0]);
-        printf("after : %s\n", str1);
+		token1->data = rm_quotes(token1->data, token1->data[0]);
 	}
-	if (str2[0] == '\"' || str2[0] == '\'')
+	if (token2->data[0] == '\"' || token2->data[0] == '\'')
 	{
-        printf("i got here\n");
-		str2 = rm_quotes(str2, str2[0]);
+		token2->data = rm_quotes(token2->data, token2->data[0]);
 	}
-    ft_strjoin(str1, str2);
+    return (ft_strjoin(token1->data, token2->data));
 }
 
 void    join_word(token_t **tokens)
@@ -63,11 +72,12 @@ void    join_word(token_t **tokens)
     {
         if (tmp->type == WORD || tmp->type == DQUOTE || tmp->type == QUOTE)
         {
-            if ( tmp->next != NULL &&
+            while ( tmp->next != NULL &&
             (tmp->next->type == WORD || tmp->next->type == DQUOTE || tmp->next->type == QUOTE))
             {
-                join_mix(tmp->data, tmp->next->data);
-                free(&(tmp->next));
+                tmp->data = join_mix(tmp, tmp->next);
+                tmp->type = WORD;
+                rm_token(&(tmp->next));
             }
         }
         tmp = tmp->next;
@@ -173,6 +183,28 @@ void    expander(token_t **tokens, char **env)
     
 }
 
+void    expander_in_quotes(token_t **token)
+{
+    char    *str;
+    int     i;
+    char    *final_quote;
+	char	*tmp;
+
+    str = (*token)->data;
+    i = 0;
+	final_quote
+    while (str[i] != '\0')
+    {
+        if (str[i] == '$')
+		{
+			tmp = ft_substr(str, 0, i);
+			ft_strjoin();
+			get_var(str);
+		}
+    }
+    
+}
+
 int main(int argc, char **argv, char **envp)
 {
     char **env;
@@ -192,8 +224,8 @@ int main(int argc, char **argv, char **envp)
 			tok = tokens;
             expander(&tokens, env);
 
-            // join_word(&tokens);
-            // rm_spaces(&tokens);
+            join_word(&tokens);
+            rm_spaces(&tokens);
             while (tokens != NULL)
             {
                 printf("from main : -- %d ---> %s\n", tokens->type, tokens->data);
@@ -208,9 +240,7 @@ int main(int argc, char **argv, char **envp)
 }
 
 // tastks : 
-// fix the tokens
 // add the expantion to vars inside DQUOTE
-// fix the join cmd
 
 // t_cmd   *parsing(token_t *kokens)
 // {

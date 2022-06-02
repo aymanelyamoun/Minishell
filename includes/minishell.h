@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:53:50 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/06/01 17:31:49 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/06/02 14:58:43 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,14 @@ typedef struct token_s
     struct token_s *prev;
 }token_t;
 
+typedef struct s_cmd
+{
+	char	*cmd_path;
+	char	**cmd_args;
+	char	**envp;
+    int     infile;
+    int     outfile;
+}	t_cmd;
 typedef struct env_outil_s
 {
     char *data; //data after =
@@ -87,11 +95,12 @@ t_gen envi;  //this global variable has the variables that we use inmultiple fil
 token_t *new_token(unsigned int type, char *data);
 void	add_at_end(token_t **tokens_head, token_t *token);
 void	add_token_last(token_t **token_head, unsigned int type, char *data);
+void    rm_token(token_t **tokens);
+
 char **set_env(char **envp);
 void    handler(int sig);
 int handle_signals(void);
 int     terminal_settings(void);
-
 
 token_t *tokenize(char *line);
 void    get_token(token_t **tokens, char **str);
