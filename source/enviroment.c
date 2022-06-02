@@ -3,26 +3,30 @@
 
 //should handle the incremented value inside env, and split it by result by =
 
-char **set_env(char **envp)
+t_list *env_create(char **envp)
 {
+    t_list *tmp = NULL;
+    t_list *head;
+    char *s;
     int index;
-    char **tmp;
 
-    if(envp)
+
+    index = 1;
+    if(!(**envp) || !(envp) || !(envp[0]))
     {
-        index = 0;
-        while(envp[index])
-            index++;
+        head = ft_lstnew(NULL);
+        return (head);
     }
-    tmp = malloc(sizeof(char *) * (index + 1));
-    if (!tmp)
-        return (NULL);
-    index = 0;
+    s = ft_strdup(envp[0]);
+    head = ft_lstnew(s);
+    ft_lstadd_back(&head, tmp);
     while(envp[index])
     {
-        tmp[index] = ft_strdup(envp[index]);
+        s = ft_strdup(envp[index]);
+        tmp = ft_lstnew(s);
+        ft_lstadd_back(&head, tmp);
         index++;
     }
-    tmp[index] = NULL;
-    return (tmp);
+    return (head);
 }
+

@@ -6,23 +6,30 @@
 /*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:28:41 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/06/01 17:45:46 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/06/02 21:19:59 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+t_list *env;
 
 int main(int argc, char **argv, char **envp)
 {
     // char **envir;
     char *line;
     token_t *tokens;
-    
     (void)envp;
     (void)argv;
     if(argc != 1)
         return (1);
-    //handle_signals();
+    env = env_create(envp);
+    // while(env)
+    // {
+    //     printf("%s\n", env->content);
+    //     env = env->next;
+    // }
+    handle_signals();
     while (1)
     {
         line = readline("Minishell: ");
@@ -30,12 +37,13 @@ int main(int argc, char **argv, char **envp)
         {
             add_history(line);
             tokens = tokenize(line);
-            check_quotes(tokens);
-            check_operators(tokens);
-            check_redirection(tokens);
-            check_newline(tokens);
-            //return 1;
-            //syntax_ana(tokens);
+            if(check_quotes(tokens) == 1)
+            {
+                check_pipe(tokens);
+                check_newline(tokens);
+            }
+            else
+                continue ;
         }
 		else
 			exit(0); //last status
