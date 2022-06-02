@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 15:42:03 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/06/02 21:27:47 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/06/02 21:30:24 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,20 +227,15 @@ void    expander_in_quotes_utils(token_t **token, char **env)
     {
         if (str[i] == '$')
 		{
-            // printf("rest:--%s\n", str);
 			tmp = ft_substr(str, 0, i);
             printf("tmp: %s\n", tmp);
 			final_quote = join(final_quote, tmp);
             str = str + i;
 			final_quote = get_var(&str, final_quote, env);
-            // printf("rest:--%s\n", str);
-        
             i = -1;
 		}
 		i++;
     }
-    // printf("hi\n");
-    // printf("tmp\n");
 	tmp = ft_substr(str, 0, i);
     final_quote = join(final_quote, tmp); 
     (*token)->data = final_quote;
@@ -296,7 +291,6 @@ int main(int argc, char **argv, char **envp)
 }
 
 // tastks : 
-// add the expantion to vars inside DQUOTE
 
 // t_cmd   *parsing(token_t *kokens)
 // {
