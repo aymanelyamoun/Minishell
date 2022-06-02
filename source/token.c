@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 19:19:26 by ael-yamo          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/06/02 12:01:27 by ael-yamo         ###   ########.fr       */
-=======
-/*   Updated: 2022/06/01 11:30:43 by oufisaou         ###   ########.fr       */
->>>>>>> 3e47ba4eb53ba175c4eb83025e0130f7f05155c3
+/*   Updated: 2022/06/02 15:14:48 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +30,11 @@ int	get_word(char **str)
     int	i;
 
     i = 0;
-<<<<<<< HEAD
     while ((*str)[i] != '\0' && ((*str)[i] != ' ' 
+	&& (*str)[i] != '\t' && (*str)[i] != '\v' && (*str)[i] != '\f'
 	&& (*str)[i] != '<' && (*str)[i] != '>' && (*str)[i] != '\"' 
-	&& (*str)[i] != '\'' && (*str)[i] != '|' && (*str)[i] != '$'))
-=======
-    while ((*str)[i] != '\0' \
-	    && (*str)[i] != '\t' && (*str)[i] != '\v' \
-	       && (*str)[i] != '\f' && (*str)[i] != ' ')
->>>>>>> 3e47ba4eb53ba175c4eb83025e0130f7f05155c3
+	&& (*str)[i] != '\'' && (*str)[i] != '|' && (*str)[i] != '$'
+	))
         i++;
     *str = *str + i;
 	return (i);
@@ -90,7 +82,7 @@ void    get_token(token_t **tokens, char **str)
 			add_token_last(tokens, DQUOTE, ft_substr(*str, 0, get_quote(str, '\"')));
 		else if (**str == '\'')
 			add_token_last(tokens, QUOTE, ft_substr(*str, 0, get_quote(str, '\'')));
-		else if (**str == ' ') // IS SPACE!
+		else if (**str == ' ' || **str == '\t' || **str == '\v' || **str == '\f') // IS SPACE!
 			add_token_last(tokens, SPACE, get_char(str, " ", 1));
 		else if (**str == '>')
 			get_sympol_great(tokens, str);
@@ -101,7 +93,7 @@ void    get_token(token_t **tokens, char **str)
 		else if (**str == '$')
 			add_token_last(tokens, DOLLAR, get_char(str, "$", 1));
 		else
-			add_token_last(tokens, WORD, ft_substr(*str, 0, get_word(str, ' ')));
+			add_token_last(tokens, WORD, ft_substr(*str, 0, get_word(str)));
 		//fix the word if it is folowed by a spectial char as < > | ...
 	}
 }

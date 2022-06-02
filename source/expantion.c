@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expantion.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/27 15:42:03 by ael-yamo          #+#    #+#             */
+/*   Updated: 2022/06/02 16:21:30 by ael-yamo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 #include "../includes/libft/libft.h"
 
@@ -50,19 +62,6 @@ char    *join_mix(token_t *token1, token_t *token2)
 	}
     return (ft_strjoin(token1->data, token2->data));
 }
-// char    *join_mix(char *str1, char *str2)
-// {
-// 	if (str1[0] == '\"' || str1[0] == '\'')
-// 	{
-// 		str1 = rm_quotes(str1, str1[0]);
-// 	}
-// 	if (str2[0] == '\"' || str2[0] == '\'')
-// 	{
-// 		str2 = rm_quotes(str2, str2[0]);
-// 		printf("%s\n", str2);
-// 	}
-//     return (ft_strjoin(str1, str2));
-// }
 
 void    join_word(token_t **tokens)
 {
@@ -180,6 +179,28 @@ void    expander(token_t **tokens, char **env)
                 tmp->type = WORD;
         }
         tmp = tmp->next;
+    }
+    
+}
+
+void    expander_in_quotes(token_t **token)
+{
+    char    *str;
+    int     i;
+    char    *final_quote;
+	char	*tmp;
+
+    str = (*token)->data;
+    i = 0;
+	final_quote
+    while (str[i] != '\0')
+    {
+        if (str[i] == '$')
+		{
+			tmp = ft_substr(str, 0, i);
+			ft_strjoin();
+			get_var(str);
+		}
     }
     
 }
