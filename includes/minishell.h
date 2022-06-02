@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/01 22:39:21 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/06/02 15:38:03 by oufisaou         ###   ########.fr       */
+/*   Created: 2022/06/02 16:40:44 by oufisaou          #+#    #+#             */
+/*   Updated: 2022/06/02 17:30:50 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,16 @@ typedef struct token_s
 }token_t;
 
 
+typedef struct s_cmd
+{
+	char	*cmd_path;
+	char	**cmd_args;
+	char	**envp;
+    int     infile;
+    int     outfile;
+}	t_cmd;
+
+
 // typedef struct env_s
 // {
 //     env_outil_t envi; //the enviroment variable structure
@@ -80,11 +90,12 @@ typedef struct token_s
 token_t *new_token(unsigned int type, char *data);
 void	add_at_end(token_t **tokens_head, token_t *token);
 void	add_token_last(token_t **token_head, unsigned int type, char *data);
+void    rm_token(token_t **tokens);
+
 char **set_env(char **envp);
 void    handler(int sig);
 int handle_signals(void);
 int     terminal_settings(void);
-
 
 token_t *tokenize(char *line);
 void    get_token(token_t **tokens, char **str);
@@ -101,6 +112,7 @@ void    check_redirection(token_t *c);
 void    check_newline(token_t *c);
 int ctrld(void);
 void    check_operators(token_t *c);
-
+int is_other(token_t *c);
 t_list *env_create(char **envp);
+void   handle_spaces(token_t *c);
 #endif

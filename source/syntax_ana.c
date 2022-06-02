@@ -6,7 +6,7 @@
 /*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 11:18:11 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/06/02 16:28:58 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/06/02 17:47:52 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void    check_quotes(token_t *tmp)
         index = 0;
         c = c->next;
     }
+    printf(" dquote : %d\n", dquote);
     squote = squote % 2;
     dquote = dquote % 2;
     if(squote != 0 || dquote != 0)
@@ -101,31 +102,64 @@ void    check_quotes(token_t *tmp)
 
 
 
-
 void check_newline(token_t *c)
 {
     token_t *tmp = NULL;
-    size_t index;
 
     tmp = c;
-    index = 0;
-while(tmp)
-{
-        while(index < ft_strlen(tmp->data))
-        {
-            if(tmp->next == NULL)
+    while(tmp)
+    {
+            if((tmp->type == LESS) || (tmp->type == GREAT) || (tmp->type == DGREAT) || (tmp->type == DLESS))
             {
-                if(ft_strncmp(tmp->data + index, ">", 1) == 0 || ft_strncmp(tmp->data + index, "<", 1) == 0|| ft_strncmp(tmp->data + index, ">>", 2) == 0 || ft_strncmp(tmp->data + index, "<<", 2) == 0)
+                if(tmp->type == LESS)
                 {
-                    printf("parse error near to newline\n");
+                    if(tmp->next->type == GREAT)
+                    {
+                        printf("newline2\n");
+                        return ;
+                    }
+                }
+                if(tmp->next == NULL)
+                {
+                    printf("3la slamtk\n");
                     break ;
                 }
+                else
+                {
+                    handle_spaces(tmp->next);
+                    break;
+                }       
             }
-            index++;
+                
         }
         tmp = tmp->next;
-    }
-    return ;  
+}
+
+
+void   handle_spaces(token_t *c)
+{
+    token_t *tmp = NULL;
+    
+    tmp = c;
+    
+    while(tmp && tmp->type == SPACE)
+        tmp = tmp->next;
+    if(tmp == NULL)
+        printf("newline 2\n");
+    else if(is_other(tmp))
+        printf("duplication\n");
+    else
+        printf("sent to redirections errors\n");
+    return ;
+}
+
+
+
+int is_other(token_t *c)
+{
+    if(c->type == QUOTE || c->type == DQUOTE || c->type == PIPE || c->type == LESS || c->type == DLESS || c->type ==DGREAT)
+        return (1);
+    return (0);
 }
 //     void    check_newline(token_t *c)
 // {
