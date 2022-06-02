@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/16 14:53:50 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/06/01 17:31:49 by oufisaou         ###   ########.fr       */
+/*   Created: 2022/06/01 22:39:21 by oufisaou          #+#    #+#             */
+/*   Updated: 2022/06/02 15:38:03 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,27 +53,20 @@ typedef struct token_s
     struct token_s *prev;
 }token_t;
 
-typedef struct env_outil_s
-{
-    char *data; //data after =
-    char *name; //name of env var
-    struct env_s *next_env; //next env
-}env_outil_t;
 
-typedef struct env_s
-{
-    env_outil_t envi; //the enviroment variable structure
-    int shlvl; //the increnented value in env
-} env_t;
+// typedef struct env_s
+// {
+//     env_outil_t envi; //the enviroment variable structure
+//     int shlvl; //the increnented value in env
+// } env_t;
 
-typedef struct s_gen
-{
-    env_t env;
-    int status;
-    char *read;
-}t_gen;
+// typedef struct s_gen
+// {
+//     env_t env;
+//     int status;
+//     char *read;
+// }t_gen;
 
-t_gen envi;  //this global variable has the variables that we use inmultiple files at once
 
 // typedef struct shell_s
 // {
@@ -108,4 +101,6 @@ void    check_redirection(token_t *c);
 void    check_newline(token_t *c);
 int ctrld(void);
 void    check_operators(token_t *c);
+
+t_list *env_create(char **envp);
 #endif

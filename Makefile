@@ -6,7 +6,7 @@
 #    By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/24 17:24:53 by yel-mrab          #+#    #+#              #
-#    Updated: 2022/06/01 16:55:15 by oufisaou         ###   ########.fr        #
+#    Updated: 2022/06/01 22:24:08 by oufisaou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRC = main list_manupulation token syntax_ana error_free signals
 OBJ = $(addprefix $(DIRBUILD)/, $(SRC:=.o))
 all : $(NAME)
 $(NAME) : $(OBJ) $(LIBFT)
-	@gcc $(CFLAGS) $^ -o $(NAME) -lreadline -L .brew/opt/readline/lib -I .brew/opt/readline/include $(LIBFT) 
+	@gcc $(CFLAGS) $^ -o $(NAME) -lreadline  $(LIBFT) 
 	@echo "MINISHELL────▒▒▒▒▒▒▒▒"
 	@echo "─────────▒▒▒──────▒▒▒"
 	@echo "──BY────▒▒───▒▒▒▒──▒░▒"
@@ -55,7 +55,7 @@ $(LIBFT) :
 	
 $(DIRBUILD)/%.o : source/%.c $(HEADERS)
 	@mkdir -p $(@D)
-	@gcc  $(CFLAGS) $(INC) -c $< -o $@
+	@gcc  $(CFLAGS) $(INC) -I /goinfre/oufisaou/.brew/opt/readline/include -c $< -o $@
 clean :
 	@rm -rf $(DIRBUILD)
 	@make clean -C includes/libft
