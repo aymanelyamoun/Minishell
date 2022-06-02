@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 14:53:50 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/05/24 21:42:06 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/06/02 14:51:40 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ typedef enum type_s
     WORD,
     QUOTE,
     DQUOTE,
-    BACKSLASH,
     SPACE,
-    NEWLINE,
     GREAT,
     DGREAT,
     LESS,
@@ -53,11 +51,14 @@ typedef struct token_s
     struct token_s *prev;
 }token_t;
 
-// typedef struct shell_s
-// {
-// }
-    
-
+typedef struct s_cmd
+{
+	char	*cmd_path;
+	char	**cmd_args;
+	char	**envp;
+    int     infile;
+    int     outfile;
+}	t_cmd;
 /*********************************/
 /********** TOKENS LIST **********/
 /*********************************/
@@ -65,6 +66,9 @@ typedef struct token_s
 token_t *new_token(unsigned int type, char *data);
 void	add_at_end(token_t **tokens_head, token_t *token);
 void	add_token_last(token_t **token_head, unsigned int type, char *data);
+token_t *tokenize(char *line);
+void    rm_token(token_t **tokens);
 
+char    **set_env(char **envp);
 
 #endif
