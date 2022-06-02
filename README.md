@@ -19,7 +19,7 @@ void    check_newline(token_t *c)
     index = 0;
     while(tmp)
     {
-        while(tmp->next->type == SPACE)
+        while(tmp->next->type == SPAACE)
              tmp = tmp->next;
         while(index < ft_strlen(tmp->data))
         {
@@ -28,7 +28,7 @@ void    check_newline(token_t *c)
                 if (tmp->data[index] == '>')
                 {
                     if(tmp->data[index + 1] != '\0')
-                        while(tmp->next->type == SPACE && tmp)
+                        while(tmp->next->type == SPAACE && tmp)
                              tmp = tmp->next;
                     printf("parse error near to newline hani\n");
                     break;
@@ -52,7 +52,7 @@ void    check_newline(token_t *c)
             
             // else if (tmp->next != NULL)
             // {
-            //     while(tmp->next->type == SPACE)
+            //     while(tmp->next->type == SPAACE)
             //         tmp = tmp->next;
             //     if (tmp->data[index] ==  '>')
             //     {
@@ -78,7 +78,7 @@ void    check_newline(token_t *c)
     index = 0;
     while(tmp)
     {
-        while(tmp->next->type == SPACE)
+        while(tmp->next->type == SPAACE)
              tmp = tmp->next;
         while(index < ft_strlen(tmp->data))
         {
@@ -87,7 +87,7 @@ void    check_newline(token_t *c)
                 if (tmp->data[index] == '>')
                 {
                     if(tmp->data[index + 1] != '\0')
-                        while(tmp->next->type == SPACE && tmp)
+                        while(tmp->next->type == SPAACE && tmp)
                              tmp = tmp->next;
                     printf("parse error near to newline hani\n");
                     break;
@@ -111,7 +111,7 @@ void    check_newline(token_t *c)
             
             // else if (tmp->next != NULL)
             // {
-            //     while(tmp->next->type == SPACE)
+            //     while(tmp->next->type == SPAACE)
             //         tmp = tmp->next;
             //     if (tmp->data[index] ==  '>')
             //     {

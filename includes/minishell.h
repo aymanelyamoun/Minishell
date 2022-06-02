@@ -6,7 +6,7 @@
 /*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 16:40:44 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/06/02 18:22:38 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/06/02 21:19:26 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef enum type_s
     WORD,
     QUOTE,
     DQUOTE,
-    SPACE,
+    SPAACE,
     GREAT,
     DGREAT,
     LESS,
@@ -94,7 +94,7 @@ void    rm_token(token_t **tokens);
 
 char **set_env(char **envp);
 void    handler(int sig);
-int handle_signals(void);
+int  handle_signals(void);
 int     terminal_settings(void);
 
 token_t *tokenize(char *line);
@@ -114,7 +114,7 @@ int ctrld(void);
 void    check_operators(token_t *c);
 int is_other(token_t *c);
 t_list *env_create(char **envp);
-void   handle_spaces(token_t *c);
+void   handle_SPAACEs(token_t *c);
 void    check_pipe(token_t *c);
-void   handle_spaces2(token_t *c);
+void   handle_SPAACEs2(token_t *c);
 #endif

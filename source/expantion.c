@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expantion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 15:42:03 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/06/02 16:21:30 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/06/02 21:09:06 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,12 +112,12 @@ void    rm_token(token_t **tokens)
     free(token);
 }
 
-void    rm_spaces(token_t **tokens)
+void    rm_SPAACEs(token_t **tokens)
 {
     token_t *tmp;
     int i = 0;
 
-    while ((*tokens) != NULL && (*tokens)->type == SPACE)
+    while ((*tokens) != NULL && (*tokens)->type == SPAACE)
     {
         rm_token(tokens);
         i++;
@@ -125,7 +125,7 @@ void    rm_spaces(token_t **tokens)
     tmp = *tokens;
     while (tmp != NULL)
     {
-        if (tmp->type == SPACE)
+        if (tmp->type == SPAACE)
         {
             rm_token(&tmp);
             i++;
@@ -172,10 +172,10 @@ void    expander(token_t **tokens, char **env)
     {
         if (tmp->type == DOLLAR)
         {
-            if (tmp->next != NULL && tmp->next->type != SPACE && 
+            if (tmp->next != NULL && tmp->next->type != SPAACE && 
             (tmp->next->type == WORD || tmp->next->type == DQUOTE))
                 play_with_tokens(&tmp, ft_strdup(tmp->next->data), env);
-            if (tmp->next != NULL && tmp->next->type == SPACE)
+            if (tmp->next != NULL && tmp->next->type == SPAACE)
                 tmp->type = WORD;
         }
         tmp = tmp->next;
@@ -225,7 +225,7 @@ int main(int argc, char **argv, char **envp)
             expander(&tokens, env);
 
             join_word(&tokens);
-            rm_spaces(&tokens);
+            rm_SPAACEs(&tokens);
             while (tokens != NULL)
             {
                 printf("from main : -- %d ---> %s\n", tokens->type, tokens->data);

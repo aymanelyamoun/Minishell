@@ -6,7 +6,7 @@
 /*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 11:18:11 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/06/02 18:18:35 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/06/02 21:09:06 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void    check_pipe(token_t *c)
             }
             else
             {
-                handle_spaces2(tmp->next);
+                handle_SPAACEs2(tmp->next);
                 break;
             }
              
@@ -96,7 +96,7 @@ void check_newline(token_t *c)
                 }
                 else
                 {
-                    handle_spaces(tmp->next);
+                    handle_SPAACEs(tmp->next);
                     break;
                 }       
             }
@@ -106,13 +106,13 @@ void check_newline(token_t *c)
 }
 
 
-void   handle_spaces(token_t *c)
+void   handle_SPAACEs(token_t *c)
 {
     token_t *tmp = NULL;
     
     tmp = c;
     
-    while(tmp && tmp->type == SPACE)
+    while(tmp && tmp->type == SPAACE)
         tmp = tmp->next;
     if(tmp == NULL)
         printf("newline 2\n");
@@ -123,13 +123,13 @@ void   handle_spaces(token_t *c)
     return ;
 }
 
-void   handle_spaces2(token_t *c)
+void   handle_SPAACEs2(token_t *c)
 {
     token_t *tmp = NULL;
     
     tmp = c;
     
-    while(tmp && tmp->type == SPACE)
+    while(tmp && tmp->type == SPAACE)
         tmp = tmp->next;
     if(tmp == NULL || is_other(tmp))
         printf("syntax error near unexpected token tmp\n");

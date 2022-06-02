@@ -6,7 +6,7 @@
 /*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 19:19:26 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/06/02 16:41:36 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/06/02 21:09:06 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ void    get_token(token_t **tokens, char **str)
 			add_token_last(tokens, DQUOTE, ft_substr(*str, 0, get_quote(str, '\"')));
 		else if (**str == '\'')
 			add_token_last(tokens, QUOTE, ft_substr(*str, 0, get_quote(str, '\'')));
-		else if (**str == ' ' || **str == '\t' || **str == '\v' || **str == '\f') // IS SPACE!
-			add_token_last(tokens, SPACE, get_char(str, " ", 1));
+		else if (**str == ' ' || **str == '\t' || **str == '\v' || **str == '\f') // IS SPAACE!
+			add_token_last(tokens, SPAACE, get_char(str, " ", 1));
 		else if (**str == '>')
 			get_sympol_great(tokens, str);
 		else if (**str == '<')
