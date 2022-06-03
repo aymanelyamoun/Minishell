@@ -6,7 +6,7 @@
 /*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 15:42:03 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/06/02 21:09:06 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/06/03 15:06:14 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void    rm_token(token_t **tokens)
     free(token);
 }
 
-void    rm_SPAACEs(token_t **tokens)
+void    rm_spaces(token_t **tokens)
 {
     token_t *tmp;
     int i = 0;
@@ -225,7 +225,7 @@ int main(int argc, char **argv, char **envp)
             expander(&tokens, env);
 
             join_word(&tokens);
-            rm_SPAACEs(&tokens);
+            rm_spaces(&tokens);
             while (tokens != NULL)
             {
                 printf("from main : -- %d ---> %s\n", tokens->type, tokens->data);

@@ -1,6 +1,4 @@
 #include "../includes/minishell.h"
-
-
 //should handle the incremented value inside env, and split it by result by =
 
 t_list *env_create(char **envp)
