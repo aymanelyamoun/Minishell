@@ -1,5 +1,3 @@
-
-
 #include "../includes/minishell.h"
 #include "../includes/libft/libft.h"
 
@@ -13,13 +11,20 @@
 char    *find_value(char *str, char **env)
 {
     int i;
+    t_list  *env_l;
+    char    *tmp;
     
-    i = 0;
-    while (env[i])
+    env_l = env_create(env);
+    while (env_l != NULL)
     {
-        if (ft_strncmp(str, env[i], ft_strlen(str)) == 0)
-            return (ft_strdup(&env[i][ft_strlen(str) + 1]));
-        i++;
+        tmp = ft_strjoin(str, "=");
+        if (ft_strncmp(tmp, env_l->content, ft_strlen(tmp)) == 0)
+        {
+            free(tmp);
+            return (ft_strdup(&(env_l->content[ft_strlen(str) + 1])));   
+        }
+        free(tmp);
+        env_l = env_l->next;
     }
     return (ft_strdup(""));
 }
@@ -196,9 +201,15 @@ char	*get_var(char **str, char *final_quote, char **env)
 		while ((*str)[i] != '\0' && (*str)[i] != ' ' && (*str)[i] != '\t' 
         && (*str)[i] != '\v' && (*str)[i] != '\f' && ft_isalnum((*str)[i]))
 			i++;
+	    env_var = find_value(ft_substr(*str, 1, i - 1), env);
+        // if (ft_strncmp(env_var, "", ft_strlen(env_var)) == 0)
+        // {
+        //     free(env_var);
+        //     env_var = ft_substr(*str, 0, i);
+        // }
 	}
-    // printf("hm---%s---\n", ft_substr(*str, 1, i - 1));
-	env_var = find_value(ft_substr(*str, 1, i - 1), env);
+    else
+        env_var = ft_strdup("$");
 	*str = *str + i;
 	return (join(final_quote, env_var));
 }
@@ -218,7 +229,6 @@ void    expander_in_quotes_utils(token_t **token, char **env)
         if (str[i] == '$')
 		{
 			tmp = ft_substr(str, 0, i);
-            printf("tmp: %s\n", tmp);
 			final_quote = join(final_quote, tmp);
             str = str + i;
 			final_quote = get_var(&str, final_quote, env);

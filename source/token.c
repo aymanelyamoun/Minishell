@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 19:19:26 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/06/02 21:09:06 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/06/03 13:03:54 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,17 +100,13 @@ void    get_token(token_t **tokens, char **str)
 
 token_t *tokenize(char *line)
 {
-    // int i;
     token_t *tokens = NULL;
     token_t *tmp;
 
-    // i = 0;
     get_token(&tokens, &line);
     tmp = tokens;
-	// int j = 0;
     while (tokens != NULL)
     {
-		printf("type: %d ... data: %s\n",tokens->type, tokens->data);
         tokens = tokens->next;
     }
     return (tmp);
