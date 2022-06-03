@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 15:42:03 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/06/03 13:06:16 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/06/03 21:23:36 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,18 @@ char    *find_value(char *str, char **env)
 {
     int i;
     t_list  *env_l;
+    char    *tmp;
     
     env_l = env_create(env);
     while (env_l != NULL)
     {
-        // printf("%s\n", env_l->content);
-        if (ft_strncmp(str, env_l->content, ft_strlen(str)) == 0)
-            return (ft_strdup(&(env_l->content[ft_strlen(str) + 1])));
+        tmp = ft_strjoin(str, "=");
+        if (ft_strncmp(tmp, env_l->content, ft_strlen(tmp)) == 0)
+        {
+            free(tmp);
+            return (ft_strdup(&(env_l->content[ft_strlen(str) + 1])));   
+        }
+        free(tmp);
         env_l = env_l->next;
     }
     return (ft_strdup(""));
@@ -208,13 +213,15 @@ char	*get_var(char **str, char *final_quote, char **env)
 		while ((*str)[i] != '\0' && (*str)[i] != ' ' && (*str)[i] != '\t' 
         && (*str)[i] != '\v' && (*str)[i] != '\f' && ft_isalnum((*str)[i]))
 			i++;
-	env_var = find_value(ft_substr(*str, 1, i - 1), env);
+	    env_var = find_value(ft_substr(*str, 1, i - 1), env);
+        // if (ft_strncmp(env_var, "", ft_strlen(env_var)) == 0)
+        // {
+        //     free(env_var);
+        //     env_var = ft_substr(*str, 0, i);
+        // }
 	}
     else
-    {
         env_var = ft_strdup("$");
-    }
-    
 	*str = *str + i;
 	return (join(final_quote, env_var));
 }
