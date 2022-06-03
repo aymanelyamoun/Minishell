@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 15:42:03 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/06/02 21:35:18 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/06/03 13:06:16 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,15 @@
 char    *find_value(char *str, char **env)
 {
     int i;
+    t_list  *env_l;
     
-    i = 0;
-    while (env[i])
+    env_l = env_create(env);
+    while (env_l != NULL)
     {
-        if (ft_strncmp(str, env[i], ft_strlen(str)) == 0)
-            return (ft_strdup(&env[i][ft_strlen(str) + 1]));
-        i++;
+        // printf("%s\n", env_l->content);
+        if (ft_strncmp(str, env_l->content, ft_strlen(str)) == 0)
+            return (ft_strdup(&(env_l->content[ft_strlen(str) + 1])));
+        env_l = env_l->next;
     }
     return (ft_strdup(""));
 }
@@ -112,7 +114,7 @@ void    rm_token(token_t **tokens)
     free(token);
 }
 
-void    rm_SPAACEs(token_t **tokens)
+void    rm_spaces(token_t **tokens)
 {
     token_t *tmp;
     int i = 0;
@@ -232,7 +234,6 @@ void    expander_in_quotes_utils(token_t **token, char **env)
         if (str[i] == '$')
 		{
 			tmp = ft_substr(str, 0, i);
-            // printf("tmp: %s\n", tmp);
 			final_quote = join(final_quote, tmp);
             str = str + i;
 			final_quote = get_var(&str, final_quote, env);
@@ -280,7 +281,7 @@ int main(int argc, char **argv, char **envp)
             expander(&tokens, env);
 			expander_in_quotes(&tokens, env);
             join_word(&tokens);
-            rm_SPAACEs(&tokens);
+            rm_spaces(&tokens);
             while (tokens != NULL)
             {
                 printf("from main : -- %d ---> %s\n", tokens->type, tokens->data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 16:51:38 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/06/02 21:24:22 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/06/02 21:43:53 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,14 @@
 // }
 int    terminal_settings(void)
 {
-    // struct termios  term;
+    struct termios  term;
 
-    // if (tcgetattr(STDIN_FILENO, &term) == -1)
-    //     return (1);
-    // term.c_lflag &= ~(ECHOCTL);
-    // tcsetattr(STDIN_FILENO, TCSANOW, &term);
-    // signal(SIGQUIT, handler);
-    // signal(SIGINT, handler);
-    rl_catch_signals = 0;
+    if (tcgetattr(STDIN_FILENO, &term) == -1)
+        return (1);
+    term.c_lflag &= ~(ECHOCTL);
+    tcsetattr(STDIN_FILENO, TCSANOW, &term);
+    signal(SIGQUIT, handler);
+    signal(SIGINT, handler);
     return (0); 
 
 }
