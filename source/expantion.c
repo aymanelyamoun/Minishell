@@ -1,14 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   expantion.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/27 15:42:03 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/06/03 15:06:14 by oufisaou         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
 
 #include "../includes/minishell.h"
 #include "../includes/libft/libft.h"
@@ -183,7 +173,37 @@ void    expander(token_t **tokens, char **env)
     
 }
 
-void    expander_in_quotes(token_t **token)
+char	*join(char *final_quote, char *tmp)
+{
+	char	*to_free;
+
+	to_free = final_quote;
+	final_quote = ft_strjoin(final_quote, tmp);
+	free(tmp);
+	free(to_free);
+	return (final_quote);
+}
+
+char	*get_var(char **str, char *final_quote, char **env)
+{
+	int		i;
+	char	*env_var;
+	char	*to_free;
+
+	i = 1;
+	if ((*str)[0] == '$' && (*str)[1] != '\0' && ft_isalnum((*str)[1]))
+	{
+		while ((*str)[i] != '\0' && (*str)[i] != ' ' && (*str)[i] != '\t' 
+        && (*str)[i] != '\v' && (*str)[i] != '\f' && ft_isalnum((*str)[i]))
+			i++;
+	}
+    // printf("hm---%s---\n", ft_substr(*str, 1, i - 1));
+	env_var = find_value(ft_substr(*str, 1, i - 1), env);
+	*str = *str + i;
+	return (join(final_quote, env_var));
+}
+
+void    expander_in_quotes_utils(token_t **token, char **env)
 {
     char    *str;
     int     i;
@@ -192,17 +212,38 @@ void    expander_in_quotes(token_t **token)
 
     str = (*token)->data;
     i = 0;
-	final_quote
+	final_quote = ft_strdup("");
     while (str[i] != '\0')
     {
         if (str[i] == '$')
 		{
 			tmp = ft_substr(str, 0, i);
-			ft_strjoin();
-			get_var(str);
+            printf("tmp: %s\n", tmp);
+			final_quote = join(final_quote, tmp);
+            str = str + i;
+			final_quote = get_var(&str, final_quote, env);
+            i = -1;
 		}
+		i++;
     }
-    
+	tmp = ft_substr(str, 0, i);
+    final_quote = join(final_quote, tmp); 
+    (*token)->data = final_quote;
+}
+
+void	expander_in_quotes(token_t **tokens, char **env)
+{
+	token_t	*token;
+
+	token = *tokens;
+	while (token != NULL)
+	{
+		if (token->type == DQUOTE)
+		{
+			expander_in_quotes_utils(&token, env);
+		}
+		token = token->next;
+	}
 }
 
 int main(int argc, char **argv, char **envp)
@@ -223,7 +264,7 @@ int main(int argc, char **argv, char **envp)
             tokens = tokenize(line);
 			tok = tokens;
             expander(&tokens, env);
-
+			expander_in_quotes(&tokens, env);
             join_word(&tokens);
             rm_spaces(&tokens);
             while (tokens != NULL)
@@ -240,7 +281,6 @@ int main(int argc, char **argv, char **envp)
 }
 
 // tastks : 
-// add the expantion to vars inside DQUOTE
 
 // t_cmd   *parsing(token_t *kokens)
 // {
