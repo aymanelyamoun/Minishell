@@ -50,6 +50,7 @@ typedef struct s_cmd
     int     infile;
     int     outfile;
     token_t *tokens_cmd;
+	int		pipes;
 }	t_cmd;
 
 
@@ -106,4 +107,13 @@ t_list *env_create(char **envp);
 void   handle_spaces(token_t *c);
 void    check_pipe(token_t *c);
 void   handle_spaces2(token_t *c);
+
+/*********************************/
+/********* CMD MANAGMENT *********/
+/*********************************/
+
+int				count_pipes(token_t *tokens);
+static t_cmd	*creat_cmds_utils(token_t **tokens, t_cmd **cmds);
+t_cmd			*creat_cmds(token_t **tokens);
+
 #endif
