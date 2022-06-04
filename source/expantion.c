@@ -270,6 +270,33 @@ int	count_pipes(token_t *tokens)
 	return (i);
 }
 
+static t_cmd *creat_cmds_utils(token_t **tokens, t_cmd **cmds)
+{
+    token_t *tmp;
+    token_t *new_head;
+    int     i;
+
+    i = 0;
+	tmp = *tokens;
+	new_head = tmp;
+	while (tmp != NULL)
+	{
+		if (tmp->next != NULL && tmp->next->type == PIPE)
+		{
+			rm_token(&(tmp->next));
+			(*cmds)[i].tokens_cmd = new_head;
+			new_head = tmp->next;
+			tmp->next = NULL;
+			tmp = new_head;
+			i++;
+		}
+        else
+		    tmp = tmp->next;
+	}
+    (*cmds)[i].tokens_cmd = new_head;
+	return (*cmds);
+}
+
 t_cmd   *creat_cmds(token_t **tokens)
 {
     int		pipes;
@@ -286,24 +313,7 @@ t_cmd   *creat_cmds(token_t **tokens)
 		cmds[i].tokens_cmd = *tokens;
 		return (cmds);
 	}
-	tmp = *tokens;
-	new_head = tmp;
-	while (tmp != NULL)
-	{
-		if (tmp->next != NULL && tmp->next->type == PIPE)
-		{
-			rm_token(&(tmp->next));
-			cmds[i].tokens_cmd = new_head;
-			new_head = tmp->next;
-			tmp->next = NULL;
-			tmp = new_head;
-			i++;
-		}
-        else
-		    tmp = tmp->next;
-	}
-    cmds[i].tokens_cmd = new_head;
-	return (cmds);
+    return (creat_cmds_utils(tokens, &cmds));
 }
 
 int main(int argc, char **argv, char **envp)
