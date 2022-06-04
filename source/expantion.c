@@ -256,14 +256,69 @@ void	expander_in_quotes(token_t **tokens, char **env)
 	}
 }
 
+int	count_pipes(token_t *tokens)
+{
+	int	i;
+
+	i = 0;
+	while (tokens != NULL)
+	{
+		if (tokens->type == PIPE)
+			i++;
+		tokens = tokens->next;
+	}
+	return (i);
+}
+
+t_cmd   *creat_cmds(token_t **tokens)
+{
+    int		pipes;
+	token_t	*new_head;
+	token_t *tmp;
+	t_cmd	*cmds;
+	int		i;
+
+	i = 0;
+	pipes = count_pipes(*tokens);
+	cmds = malloc(sizeof(t_cmd) * (pipes + 1));
+	if (pipes == 0)
+	{
+		cmds[i].tokens_cmd = *tokens;
+		return (cmds);
+	}
+	tmp = *tokens;
+	new_head = tmp;
+	while (tmp != NULL)
+	{
+		if (tmp->next != NULL && tmp->next->type == PIPE)
+		{
+			rm_token(&(tmp->next));
+			cmds[i].tokens_cmd = new_head;
+			new_head = tmp->next;
+			tmp->next = NULL;
+			tmp = new_head;
+			i++;
+		}
+        else
+		    tmp = tmp->next;
+	}
+    cmds[i].tokens_cmd = new_head;
+	return (cmds);
+}
+
 int main(int argc, char **argv, char **envp)
 {
     char **env;
     char *line;
     token_t *tokens;
     token_t *tok;
-    if(argc != 1)
-        return (1);
+	t_cmd	*cmds;
+    
+	int	pipes;
+	int	i = 0;
+
+    // if(argc != 1)
+    //     return (1);
     env = set_env(envp);
     while (1)
     {
@@ -272,25 +327,29 @@ int main(int argc, char **argv, char **envp)
         {
             add_history(line);
             tokens = tokenize(line);
-			tok = tokens;
             expander(&tokens, env);
 			expander_in_quotes(&tokens, env);
             join_word(&tokens);
             rm_spaces(&tokens);
-            while (tokens != NULL)
-            {
-                printf("from main : -- %d ---> %s\n", tokens->type, tokens->data);
-                tokens = tokens->next;
-            }
-            
+			pipes = count_pipes(tokens) + 1;
+			cmds = creat_cmds(&tokens);
+			i = 0;
+			while (i <= pipes)
+			{
+                tok = cmds[i].tokens_cmd;
+				while (tok != NULL)
+				{
+					printf("from main %d : -- %d ---> %s\n", i, tok->type, tok->data);
+                    tok = tok->next;
+				}
+				i++;
+			}
         }
 		else
 			exit(0); //last status
     }
     return (0);
 }
-
-// tastks : 
 
 // t_cmd   *parsing(token_t *kokens)
 // {
