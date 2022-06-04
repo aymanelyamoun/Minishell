@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   expantion.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/27 15:42:03 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/06/02 16:21:30 by ael-yamo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minishell.h"
 #include "../includes/libft/libft.h"
 
@@ -23,13 +11,20 @@
 char    *find_value(char *str, char **env)
 {
     int i;
+    t_list  *env_l;
+    char    *tmp;
     
-    i = 0;
-    while (env[i])
+    env_l = env_create(env);
+    while (env_l != NULL)
     {
-        if (ft_strncmp(str, env[i], ft_strlen(str)) == 0)
-            return (ft_strdup(&env[i][ft_strlen(str) + 1]));
-        i++;
+        tmp = ft_strjoin(str, "=");
+        if (ft_strncmp(tmp, env_l->content, ft_strlen(tmp)) == 0)
+        {
+            free(tmp);
+            return (ft_strdup(&(env_l->content[ft_strlen(str) + 1])));   
+        }
+        free(tmp);
+        env_l = env_l->next;
     }
     return (ft_strdup(""));
 }
@@ -117,7 +112,7 @@ void    rm_spaces(token_t **tokens)
     token_t *tmp;
     int i = 0;
 
-    while ((*tokens) != NULL && (*tokens)->type == SPACE)
+    while ((*tokens) != NULL && (*tokens)->type == SPAACE)
     {
         rm_token(tokens);
         i++;
@@ -125,7 +120,7 @@ void    rm_spaces(token_t **tokens)
     tmp = *tokens;
     while (tmp != NULL)
     {
-        if (tmp->type == SPACE)
+        if (tmp->type == SPAACE)
         {
             rm_token(&tmp);
             i++;
@@ -172,10 +167,10 @@ void    expander(token_t **tokens, char **env)
     {
         if (tmp->type == DOLLAR)
         {
-            if (tmp->next != NULL && tmp->next->type != SPACE && 
+            if (tmp->next != NULL && tmp->next->type != SPAACE && 
             (tmp->next->type == WORD || tmp->next->type == DQUOTE))
                 play_with_tokens(&tmp, ft_strdup(tmp->next->data), env);
-            if (tmp->next != NULL && tmp->next->type == SPACE)
+            if (tmp->next != NULL && tmp->next->type == SPAACE)
                 tmp->type = WORD;
         }
         tmp = tmp->next;
@@ -183,7 +178,43 @@ void    expander(token_t **tokens, char **env)
     
 }
 
-void    expander_in_quotes(token_t **token)
+char	*join(char *final_quote, char *tmp)
+{
+	char	*to_free;
+
+	to_free = final_quote;
+	final_quote = ft_strjoin(final_quote, tmp);
+	free(tmp);
+	free(to_free);
+	return (final_quote);
+}
+
+char	*get_var(char **str, char *final_quote, char **env)
+{
+	int		i;
+	char	*env_var;
+	char	*to_free;
+
+	i = 1;
+	if ((*str)[0] == '$' && (*str)[1] != '\0' && ft_isalnum((*str)[1]))
+	{
+		while ((*str)[i] != '\0' && (*str)[i] != ' ' && (*str)[i] != '\t' 
+        && (*str)[i] != '\v' && (*str)[i] != '\f' && ft_isalnum((*str)[i]))
+			i++;
+	    env_var = find_value(ft_substr(*str, 1, i - 1), env);
+        // if (ft_strncmp(env_var, "", ft_strlen(env_var)) == 0)
+        // {
+        //     free(env_var);
+        //     env_var = ft_substr(*str, 0, i);
+        // }
+	}
+    else
+        env_var = ft_strdup("$");
+	*str = *str + i;
+	return (join(final_quote, env_var));
+}
+
+void    expander_in_quotes_utils(token_t **token, char **env)
 {
     char    *str;
     int     i;
@@ -192,17 +223,37 @@ void    expander_in_quotes(token_t **token)
 
     str = (*token)->data;
     i = 0;
-	final_quote
+	final_quote = ft_strdup("");
     while (str[i] != '\0')
     {
         if (str[i] == '$')
 		{
 			tmp = ft_substr(str, 0, i);
-			ft_strjoin();
-			get_var(str);
+			final_quote = join(final_quote, tmp);
+            str = str + i;
+			final_quote = get_var(&str, final_quote, env);
+            i = -1;
 		}
+		i++;
     }
-    
+	tmp = ft_substr(str, 0, i);
+    final_quote = join(final_quote, tmp); 
+    (*token)->data = final_quote;
+}
+
+void	expander_in_quotes(token_t **tokens, char **env)
+{
+	token_t	*token;
+
+	token = *tokens;
+	while (token != NULL)
+	{
+		if (token->type == DQUOTE)
+		{
+			expander_in_quotes_utils(&token, env);
+		}
+		token = token->next;
+	}
 }
 
 int main(int argc, char **argv, char **envp)
@@ -223,7 +274,7 @@ int main(int argc, char **argv, char **envp)
             tokens = tokenize(line);
 			tok = tokens;
             expander(&tokens, env);
-
+			expander_in_quotes(&tokens, env);
             join_word(&tokens);
             rm_spaces(&tokens);
             while (tokens != NULL)
@@ -240,7 +291,6 @@ int main(int argc, char **argv, char **envp)
 }
 
 // tastks : 
-// add the expantion to vars inside DQUOTE
 
 // t_cmd   *parsing(token_t *kokens)
 // {

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/16 14:53:50 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/06/02 14:58:43 by ael-yamo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -32,7 +20,7 @@ typedef enum type_s
     WORD,
     QUOTE,
     DQUOTE,
-    SPACE,
+    SPAACE,
     GREAT,
     DGREAT,
     LESS,
@@ -53,6 +41,7 @@ typedef struct token_s
     struct token_s *prev;
 }token_t;
 
+
 typedef struct s_cmd
 {
 	char	*cmd_path;
@@ -61,27 +50,21 @@ typedef struct s_cmd
     int     infile;
     int     outfile;
 }	t_cmd;
-typedef struct env_outil_s
-{
-    char *data; //data after =
-    char *name; //name of env var
-    struct env_s *next_env; //next env
-}env_outil_t;
 
-typedef struct env_s
-{
-    env_outil_t envi; //the enviroment variable structure
-    int shlvl; //the increnented value in env
-} env_t;
 
-typedef struct s_gen
-{
-    env_t env;
-    int status;
-    char *read;
-}t_gen;
+// typedef struct env_s
+// {
+//     env_outil_t envi; //the enviroment variable structure
+//     int shlvl; //the increnented value in env
+// } env_t;
 
-t_gen envi;  //this global variable has the variables that we use inmultiple files at once
+// typedef struct s_gen
+// {
+//     env_t env;
+//     int status;
+//     char *read;
+// }t_gen;
+
 
 // typedef struct shell_s
 // {
@@ -99,7 +82,7 @@ void    rm_token(token_t **tokens);
 
 char **set_env(char **envp);
 void    handler(int sig);
-int handle_signals(void);
+int  handle_signals(void);
 int     terminal_settings(void);
 
 token_t *tokenize(char *line);
@@ -110,11 +93,16 @@ void	get_sympol_great(token_t **tokens, char **str);
 char *get_char(char **str, char *c, int increment);
 int	get_word(char **str);
 int	get_quote(char **str, char c);
-void    check_quotes(token_t *c);
+int    check_quotes(token_t *c);
 token_t *error_free(char *str, token_t *tokens);
 void	free_all(token_t *tokens);
 void    check_redirection(token_t *c);
 void    check_newline(token_t *c);
 int ctrld(void);
 void    check_operators(token_t *c);
+int is_other(token_t *c);
+t_list *env_create(char **envp);
+void   handle_spaces(token_t *c);
+void    check_pipe(token_t *c);
+void   handle_spaces2(token_t *c);
 #endif

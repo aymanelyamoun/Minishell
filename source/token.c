@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 19:19:26 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/06/02 15:14:48 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/06/03 13:03:54 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ void    get_token(token_t **tokens, char **str)
 			add_token_last(tokens, DQUOTE, ft_substr(*str, 0, get_quote(str, '\"')));
 		else if (**str == '\'')
 			add_token_last(tokens, QUOTE, ft_substr(*str, 0, get_quote(str, '\'')));
-		else if (**str == ' ' || **str == '\t' || **str == '\v' || **str == '\f') // IS SPACE!
-			add_token_last(tokens, SPACE, get_char(str, " ", 1));
+		else if (**str == ' ' || **str == '\t' || **str == '\v' || **str == '\f') // IS SPAACE!
+			add_token_last(tokens, SPAACE, get_char(str, " ", 1));
 		else if (**str == '>')
 			get_sympol_great(tokens, str);
 		else if (**str == '<')
@@ -100,14 +100,11 @@ void    get_token(token_t **tokens, char **str)
 
 token_t *tokenize(char *line)
 {
-    // int i;
     token_t *tokens = NULL;
     token_t *tmp;
 
-    // i = 0;
     get_token(&tokens, &line);
     tmp = tokens;
-	// int j = 0;
     while (tokens != NULL)
     {
         tokens = tokens->next;
