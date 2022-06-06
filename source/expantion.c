@@ -7,7 +7,6 @@
 // cerating the expander
 // creating the minimizer
 
-
 char    *find_value(char *str, char **env)
 {
     int i;
@@ -28,6 +27,7 @@ char    *find_value(char *str, char **env)
     }
     return (ft_strdup(""));
 }
+
 
 char	*rm_quotes(char *str, char c)
 {
@@ -256,50 +256,50 @@ void	expander_in_quotes(token_t **tokens, char **env)
 	}
 }
 
-int main(int argc, char **argv, char **envp)
-{
-    char **env;
-    char *line;
-    token_t *tokens;
-    token_t *tok;
-	t_cmd	*cmds;
+// int main(int argc, char **argv, char **envp)
+// {
+//     char **env;
+//     char *line;
+//     token_t *tokens;
+//     token_t *tok;
+// 	t_cmd	*cmds;
     
-	int	pipes;
-	int	i = 0;
+// 	int	pipes;
+// 	int	i = 0;
 
-    // if(argc != 1)
-    //     return (1);
-    env = set_env(envp);
-    while (1)
-    {
-        line = readline("ENTER PROMPT   ");
-        if (line != NULL)
-        {
-            add_history(line);
-            tokens = tokenize(line);
-            expander(&tokens, env);
-			expander_in_quotes(&tokens, env);
-            join_word(&tokens);
-            rm_spaces(&tokens);
-			pipes = count_pipes(tokens) + 1;
-			cmds = creat_cmds(&tokens);
-			i = 0;
-			while (i <= pipes)
-			{
-                tok = cmds[i].tokens_cmd;
-				while (tok != NULL)
-				{
-					printf("from main %d : -- %d ---> %s\n", i, tok->type, tok->data);
-                    tok = tok->next;
-				}
-				i++;
-			}
-        }
-		else
-			exit(0); //last status
-    }
-    return (0);
-}
+//     // if(argc != 1)
+//     //     return (1);
+//     env = set_env(envp);
+//     while (1)
+//     {
+//         line = readline("ENTER PROMPT   ");
+//         if (line != NULL)
+//         {
+//             add_history(line);
+//             tokens = tokenize(line);
+//             expander(&tokens, env);
+// 			expander_in_quotes(&tokens, env);
+//             join_word(&tokens);
+//             rm_spaces(&tokens);
+// 			pipes = count_pipes(tokens) + 1;
+// 			cmds = creat_cmds(&tokens);
+// 			i = 0;
+// 			while (i <= pipes)
+// 			{
+//                 tok = cmds[i].tokens_cmd;
+// 				while (tok != NULL)
+// 				{
+// 					printf("from main %d : -- %d ---> %s\n", i, tok->type, tok->data);
+//                     tok = tok->next;
+// 				}
+// 				i++;
+// 			}
+//         }
+// 		else
+// 			exit(0); //last status
+//     }
+//     return (0);
+// }
 
 // t_cmd   *parsing(token_t *kokens)
 // {

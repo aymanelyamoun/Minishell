@@ -60,3 +60,35 @@ t_cmd   *creat_cmds(token_t **tokens)
 	}
     return (creat_cmds_utils(tokens, &cmds));
 }
+
+
+
+int	commands(char *line)
+{
+    if (!ft_strncmp("echo", line, 4))
+		return (YES);
+	if (!ft_strncmp("export ", line, 7))
+		return (YES);
+	if (!ft_strncmp("pwd", line, 3) && ft_strlen(line) == 3)
+		return (YES);
+	if (!ft_strncmp("unset ", line, 6))
+        return (YES);
+	if (!ft_strncmp("env", line, 3))
+		return (YES);
+	if (!ft_strncmp("exit", line, 4) && ft_strlen(line) == 4)
+		return (YES);
+	if (!ft_strncmp("cd ", line, 3))
+		return (YES);
+	return (NO);
+}
+
+void	go_commands(t_list *env, char *line)
+{
+	if (!ft_strncmp("pwd", line, 3) && ft_strlen(line) == 3)
+		ft_pwd();
+	// if (!ft_strncmp("cd ", line, 3))
+	// 	ft_cd(env, &line);
+	if (!ft_strncmp("env", line, 3))
+		ft_env(env);
+	return ;
+}
