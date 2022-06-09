@@ -9,6 +9,7 @@ t_list *env_create(char **envp)
     char *s;
     int index;
 
+
     index = 1;
     if(!(**envp) || !(envp) || !(envp[0]))
     {
@@ -28,26 +29,26 @@ t_list *env_create(char **envp)
     return (head);
 }
 
-// char **set_env(char **envp)
-// {
-//     int index;
-//     char **tmp;
+char **set_env(char **envp)
+{
+    int index;
+    char **tmp;
 
-//     if(envp)
-//     {
-//         index = 0;
-//         while(envp[index])
-//             index++;
-//     }
-//     tmp = malloc(sizeof(char *) * (index + 1));
-//     if (!tmp)
-//         return (NULL);
-//     index = 0;
-//     while(envp[index])
-//     {
-//         tmp[index] = ft_strdup(envp[index]);
-//         index++;
-//     }
-//     tmp[index] = NULL;
-//     return (tmp);
-// // }
+    if(envp)
+    {
+        index = 0;
+        while(envp[index])
+            index++;
+    }
+    tmp = malloc(sizeof(char *) * (index + 1));
+    if (!tmp)
+        return (NULL);
+    index = 0;
+    while(envp[index])
+    {
+        tmp[index] = ft_strdup(envp[index]);
+        index++;
+    }
+    tmp[index] = NULL;
+    return (tmp);
+}

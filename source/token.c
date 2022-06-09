@@ -107,7 +107,6 @@ token_t *tokenize(char *line)
     tmp = tokens;
     while (tokens != NULL)
     {
-		//printf("type: %d ... data: %s\n",tokens->type, tokens->data);
         tokens = tokens->next;
     }
     return (tmp);
