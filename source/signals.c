@@ -46,11 +46,11 @@ void    free_env(t_list **env)
     env = NULL;
 }
 
-int ctrld(t_list **env)
+int ctrld(void)
 {
-    free_env(env);
+    //free_env(env);
     rl_on_new_line();
     rl_redisplay();
     ft_putstr_fd("exit\n", 2);
-    return (1);
+    exit(1);
 }
