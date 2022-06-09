@@ -1,14 +1,14 @@
 #include "../includes/minishell.h"
 
-int    check_quotes(token_t *tmp)
+int    check_quotes(token_t *tmp) //prbleeeeeeeem
 {
     size_t index;
     static int squote;
     static int dquote;
     token_t *c = tmp;
 
-    index = 0;
     squote = 0;
+    index = 0;
     dquote = 0;
     while(c)
     {
@@ -24,7 +24,7 @@ int    check_quotes(token_t *tmp)
         c = c->next;
     }
     //printf(" dquote : %d\n", dquote);
-    squote = squote % 2;
+     squote = squote % 2;
     dquote = dquote % 2;
     if(squote != 0 || dquote != 0)
     {
