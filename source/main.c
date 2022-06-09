@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/16 14:28:41 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/06/02 21:47:07 by ael-yamo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
@@ -16,27 +5,25 @@ t_list *env;
 
 // int main(int argc, char **argv, char **envp)
 // {
-//     // char **envir;
 //     char *line;
 //     token_t *tokens;
-//     (void)envp;
-//     (void)argv;
+
 //     if(argc != 1)
 //         return (1);
 //     env = env_create(envp);
-//     // while(env)
-//     // {
-//     //     printf("%s\n", env->content);
-//     //     env = env->next;
-//     // }
 //     handle_signals();
 //     while (1)
 //     {
 //         line = readline("Minishell: ");
-//         if (line != NULL)
+//         if(!line)
+//             ctrld(&env); //there is a seg fault here
+//         else if(line != NULL && commands(line) == YES)
+//             go_commands(env, line);
+//         else
 //         {
 //             add_history(line);
 //             tokens = tokenize(line);
+//             //ft_echo(argc, argv);
 //             if(check_quotes(tokens) == 1)
 //             {
 //                 check_pipe(tokens);
@@ -45,9 +32,8 @@ t_list *env;
 //             else
 //                 continue ;
 //         }
-// 		else
-// 			exit(0); //last status
 //     }
 //     return (0);
 // }
+    
 
