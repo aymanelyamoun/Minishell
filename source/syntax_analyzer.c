@@ -23,13 +23,8 @@ int    check_quotes(token_t *tmp) //prbleeeeeeeem
         index = 0;
         c = c->next;
     }
-<<<<<<< HEAD
     //printf(" dquote : %d\n", dquote);
      squote = squote % 2;
-=======
-    printf(" dquote : %d\n", dquote);
-    squote = squote % 2;
->>>>>>> 6f8da807c76e5850dafb8566bdb77e20ae64b92f
     dquote = dquote % 2;
     if(squote != 0 || dquote != 0)
     {
