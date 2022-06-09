@@ -59,7 +59,6 @@ t_cmd   *creat_cmds(token_t **tokens)
 		return (cmds);
 	}
     return (creat_cmds_utils(tokens, &cmds));
-<<<<<<< HEAD
 }
 
 
@@ -117,6 +116,4 @@ int	ft_strcmp(char *s1, char *s2)
 	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
 		i++;
 	return (s1[i] - s2[i]);
-=======
->>>>>>> 6f8da807c76e5850dafb8566bdb77e20ae64b92f
 }

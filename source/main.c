@@ -1,20 +1,8 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/16 14:28:41 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/06/02 21:47:07 by ael-yamo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 t_gen *gen;
 
-<<<<<<< HEAD
 int main(int argc, char **argv, char **envp)
 {
     char *line;
@@ -52,42 +40,4 @@ int main(int argc, char **argv, char **envp)
     return (0);
 }
     
-=======
-// int main(int argc, char **argv, char **envp)
-// {
-//     // char **envir;
-//     char *line;
-//     token_t *tokens;
-//     (void)envp;
-//     (void)argv;
-//     if(argc != 1)
-//         return (1);
-//     env = env_create(envp);
-//     // while(env)
-//     // {
-//     //     printf("%s\n", env->content);
-//     //     env = env->next;
-//     // }
-//     handle_signals();
-//     while (1)
-//     {
-//         line = readline("Minishell: ");
-//         if (line != NULL)
-//         {
-//             add_history(line);
-//             tokens = tokenize(line);
-//             if(check_quotes(tokens) == 1)
-//             {
-//                 check_pipe(tokens);
-//                 check_newline(tokens);
-//             }
-//             else
-//                 continue ;
-//         }
-// 		else
-// 			exit(0); //last status
-//     }
-//     return (0);
-// }
->>>>>>> 6f8da807c76e5850dafb8566bdb77e20ae64b92f
 
