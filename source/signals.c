@@ -23,7 +23,7 @@ void    handler(int sig)
     if(sig == SIGINT)
     {
         ft_putstr_fd("\n", 2);
-        rl_replace_line("", 1);
+        // rl_replace_line("", 1);
         rl_on_new_line();
     }
     rl_on_new_line();
