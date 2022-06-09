@@ -119,7 +119,7 @@ char *join_mix(token_t *token1, token_t *token2);
 void join_word(token_t **tokens);
 void rm_token(token_t **tokens);
 void rm_spaces(token_t **tokens);
-=======
+// =======
 void	free_all(token_t *tokens);
 void    check_redirection(token_t *c);
 void    check_newline(token_t *c);
