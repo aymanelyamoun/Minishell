@@ -14,6 +14,10 @@
 #include <signal.h>
 #include "../includes/libft/libft.h"
 
+#define YES 1
+#define NO 0
+#define PATH_MAX 4096
+
 typedef enum type_s
 {
     WORD,
@@ -27,10 +31,6 @@ typedef enum type_s
     PIPE,
     DOLLAR
 } type_t;
-
-
-//    WORD,
-//the linked list to store the tokens
 
 typedef struct token_s
 {
@@ -57,26 +57,6 @@ typedef struct s_gen
     char **envp;
 
 } t_gen;
-
-
-// typedef struct env_s
-// {
-//     env_outil_t envi; //the enviroment variable structure
-//     int shlvl; //the increnented value in env
-// } env_t;
-
-// typedef struct s_gen
-// {
-//     env_t env;
-//     int status;
-//     char *read;
-// }t_gen;
-
-
-// typedef struct shell_s
-// {
-// }
-   
 
 /*********************************/
 /********** TOKENS LIST **********/
@@ -119,7 +99,7 @@ char *join_mix(token_t *token1, token_t *token2);
 void join_word(token_t **tokens);
 void rm_token(token_t **tokens);
 void rm_spaces(token_t **tokens);
-// =======
+
 void	free_all(token_t *tokens);
 void    check_redirection(token_t *c);
 void    check_newline(token_t *c);
@@ -135,6 +115,7 @@ void   handle_spaces2(token_t *c);
 /*********************************/
 /********* CMD MANAGMENT *********/
 /*********************************/
+
 int count_pipes(token_t *tokens);
 static t_cmd *creat_cmds_utils(token_t **tokens, t_cmd **cmds);
 t_cmd *creat_cmds(token_t **tokens);
@@ -160,6 +141,5 @@ void ft_env(t_list *env);
 void free_env(t_list **env);
 int	array_len(char **array);
 int	ft_strcmp(char *s1, char *s2);
-
 
 #endif
