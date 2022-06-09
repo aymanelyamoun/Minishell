@@ -29,6 +29,8 @@ static t_cmd *creat_cmds_utils(token_t **tokens, t_cmd **cmds)
 		{
 			rm_token(&(tmp->next));
 			(*cmds)[i].tokens_cmd = new_head;
+			(*cmds)[i].infile = -1;
+			(*cmds)[i].outfile = -1;
 			new_head = tmp->next;
 			new_head->prev = NULL;
 			tmp->next = NULL;
@@ -39,6 +41,8 @@ static t_cmd *creat_cmds_utils(token_t **tokens, t_cmd **cmds)
 		    tmp = tmp->next;
 	}
     (*cmds)[i].tokens_cmd = new_head;
+	(*cmds)[i].infile = -1;
+	(*cmds)[i].outfile = -1;
 	return (*cmds);
 }
 
@@ -56,6 +60,8 @@ t_cmd   *creat_cmds(token_t **tokens)
 	if (pipes == 0)
 	{
 		cmds[i].tokens_cmd = *tokens;
+		cmds[i].infile = -1;
+		cmds[i].outfile = -1;
 		return (cmds);
 	}
     return (creat_cmds_utils(tokens, &cmds));
@@ -63,57 +69,32 @@ t_cmd   *creat_cmds(token_t **tokens)
 
 
 
-int	commands(char **line)
-{
-    if (!ft_strcmp("echo", line[0]))
-		return (YES);
-	if (!ft_strcmp("export ", line[0]))
-		return (YES);
-	if (!ft_strcmp("pwd", line[0]) && ft_strlen(line[0]) == 3)
-		return (YES);
-	if (!ft_strcmp("unset ", line[0]))
-        return (YES);
-	if (!ft_strcmp("env", line[0]))
-		return (YES);
-	if (!ft_strcmp("exit", line[0]) && ft_strlen(line[0]) == 4)
-		return (YES);
-	if (!ft_strcmp("cd ", line[0]))
-		return (YES);
-	return (NO);
-}
+// int	commands(char *line)
+// {
+//     if (!ft_strncmp("echo", line, 4))
+// 		return (YES);
+// 	if (!ft_strncmp("export ", line, 7))
+// 		return (YES);
+// 	if (!ft_strncmp("pwd", line, 3) && ft_strlen(line) == 3)
+// 		return (YES);
+// 	if (!ft_strncmp("unset ", line, 6))
+//         return (YES);
+// 	if (!ft_strncmp("env", line, 3))
+// 		return (YES);
+// 	if (!ft_strncmp("exit", line, 4) && ft_strlen(line) == 4)
+// 		return (YES);
+// 	if (!ft_strncmp("cd ", line, 3))
+// 		return (YES);
+// 	return (NO);
+// }
 
-void	go_commands(t_gen *gen, char **line)
-{
-	
-	if (!ft_strcmp("env", line[0]))
-		ft_env(gen->env);
-	if (!ft_strcmp("pwd", line[0]))
-		ft_pwd(); //it does not print the pwd
-	if (!ft_strcmp("echo", line[0]))
-		ft_echo(gen, line);
-	if (!ft_strncmp("cd ", line[0], 3))
-		ft_cd(gen->env, line[1]); //what if it has alot of spaces?
-	
-	
-	return ;
-}
-
-int	array_len(char **array)
-{
-	int	index;
-
-	index = 0;
-	while (array[index + 1])
-		index++ ;
-	return (index);
-}
-
-int	ft_strcmp(char *s1, char *s2)
-{
-	int i;
-
-	i = 0;
-	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
-		i++;
-	return (s1[i] - s2[i]);
-}
+// void	go_commands(t_list *env, char *line)
+// {
+// 	if (!ft_strncmp("pwd", line, 3) && ft_strlen(line) == 3)
+// 		ft_pwd();
+// 	// if (!ft_strncmp("cd ", line, 3))
+// 	// 	ft_cd(env, &line);
+// 	if (!ft_strncmp("env", line, 3))
+// 		ft_env(env);
+// 	return ;
+// }

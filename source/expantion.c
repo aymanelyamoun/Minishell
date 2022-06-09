@@ -7,13 +7,11 @@
 // cerating the expander
 // creating the minimizer
 
-char    *find_value(char *str, char **env)
+char    *find_value(char *str, t_list *env_l)
 {
     int i;
-    t_list  *env_l;
     char    *tmp;
     
-    env_l = env_create(env);
     while (env_l != NULL)
     {
         tmp = ft_strjoin(str, "=");
@@ -135,7 +133,7 @@ void    change_data(token_t **tokens, char *data)
     (*tokens)->data = data;
     (*tokens)->type = WORD;
 }
-void    play_with_tokens(token_t **tokens, char *str, char **env)
+void    play_with_tokens(token_t **tokens, char *str, t_list *env)
 {
     char    *env_var;
 
@@ -157,7 +155,7 @@ void    play_with_tokens(token_t **tokens, char *str, char **env)
 
 }
 
-void    expander(token_t **tokens, char **env)
+void    expander(token_t **tokens, t_list *env_l)
 {
     token_t *tmp;
     // char    **env = NULL;
@@ -169,7 +167,7 @@ void    expander(token_t **tokens, char **env)
         {
             if (tmp->next != NULL && tmp->next->type != SPAACE && 
             (tmp->next->type == WORD || tmp->next->type == DQUOTE))
-                play_with_tokens(&tmp, ft_strdup(tmp->next->data), env);
+                play_with_tokens(&tmp, ft_strdup(tmp->next->data), env_l);
             if (tmp->next != NULL && tmp->next->type == SPAACE)
                 tmp->type = WORD;
         }
@@ -189,7 +187,7 @@ char	*join(char *final_quote, char *tmp)
 	return (final_quote);
 }
 
-char	*get_var(char **str, char *final_quote, char **env)
+char	*get_var(char **str, char *final_quote, t_list *env)
 {
 	int		i;
 	char	*env_var;
@@ -214,7 +212,7 @@ char	*get_var(char **str, char *final_quote, char **env)
 	return (join(final_quote, env_var));
 }
 
-void    expander_in_quotes_utils(token_t **token, char **env)
+void    expander_in_quotes_utils(token_t **token, t_list *env)
 {
     char    *str;
     int     i;
@@ -241,7 +239,7 @@ void    expander_in_quotes_utils(token_t **token, char **env)
     (*token)->data = final_quote;
 }
 
-void	expander_in_quotes(token_t **tokens, char **env)
+void	expander_in_quotes(token_t **tokens, t_list *env)
 {
 	token_t	*token;
 
@@ -256,50 +254,57 @@ void	expander_in_quotes(token_t **tokens, char **env)
 	}
 }
 
-// int main(int argc, char **argv, char **envp)
-// {
-//     char **env;
-//     char *line;
-//     token_t *tokens;
-//     token_t *tok;
-// 	t_cmd	*cmds;
+int main(int argc, char **argv, char **envp)
+{
+    t_list *env_l;
+    char *line;
+    token_t *tokens;
+    token_t *tok;
+	t_cmd	*cmds;
     
-// 	int	pipes;
-// 	int	i = 0;
+	int	pipes;
+	int	i = 0;
 
-//     // if(argc != 1)
-//     //     return (1);
-//     env = set_env(envp);
-//     while (1)
-//     {
-//         line = readline("ENTER PROMPT   ");
-//         if (line != NULL)
-//         {
-//             add_history(line);
-//             tokens = tokenize(line);
-//             expander(&tokens, env);
-// 			expander_in_quotes(&tokens, env);
-//             join_word(&tokens);
-//             rm_spaces(&tokens);
-// 			pipes = count_pipes(tokens) + 1;
-// 			cmds = creat_cmds(&tokens);
-// 			i = 0;
-// 			while (i <= pipes)
-// 			{
-//                 tok = cmds[i].tokens_cmd;
-// 				while (tok != NULL)
-// 				{
-// 					printf("from main %d : -- %d ---> %s\n", i, tok->type, tok->data);
-//                     tok = tok->next;
-// 				}
-// 				i++;
-// 			}
-//         }
-// 		else
-// 			exit(0); //last status
-//     }
-//     return (0);
-// }
+    // if(argc != 1)
+    //     return (1);
+    env_l = env_create(envp);
+    // env = set_env(envp);
+    while (1)
+    {
+        line = readline("ENTER PROMPT   ");
+        if (line != NULL)
+        {
+            add_history(line);
+            tokens = tokenize(line);
+            expander(&tokens, env_l);
+			expander_in_quotes(&tokens, env_l);
+            join_word(&tokens);
+            rm_spaces(&tokens);
+			pipes = count_pipes(tokens);
+			cmds = creat_cmds(&tokens);
+            check_file_direcitons(&cmds, pipes);
+            rm_redirecitons(&cmds, pipes);
+			i = 0;
+			while (i <= pipes)
+			{
+                tok = cmds[i].tokens_cmd;
+                printf("---infile: %d --- outfile: %d\n", cmds[i].infile, cmds[i].outfile);
+				while (tok != NULL)
+				{
+					printf("from main %d : -- %d ---> %s \n", i, tok->type, tok->data);
+                    tok = tok->next;
+				}
+				i++;
+			}
+        }
+		else
+        {
+            printf("\ni got a NULL\n");
+			exit(0); //last status
+        }
+    }
+    return (0);
+}
 
 // t_cmd   *parsing(token_t *kokens)
 // {
