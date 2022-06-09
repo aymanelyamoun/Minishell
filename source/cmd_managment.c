@@ -60,6 +60,8 @@ t_cmd   *creat_cmds(token_t **tokens)
 	if (pipes == 0)
 	{
 		cmds[i].tokens_cmd = *tokens;
+		cmds[i].infile = -1;
+		cmds[i].outfile = -1;
 		return (cmds);
 	}
     return (creat_cmds_utils(tokens, &cmds));

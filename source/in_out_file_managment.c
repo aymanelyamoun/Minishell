@@ -4,7 +4,7 @@
 int    open_file(token_t **tokens, int type)
 {
     int fd;
-	
+
 	if (type == GREAT)
     	fd = open((*tokens)->next->data, O_RDWR | O_CREAT, 0777);
 	else if (type == LESS)
@@ -15,7 +15,8 @@ int    open_file(token_t **tokens, int type)
 	{
 		fd = heredoc(ft_strdup((*tokens)->next->data));
 	}
-	printf("the created file : %d\n", fd);
+	if (fd < 0)
+		perror("the error");
 	// close(fd);
 	return (fd);
 }
@@ -77,9 +78,10 @@ void    check_file_direcitons(t_cmd **cmds, int pipes)
 				if ((*cmds)[i].infile != -1)
 				{
 					if (close((*cmds)[i].infile) != -1)
-						printf("i am %d 1 just closed %d\n", i, (*cmds)[i].infile);
-					else
+					{
+						// puts("i failed to close");
 						exit(3);
+					}
 				}
 				(*cmds)[i].infile = fd;
 			}
@@ -88,10 +90,11 @@ void    check_file_direcitons(t_cmd **cmds, int pipes)
                 fd = open_file(&tokens, tokens->type);
 				if ((*cmds)[i].outfile != -1)
 				{
-					if (close((*cmds)[i].outfile) != -1)
-						printf("i am %d 2 just closed %d\n", i, (*cmds)[i].outfile);
-					else
+					if (close((*cmds)[i].outfile) == -1)
+					{
+						// puts("i failed to close");
 						exit(3);
+					}
 				}
 				(*cmds)[i].outfile = fd;
 			}

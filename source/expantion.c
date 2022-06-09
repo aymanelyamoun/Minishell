@@ -288,7 +288,7 @@ int main(int argc, char **argv, char **envp)
 			while (i <= pipes)
 			{
                 tok = cmds[i].tokens_cmd;
-                // printf("---infile: %d --- outfile: %d\n", cmds[i].infile, cmds[i].outfile);
+                printf("---infile: %d --- outfile: %d\n", cmds[i].infile, cmds[i].outfile);
 				while (tok != NULL)
 				{
 					printf("from main %d : -- %d ---> %s \n", i, tok->type, tok->data);
