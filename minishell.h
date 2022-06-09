@@ -100,18 +100,6 @@ void join_word(token_t **tokens);
 void rm_token(token_t **tokens);
 void rm_spaces(token_t **tokens);
 
-void	free_all(token_t *tokens);
-void    check_redirection(token_t *c);
-void    check_newline(token_t *c);
-int ctrld(void);
-void    check_operators(token_t *c);
-int is_other(token_t *c);
-t_list *env_create(char **envp);
-void   handle_spaces(token_t *c);
-void    check_pipe(token_t *c);
-void   handle_spaces2(token_t *c);
-
-
 /*********************************/
 /********* CMD MANAGMENT *********/
 /*********************************/
@@ -119,14 +107,6 @@ void   handle_spaces2(token_t *c);
 int count_pipes(token_t *tokens);
 static t_cmd *creat_cmds_utils(token_t **tokens, t_cmd **cmds);
 t_cmd *creat_cmds(token_t **tokens);
-
-/*********************************/
-/******** FILE MANAGMENT *********/
-/*********************************/
-
-int heredoc(char *limiter);
-void check_file_direcitons(t_cmd **cmds, int pipes);
-void rm_redirecitons(t_cmd **cmds, int pipes);
 
 /*********************************/
 /*********Builtins****************/
