@@ -12,6 +12,7 @@
 #include "../includes/minishell.h"
 #include <termios.h>
 #include <signal.h>
+#include <fcntl.h>
 #include "../includes/libft/libft.h"
 
 #define YES 1
@@ -94,7 +95,7 @@ void handle_spaces2(token_t *c);
 // int ctrld(void);
 
 ////////////////////////////////////////////////
-char *find_value(char *str, char **env);
+char    *find_value(char *str, t_list *env_l);
 char *join_mix(token_t *token1, token_t *token2);
 void join_word(token_t **tokens);
 void rm_token(token_t **tokens);
