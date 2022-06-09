@@ -102,7 +102,6 @@ int get_word(char **str);
 int get_quote(char **str, char c);
 int check_quotes(token_t *c);
 token_t *error_free(char *str, token_t *tokens);
-<<<<<<< HEAD
 void free_all(token_t *tokens);
 void check_redirection(token_t *c);
 void check_newline(token_t *c);
@@ -131,13 +130,11 @@ t_list *env_create(char **envp);
 void   handle_spaces(token_t *c);
 void    check_pipe(token_t *c);
 void   handle_spaces2(token_t *c);
->>>>>>> 6f8da807c76e5850dafb8566bdb77e20ae64b92f
+
 
 /*********************************/
 /********* CMD MANAGMENT *********/
 /*********************************/
-
-<<<<<<< HEAD
 int count_pipes(token_t *tokens);
 static t_cmd *creat_cmds_utils(token_t **tokens, t_cmd **cmds);
 t_cmd *creat_cmds(token_t **tokens);
@@ -155,10 +152,6 @@ void ft_env(t_list *env);
 void free_env(t_list **env);
 int	array_len(char **array);
 int	ft_strcmp(char *s1, char *s2);
-=======
-int				count_pipes(token_t *tokens);
-static t_cmd	*creat_cmds_utils(token_t **tokens, t_cmd **cmds);
-t_cmd			*creat_cmds(token_t **tokens);
->>>>>>> 6f8da807c76e5850dafb8566bdb77e20ae64b92f
+
 
 #endif
