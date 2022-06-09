@@ -132,7 +132,7 @@ void rm_redirecitons(t_cmd **cmds, int pipes);
 /*********Builtins****************/
 /*********************************/
 
-int ft_pwd(void);
+char *ft_pwd(t_gen *gen);
 void ft_echo(t_gen *gen, char **str);
 int is_flag(char *str);
 int commands(char **line);
@@ -141,5 +141,10 @@ void ft_env(t_list *env);
 void free_env(t_list **env);
 int	array_len(char **array);
 int	ft_strcmp(char *s1, char *s2);
+void	print_cwd(void);
+void	go_oldpwd(t_gen *gen);
+int    ft_cd(t_gen *gen, char *path);
+char *change_env(t_gen *gen, char *new);
 
+void change_env2(t_gen *gen);
 #endif

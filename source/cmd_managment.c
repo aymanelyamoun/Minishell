@@ -77,7 +77,7 @@ int	commands(char **line)
 		return (YES);
 	if (!ft_strcmp("exit", line[0]) && ft_strlen(line[0]) == 4)
 		return (YES);
-	if (!ft_strcmp("cd ", line[0]))
+	if (!ft_strcmp("cd", line[0]))
 		return (YES);
 	return (NO);
 }
@@ -88,13 +88,11 @@ void	go_commands(t_gen *gen, char **line)
 	if (!ft_strcmp("env", line[0]))
 		ft_env(gen->env);
 	if (!ft_strcmp("pwd", line[0]))
-		ft_pwd(); //it does not print the pwd
+		printf("%s",ft_pwd(gen)); //it does not print the pwd
 	if (!ft_strcmp("echo", line[0]))
 		ft_echo(gen, line);
-	if (!ft_strncmp("cd ", line[0], 3))
-		ft_cd(gen->env, line[1]); //what if it has alot of spaces?
-	
-	
+	if (!ft_strcmp("cd", line[0]))
+		ft_cd(gen, line[1]); //what if it has alot of spaces?
 	return ;
 }
 
