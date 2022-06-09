@@ -140,6 +140,14 @@ static t_cmd *creat_cmds_utils(token_t **tokens, t_cmd **cmds);
 t_cmd *creat_cmds(token_t **tokens);
 
 /*********************************/
+/******** FILE MANAGMENT *********/
+/*********************************/
+
+int heredoc(char *limiter);
+void check_file_direcitons(t_cmd **cmds, int pipes);
+void rm_redirecitons(t_cmd **cmds, int pipes);
+
+/*********************************/
 /*********Builtins****************/
 /*********************************/
 
