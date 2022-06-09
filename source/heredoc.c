@@ -22,7 +22,9 @@ int heredoc(char *limiter)
     char	*line;
 	int		fd;
 
-	fd = open(".heredoc", O_RDWR | O_CREAT | O_TRUNC);
+	fd = open("heredoc",  O_CREAT | O_RDWR | O_TRUNC);
+	if (fd < 0)
+		exit(3);
     line = readline("> ");
     while (line != NULL && ft_strcmp(line, limiter))
     {

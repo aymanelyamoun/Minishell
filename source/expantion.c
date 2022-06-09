@@ -283,14 +283,15 @@ int main(int argc, char **argv, char **envp)
 			pipes = count_pipes(tokens);
 			cmds = creat_cmds(&tokens);
             check_file_direcitons(&cmds, pipes);
+            rm_redirecitons(&cmds, pipes);
 			i = 0;
-            // printf(":::%d\n",pipes);
 			while (i <= pipes)
 			{
                 tok = cmds[i].tokens_cmd;
+                // printf("---infile: %d --- outfile: %d\n", cmds[i].infile, cmds[i].outfile);
 				while (tok != NULL)
 				{
-					printf("from main %d : -- %d ---> %s\n", i, tok->type, tok->data);
+					printf("from main %d : -- %d ---> %s \n", i, tok->type, tok->data);
                     tok = tok->next;
 				}
 				i++;
@@ -298,7 +299,7 @@ int main(int argc, char **argv, char **envp)
         }
 		else
         {
-            printf("i got a NULL\n");
+            printf("\ni got a NULL\n");
 			exit(0); //last status
         }
     }

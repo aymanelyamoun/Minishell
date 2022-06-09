@@ -15,17 +15,48 @@ int    open_file(token_t **tokens, int type)
 	{
 		fd = heredoc(ft_strdup((*tokens)->next->data));
 	}
-	close(fd);
+	printf("the created file : %d\n", fd);
+	// close(fd);
 	return (fd);
 }
 
-void	check_file_direc_rm_token(token_t **tokens, t_cmd **cmds, int i)
+// void	check_file_direc_rm_token(token_t **tokens, t_cmd **cmds, int i)
+// {
+// 	if ((*tokens)->prev == NULL)
+// 		(*cmds)->tokens_cmd = (*tokens)->next->next;
+// 	rm_token(&(*tokens)->next);
+// 	rm_token(tokens);
+// 		// printf("--- %s\n", (*tokens)->next->data);
+// }
+void	rm_redirecitons(t_cmd **cmds, int pipes)
 {
-	if ((*tokens)->prev == NULL)
-		(*cmds)->tokens_cmd = (*tokens)->next->next;
-	rm_token(&(*tokens)->next);
-	rm_token(tokens);
-		// printf("--- %s\n", (*tokens)->next->data);
+	int	i;
+	token_t	*tmp;
+
+	i = 0;
+	while(i <= pipes)
+	{
+		while (((*cmds)[i].tokens_cmd) != NULL 
+		&& ((((*cmds)[i].tokens_cmd))->type == LESS || ((*cmds)[i].tokens_cmd)->type == GREAT
+		|| (((*cmds)[i].tokens_cmd))->type == DLESS || ((*cmds)[i].tokens_cmd)->type == DGREAT))
+		{
+			rm_token(&((*cmds)[i].tokens_cmd));
+			rm_token(&((*cmds)[i].tokens_cmd));
+		}
+		tmp = ((*cmds)[i].tokens_cmd);
+		while (tmp != NULL)
+		{
+			if ((tmp->next != NULL) && (tmp->next->type == LESS || tmp->next->type == GREAT
+			|| tmp->next->type == DLESS || tmp->next->type == DGREAT))
+			{
+				rm_token(&(tmp->next));
+				rm_token(&(tmp->next));
+				continue;
+			}
+			tmp = tmp->next;
+		}
+		i++;
+	}
 }
 
 void    check_file_direcitons(t_cmd **cmds, int pipes)
@@ -44,30 +75,28 @@ void    check_file_direcitons(t_cmd **cmds, int pipes)
 			{
                 fd = open_file(&tokens, tokens->type);
 				if ((*cmds)[i].infile != -1)
-					close((*cmds)[i].infile);
+				{
+					if (close((*cmds)[i].infile) != -1)
+						printf("i am %d 1 just closed %d\n", i, (*cmds)[i].infile);
+					else
+						exit(3);
+				}
 				(*cmds)[i].infile = fd;
-					// rm_token(&tokens);
-					// rm_token(&tokens);
-				check_file_direc_rm_token(&tokens, cmds, i);
-				continue;
-				// printf("--- %s\n", (tokens)->data);
 			}
 			else if (tokens->type == GREAT || tokens->type == DGREAT)
 			{
                 fd = open_file(&tokens, tokens->type);
 				if ((*cmds)[i].outfile != -1)
-					close((*cmds)[i].outfile);
+				{
+					if (close((*cmds)[i].outfile) != -1)
+						printf("i am %d 2 just closed %d\n", i, (*cmds)[i].outfile);
+					else
+						exit(3);
+				}
 				(*cmds)[i].outfile = fd;
-					// rm_token(&tokens);
-					// rm_token(&tokens);
-				// printf("hi\n");
-				check_file_direc_rm_token(&tokens, cmds, i);
-				continue;
-				// printf("--- %s\n", (tokens)->data);
 			}
 			tokens = tokens->next;
         }
         i++;
     }
-    
 }

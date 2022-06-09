@@ -107,7 +107,8 @@ t_cmd *creat_cmds(token_t **tokens);
 /*********************************/
 
 int heredoc(char *limiter);
-void    check_file_direcitons(t_cmd **cmds, int pipes);
+void check_file_direcitons(t_cmd **cmds, int pipes);
+void rm_redirecitons(t_cmd **cmds, int pipes);
 
 /*********************************/
 /*********Builtins****************/
