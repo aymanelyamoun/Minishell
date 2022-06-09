@@ -23,7 +23,7 @@ void    handler(int sig)
     if(sig == SIGINT)
     {
         ft_putstr_fd("\n", 2);
-        rl_replace_line("", 1);
+        // rl_replace_line("", 1);
         rl_on_new_line();
     }
     rl_on_new_line();
@@ -46,11 +46,11 @@ void    free_env(t_list **env)
     env = NULL;
 }
 
-int ctrld(void)
+int ctrld(t_list **env)
 {
-    //free_env(env);
+    free_env(env);
     rl_on_new_line();
     rl_redisplay();
     ft_putstr_fd("exit\n", 2);
-    exit(1);
+    return (1);
 }
