@@ -15,7 +15,6 @@ int    open_file(token_t **tokens, int type)
 	{
 		fd = heredoc();
 	}
-	close(fd);
 	return (fd);
 }
 

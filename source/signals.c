@@ -29,6 +29,7 @@ void    handler(int sig)
     rl_on_new_line();
     rl_redisplay();
 }
+<<<<<<< HEAD
 
 void    free_env(t_list **env)
 {
@@ -54,3 +55,12 @@ int ctrld(void)
     ft_putstr_fd("exit\n", 2);
     exit(1);
 }
+=======
+// int ctrld(void)
+// {
+//     rl_on_new_line();
+//     rl_redisplay();
+//     //ft_putstr_fd("quit\n", 2);
+//     return (1);
+// }
+>>>>>>> 6f8da807c76e5850dafb8566bdb77e20ae64b92f

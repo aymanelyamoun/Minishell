@@ -14,10 +14,6 @@
 #include <signal.h>
 #include "../includes/libft/libft.h"
 
-#define YES 1
-#define NO 0
-#define PATH_MAX 4096
-
 typedef enum type_s
 {
     WORD,
@@ -31,6 +27,10 @@ typedef enum type_s
     PIPE,
     DOLLAR
 } type_t;
+
+
+//    WORD,
+//the linked list to store the tokens
 
 typedef struct token_s
 {
@@ -58,6 +58,26 @@ typedef struct s_gen
 
 } t_gen;
 
+
+// typedef struct env_s
+// {
+//     env_outil_t envi; //the enviroment variable structure
+//     int shlvl; //the increnented value in env
+// } env_t;
+
+// typedef struct s_gen
+// {
+//     env_t env;
+//     int status;
+//     char *read;
+// }t_gen;
+
+
+// typedef struct shell_s
+// {
+// }
+   
+
 /*********************************/
 /********** TOKENS LIST **********/
 /*********************************/
@@ -82,6 +102,7 @@ int get_word(char **str);
 int get_quote(char **str, char c);
 int check_quotes(token_t *c);
 token_t *error_free(char *str, token_t *tokens);
+<<<<<<< HEAD
 void free_all(token_t *tokens);
 void check_redirection(token_t *c);
 void check_newline(token_t *c);
@@ -99,11 +120,24 @@ char *join_mix(token_t *token1, token_t *token2);
 void join_word(token_t **tokens);
 void rm_token(token_t **tokens);
 void rm_spaces(token_t **tokens);
+=======
+void	free_all(token_t *tokens);
+void    check_redirection(token_t *c);
+void    check_newline(token_t *c);
+int ctrld(void);
+void    check_operators(token_t *c);
+int is_other(token_t *c);
+t_list *env_create(char **envp);
+void   handle_spaces(token_t *c);
+void    check_pipe(token_t *c);
+void   handle_spaces2(token_t *c);
+>>>>>>> 6f8da807c76e5850dafb8566bdb77e20ae64b92f
 
 /*********************************/
 /********* CMD MANAGMENT *********/
 /*********************************/
 
+<<<<<<< HEAD
 int count_pipes(token_t *tokens);
 static t_cmd *creat_cmds_utils(token_t **tokens, t_cmd **cmds);
 t_cmd *creat_cmds(token_t **tokens);
@@ -121,5 +155,10 @@ void ft_env(t_list *env);
 void free_env(t_list **env);
 int	array_len(char **array);
 int	ft_strcmp(char *s1, char *s2);
+=======
+int				count_pipes(token_t *tokens);
+static t_cmd	*creat_cmds_utils(token_t **tokens, t_cmd **cmds);
+t_cmd			*creat_cmds(token_t **tokens);
+>>>>>>> 6f8da807c76e5850dafb8566bdb77e20ae64b92f
 
 #endif
