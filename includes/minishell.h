@@ -91,7 +91,7 @@ t_list *env_create(char **envp);
 void handle_spaces(token_t *c);
 void check_pipe(token_t *c);
 void handle_spaces2(token_t *c);
-int ctrld(void);
+// int ctrld(void);
 
 ////////////////////////////////////////////////
 char *find_value(char *str, char **env);
@@ -103,7 +103,7 @@ void rm_spaces(token_t **tokens);
 void	free_all(token_t *tokens);
 void    check_redirection(token_t *c);
 void    check_newline(token_t *c);
-int ctrld(void);
+// int ctrld(void);
 void    check_operators(token_t *c);
 int is_other(token_t *c);
 t_list *env_create(char **envp);
