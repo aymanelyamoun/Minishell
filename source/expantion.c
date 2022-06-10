@@ -76,6 +76,22 @@ void join_word(token_t **tokens)
 	}
 }
 
+void	rm_quotes_tokens(token_t **tokens)
+{
+	token_t	*tmp;
+
+	tmp = *tokens;
+	while (tmp != NULL)
+	{
+		if (tmp->type == QUOTE || tmp->type == DQUOTE)
+		{
+			tmp->data = rm_quotes(tmp->data, tmp->data[0]);
+			tmp->type = WORD;
+		}
+		tmp = tmp->next;
+	}
+}
+
 void rm_token(token_t **tokens)
 {
 	token_t *token;
@@ -331,6 +347,7 @@ int main(int argc, char **argv, char **envp)
 			expander_in_quotes(&tokens, env_l);
 			join_word(&tokens);
 			rm_spaces(&tokens);
+			rm_quotes_tokens(&tokens);
 			pipes = count_pipes(tokens);
 			cmds = creat_cmds(&tokens);
 			check_file_direcitons(&cmds, pipes);
@@ -338,7 +355,6 @@ int main(int argc, char **argv, char **envp)
 			creat_cmd_args(&cmds, pipes);
 			if (get_cmds_path(&cmds, pipes, env_l) == 0)
 			{
-
 				// execute_cmds(cmds);
 				printf("\n\n------ i got executed ------\n\n\n");
 			}
