@@ -1,3 +1,6 @@
+
+
+
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
@@ -120,6 +123,7 @@ void   handle_spaces2(token_t *c);
 int count_pipes(token_t *tokens);
 static t_cmd *creat_cmds_utils(token_t **tokens, t_cmd **cmds);
 t_cmd *creat_cmds(token_t **tokens);
+int	get_cmds_path(t_cmd **cmds, int pipes, t_list *env_l);
 
 /*********************************/
 /******** FILE MANAGMENT *********/

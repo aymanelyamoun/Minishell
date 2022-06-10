@@ -314,6 +314,7 @@ int main(int argc, char **argv, char **envp)
 	int pipes;
 	int i = 0;
 	int j = 0;
+	int	status;
 	
 // if(argc != 1)
 	//     return (1);
@@ -335,25 +336,31 @@ int main(int argc, char **argv, char **envp)
 			check_file_direcitons(&cmds, pipes);
 			rm_redirecitons(&cmds, pipes);
 			creat_cmd_args(&cmds, pipes);
-			i = 0;
-			while (i <= pipes)
+			if (get_cmds_path(&cmds, pipes, env_l) == 0)
 			{
-				tok = cmds[i].tokens_cmd;
-				printf("from main %d : ---infile: %d --- outfile: %d\n", i, cmds[i].infile, cmds[i].outfile);
-				while (tok != NULL)
-				{
-					printf(" -- %d ---> %s \n", tok->type, tok->data);
-					tok = tok->next;
-				}
-				j = 0;
-				while (cmds[i].cmd_args[j])
-				{
-					printf("arg %d : %s\n", j+1, cmds[i].cmd_args[j]);
-					j++;
-				}
-				
-				i++;
+
+				// execute_cmds(cmds);
+				printf("\n\n------ i got executed ------\n\n\n");
 			}
+			// i = 0;
+			// while (i <= pipes)
+			// {
+			// 	tok = cmds[i].tokens_cmd;
+			// 	printf("from main %d : ---infile: %d --- outfile: %d\n", i, cmds[i].infile, cmds[i].outfile);
+			// 	while (tok != NULL)
+			// 	{
+			// 		printf(" -- %d ---> %s \n", tok->type, tok->data);
+			// 		tok = tok->next;
+			// 	}
+			// 	j = 0;
+			// 	while (cmds[i].cmd_args[j])
+			// 	{
+			// 		printf("arg %d : %s\n", j+1, cmds[i].cmd_args[j]);
+			// 		j++;
+			// 	}
+				
+			// 	i++;
+			// }
 		}
 		else
 		{

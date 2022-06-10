@@ -67,7 +67,125 @@ t_cmd   *creat_cmds(token_t **tokens)
     return (creat_cmds_utils(tokens, &cmds));
 }
 
+// checking cmds 
+static void	ft_strcat(char *s1, const char *s2)
+{
+	while (*s1)
+		s1++;
+	while (*s2)
+	{
+		*s1 = *s2;
+		s1++;
+		s2++;
+	}
+	*s1 = '\0';
+}
 
+char	*ft_strjoin_1(char const *s1, char const *s2)
+{
+	int		total_len;
+	char	*allocat;
+
+	if (!s1 || !s2)
+		return (0);
+	total_len = ft_strlen(s1) + ft_strlen(s2) + 1;
+	allocat = (char *)malloc(total_len);
+	if (!allocat)
+		return (0);
+	*allocat = '\0';
+	ft_strcat(allocat, s1);
+	ft_strcat(allocat, s2);
+	return (allocat);
+}
+
+static void	free_arr(char **arr)
+{
+	int	i;
+
+	i = 0;
+	if (arr != NULL)
+	{
+		while (arr[i] != NULL)
+		{
+			free(arr[i]);
+			i++;
+		}
+		free(arr);
+	}
+}
+
+static char	*join_cmd(char *path, char *cmd)
+{
+	char	*cmd_path;
+	char	*to_free;
+
+	to_free = ft_strjoin_1("/", cmd);
+	if (to_free == NULL)
+		exit(2);
+	cmd_path = ft_strjoin_1(path, to_free);
+	if (cmd_path == NULL)
+		exit(2);
+	free(to_free);
+	return (cmd_path);
+}
+
+void	cmd_not_found(char *cmd)
+{
+	printf("minishell: command not found: %s\n", cmd);
+}
+
+char	*get_cmd_path(char *path, char *cmd)
+{
+	int		i;
+	char	**paths;
+	char	*cmd_path;
+
+	i = 0;
+	paths = ft_split(path, ':');
+	if (paths == NULL)
+		exit(2);
+	while (paths[i] != NULL)
+	{
+		cmd_path = join_cmd(paths[i], cmd);
+		if (access(cmd_path, F_OK | X_OK) == 0)
+		{
+			free_arr(paths);
+			return (cmd_path);
+		}
+		free(cmd_path);
+		i++;
+	}
+	free_arr(paths);
+	if (access(cmd, F_OK | X_OK) == 0)
+		return (ft_strdup(cmd));
+	cmd_not_found(cmd);
+	return (NULL);
+}
+
+int	get_cmds_path(t_cmd **cmds, int pipes, t_list *env_l)
+{
+	int	i;
+	int	status;
+	char	*path;
+
+	status = 0;
+	i = 0;
+	path = find_value("PATH", env_l);
+	if (path == NULL)
+	{
+		printf("PATH not found\n");
+		return 1;
+	}
+		
+	while (i <= pipes)
+	{
+		(*cmds)[i].cmd_path = get_cmd_path(path, (*cmds)[i].cmd_args[0]);
+		if ((*cmds)[i].cmd_path == NULL)
+			status = 1;
+		i++;
+	}
+	return (status);
+}
 
 // int	commands(char *line)
 // {
