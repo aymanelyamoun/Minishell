@@ -16,7 +16,15 @@ int    open_file(token_t **tokens, int type)
 		fd = heredoc(ft_strdup((*tokens)->next->data));
 	}
 	if (fd < 0)
-		perror("the error");
+	{
+		if ((*tokens)->next->old_data == NULL)
+			perror("the error");
+		else
+		{
+			printf("minishell: %s: ambiguous redirect", (*tokens)->next->old_data);
+			free((*tokens)->next->old_data);
+		}
+	}
 	// close(fd);
 	return (fd);
 }
