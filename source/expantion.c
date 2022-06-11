@@ -220,11 +220,6 @@ char *get_var(char **str, char *final_quote, t_list *env)
 		while ((*str)[i] != '\0' && (*str)[i] != ' ' && (*str)[i] != '\t' && (*str)[i] != '\v' && (*str)[i] != '\f' && ft_isalnum((*str)[i]))
 			i++;
 		env_var = find_value(ft_substr(*str, 1, i - 1), env);
-		// if (ft_strncmp(env_var, "", ft_strlen(env_var)) == 0)
-		// {
-		//     free(env_var);
-		//     env_var = ft_substr(*str, 0, i);
-		// }
 	}
 	else
 		env_var = ft_strdup("$");
@@ -356,37 +351,37 @@ int main(int argc, char **argv, char **envp)
 			expander_in_quotes(&tokens, env_l);
 			join_word(&tokens);
 			rm_spaces(&tokens);
-			rm_quotes_tokens(&tokens);
-			pipes = count_pipes(tokens);
-			cmds = creat_cmds(&tokens);
-			check_file_direcitons(&cmds, pipes);
-			rm_redirecitons(&cmds, pipes);
-			creat_cmd_args(&cmds, pipes);
-			if (get_cmds_path(&cmds, pipes, env_l) == 0)
-			{
-				// execute_cmds(cmds);
-				printf("========\n\n------ i got executed ------\n\n========\n");
-			}
-			// i = 0;
-			// // while (i <= pipes)
-			// // {
-			// 	tok = tokens;
-			// 	// tok = cmds[i].tokens_cmd;
-			// 	// printf("from main %d : ---infile: %d --- outfile: %d\n", i, cmds[i].infile, cmds[i].outfile);
-			// 	while (tok != NULL)
-			// 	{
-			// 		printf(" -- %d ---> %s \n", tok->type, tok->data);
-			// 		tok = tok->next;
-			// 	}
-			// 	// j = 0;
-			// 	// while (cmds[i].cmd_args[j])
-			// 	// {
-			// 	// 	printf("arg %d : %s\n", j+1, cmds[i].cmd_args[j]);
-			// 	// 	j++;
-			// 	// }
+			// rm_quotes_tokens(&tokens);
+			// pipes = count_pipes(tokens);
+			// cmds = creat_cmds(&tokens);
+			// check_file_direcitons(&cmds, pipes);
+			// rm_redirecitons(&cmds, pipes);
+			// creat_cmd_args(&cmds, pipes);
+			// if (get_cmds_path(&cmds, pipes, env_l) == 0)
+			// {
+			// 	// execute_cmds(cmds);
+			// 	printf("========\n\n------ i got executed ------\n\n========\n");
+			// }
+			i = 0;
+			// while (i <= pipes)
+			// {
+				tok = tokens;
+				// tok = cmds[i].tokens_cmd;
+				// printf("from main %d : ---infile: %d --- outfile: %d\n", i, cmds[i].infile, cmds[i].outfile);
+				while (tok != NULL)
+				{
+					printf(" -- %d ---> %s \n", tok->type, tok->data);
+					tok = tok->next;
+				}
+				// j = 0;
+				// while (cmds[i].cmd_args[j])
+				// {
+				// 	printf("arg %d : %s\n", j+1, cmds[i].cmd_args[j]);
+				// 	j++;
+				// }
 				
-			// 	i++;
-			// // // }
+				i++;
+			// // }
 		}
 		else
 		{
