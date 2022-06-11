@@ -208,6 +208,20 @@ char *join(char *final_quote, char *tmp)
 	return (final_quote);
 }
 
+int	get_dollars(char *str)
+{
+	int	j;
+	int	count;
+
+	j = 0;
+	while (str[j] != '\0' && str[j] == '$')
+			j++;
+	if ((j % 2 != 0) && str[j] != '\0' && j != 1)
+		return (j - 1);
+	else
+		return (j);
+}
+
 char *get_var(char **str, char *final_quote, t_list *env)
 {
 	int i;
@@ -217,17 +231,18 @@ char *get_var(char **str, char *final_quote, t_list *env)
 	i = 1;
 	if ((*str)[0] == '$' && (*str)[1] != '\0' && ft_isalnum((*str)[1]))
 	{
-		while ((*str)[i] != '\0' && (*str)[i] != ' ' && (*str)[i] != '\t' && (*str)[i] != '\v' && (*str)[i] != '\f' && ft_isalnum((*str)[i]))
+		while ((*str)[i] != '\0' && (*str)[i] != ' ' && (*str)[i] != '\t' 
+		&& (*str)[i] != '\v' && (*str)[i] != '\f' && ft_isalnum((*str)[i]))
 			i++;
-		env_var = find_value(ft_substr(*str, 1, i - 1), env);
-		// if (ft_strncmp(env_var, "", ft_strlen(env_var)) == 0)
-		// {
-		//     free(env_var);
-		//     env_var = ft_substr(*str, 0, i);
-		// }
+		to_free = ft_substr(*str, 1, i - 1);
+		env_var = find_value(to_free, env);
+		free(to_free);
 	}
 	else
-		env_var = ft_strdup("$");
+	{
+		i = get_dollars(*str);
+		env_var = ft_substr(*str, 0, i);
+	}
 	*str = *str + i;
 	return (join(final_quote, env_var));
 }
