@@ -121,10 +121,10 @@ static char	*join_cmd(char *path, char *cmd)
 
 	to_free = ft_strjoin_1("/", cmd);
 	if (to_free == NULL)
-		exit(2);
+		exit(10);
 	cmd_path = ft_strjoin_1(path, to_free);
 	if (cmd_path == NULL)
-		exit(2);
+		exit(9);
 	free(to_free);
 	return (cmd_path);
 }

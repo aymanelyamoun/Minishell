@@ -39,6 +39,7 @@ typedef enum type_s
 typedef struct token_s
 {
     char *data;
+    char *old_data;
     unsigned int type;
     struct token_s *next;
     struct token_s *prev;

@@ -143,6 +143,8 @@ void rm_spaces(token_t **tokens)
 
 void change_data(token_t **tokens, char *data)
 {
+	if (ft_strcmp(data, "") == 0)
+		(*tokens)->old_data = ft_strjoin("$", (*tokens)->next->data);
 	free((*tokens)->data);
 	(*tokens)->data = data;
 	(*tokens)->type = WORD;
@@ -163,7 +165,7 @@ void play_with_tokens(token_t **tokens, char *str, t_list *env)
 	{
 		free((*tokens)->data);
 		(*tokens)->data = ft_strdup((*tokens)->next->data);
-		(*tokens)->type = WORD;
+		(*tokens)->type = DQUOTE;
 	}
 	rm_token(&((*tokens)->next));
 }
@@ -338,7 +340,7 @@ int main(int argc, char **argv, char **envp)
 	// env = set_env(envp);
 	while (1)
 	{
-		line = readline("ENTER PROMPT   ");
+		line = readline("minishell> ");
 		if (line != NULL)
 		{
 			add_history(line);
@@ -359,24 +361,25 @@ int main(int argc, char **argv, char **envp)
 				printf("\n\n------ i got executed ------\n\n\n");
 			}
 			// i = 0;
-			// while (i <= pipes)
-			// {
-			// 	tok = cmds[i].tokens_cmd;
-			// 	printf("from main %d : ---infile: %d --- outfile: %d\n", i, cmds[i].infile, cmds[i].outfile);
+			// // while (i <= pipes)
+			// // {
+			// 	tok = tokens;
+			// 	// tok = cmds[i].tokens_cmd;
+			// 	// printf("from main %d : ---infile: %d --- outfile: %d\n", i, cmds[i].infile, cmds[i].outfile);
 			// 	while (tok != NULL)
 			// 	{
 			// 		printf(" -- %d ---> %s \n", tok->type, tok->data);
 			// 		tok = tok->next;
 			// 	}
-			// 	j = 0;
-			// 	while (cmds[i].cmd_args[j])
-			// 	{
-			// 		printf("arg %d : %s\n", j+1, cmds[i].cmd_args[j]);
-			// 		j++;
-			// 	}
+			// 	// j = 0;
+			// 	// while (cmds[i].cmd_args[j])
+			// 	// {
+			// 	// 	printf("arg %d : %s\n", j+1, cmds[i].cmd_args[j]);
+			// 	// 	j++;
+			// 	// }
 				
 			// 	i++;
-			// }
+			// // }
 		}
 		else
 		{
