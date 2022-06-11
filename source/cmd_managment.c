@@ -121,10 +121,10 @@ static char	*join_cmd(char *path, char *cmd)
 
 	to_free = ft_strjoin_1("/", cmd);
 	if (to_free == NULL)
-		exit(10);
+		return (NULL);
 	cmd_path = ft_strjoin_1(path, to_free);
 	if (cmd_path == NULL)
-		exit(9);
+		return (NULL);
 	free(to_free);
 	return (cmd_path);
 }
@@ -143,10 +143,12 @@ char	*get_cmd_path(char *path, char *cmd)
 	i = 0;
 	paths = ft_split(path, ':');
 	if (paths == NULL)
-		exit(2);
+		return (NULL);
 	while (paths[i] != NULL)
 	{
 		cmd_path = join_cmd(paths[i], cmd);
+		if (cmd_path == NULL)
+			return (NULL);
 		if (access(cmd_path, F_OK | X_OK) == 0)
 		{
 			free_arr(paths);
