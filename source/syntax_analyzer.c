@@ -1,38 +1,79 @@
 #include "../includes/minishell.h"
 
-int    check_quotes(token_t *tmp) //prbleeeeeeeem
+// int    check_quotes(token_t *tmp) //prbleeeeeeeem
+// {
+//     size_t index;
+//     static int squote;
+//     static int dquote;
+//     token_t *c = tmp;
+
+//     squote = 0;
+//     index = 0;
+//     dquote = 0;
+//     while(c)
+//     {
+//         while(index < ft_strlen(c->data))
+//         {
+//             if(c->data[index] == '\'')
+//                 squote += 1;
+//             if(c->data[index] == '\"')
+//                 dquote += 1;
+//             index++;
+//         }
+//         index = 0;
+//         c = c->next;
+//     }
+//     //printf(" dquote : %d\n", dquote);
+//      squote = squote % 2;
+//     dquote = dquote % 2;
+//     if(squote != 0 || dquote != 0)
+//     {
+//        error_free("QUOTES", c);
+//        return (0);
+//     }
+//     return 1;
+// }
+int check_quotes(token_t *tmp) //prbleeeeeeeem
 {
     size_t index;
-    static int squote;
-    static int dquote;
+    int flag1;
+    int flag2;
+
+    // static int dquote;
     token_t *c = tmp;
 
-    squote = 0;
+    flag1 = 0;
+    flag2 = 0;
     index = 0;
-    dquote = 0;
-    while(c)
+    int len = 0;
+    while(c->next != NULL)
     {
-        while(index < ft_strlen(c->data))
+        index = 0;
+        len = ft_strlen(c->data);
+        flag1 = 2;
+        flag2= 2;
+        while(index < len -1)
         {
             if(c->data[index] == '\'')
-                squote += 1;
-            if(c->data[index] == '\"')
-                dquote += 1;
+               flag1 = 1;
+            else if(c->data[index] == '\"')
+               flag2 = 1;
+            // printf("index:%d\n",index);
+            //printf("%d\n",flag2);
             index++;
         }
-        index = 0;
         c = c->next;
     }
-    //printf(" dquote : %d\n", dquote);
-     squote = squote % 2;
-    dquote = dquote % 2;
-    if(squote != 0 || dquote != 0)
+    printf("%d\n", flag2);
+    if((flag1 == 1) || (flag2 == 1))
     {
        error_free("QUOTES", c);
-       return (0);
+       return 0;
     }
     return 1;
 }
+
+// 
 
 void    check_pipe(token_t *c)
 {
@@ -71,11 +112,13 @@ void check_newline(token_t *c)
             {
                 if(tmp->type == LESS)
                 {
-                    if(tmp->next->type == GREAT)
+                    if(tmp->next != NULL && tmp->next->type == GREAT)
                     {
                         printf("newline2\n");
-                        return ;
                     }
+                    else 
+                        printf("fcfvfvfv\n");
+                    return ;
                 }
                 if(tmp->next == NULL)
                 {
