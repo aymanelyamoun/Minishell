@@ -161,12 +161,19 @@ void play_with_tokens(token_t **tokens, char *str, t_list *env)
 			change_data(tokens, env_var);
 		}
 	}
+	else if ((*tokens)->next->type == DOLLAR)
+	{
+		free((*tokens)->data);
+		(*tokens)->data = ft_strdup("$$");
+		(*tokens)->type = WORD;
+	}
 	else if ((*tokens)->next->type == DQUOTE)
 	{
 		free((*tokens)->data);
 		(*tokens)->data = ft_strdup((*tokens)->next->data);
 		(*tokens)->type = DQUOTE;
 	}
+
 	rm_token(&((*tokens)->next));
 }
 
@@ -181,9 +188,9 @@ void expander(token_t **tokens, t_list *env_l)
 		if (tmp->type == DOLLAR)
 		{
 			if (tmp->next != NULL && tmp->next->type != SPAACE &&
-				(tmp->next->type == WORD || tmp->next->type == DQUOTE))
+				(tmp->next->type == WORD || tmp->next->type == DQUOTE || tmp->next->type == DOLLAR))
 				play_with_tokens(&tmp, ft_strdup(tmp->next->data), env_l);
-			if (tmp->next != NULL && tmp->next->type == SPAACE)
+			if ((tmp->next != NULL && tmp->next->type == SPAACE) || (tmp->next == NULL))
 				tmp->type = WORD;
 		}
 		tmp = tmp->next;
@@ -358,7 +365,7 @@ int main(int argc, char **argv, char **envp)
 			if (get_cmds_path(&cmds, pipes, env_l) == 0)
 			{
 				// execute_cmds(cmds);
-				printf("\n\n------ i got executed ------\n\n\n");
+				printf("========\n\n------ i got executed ------\n\n========\n");
 			}
 			// i = 0;
 			// // while (i <= pipes)
@@ -379,7 +386,7 @@ int main(int argc, char **argv, char **envp)
 			// 	// }
 				
 			// 	i++;
-			// // }
+			// // // }
 		}
 		else
 		{
