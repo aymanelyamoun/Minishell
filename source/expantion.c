@@ -1,5 +1,4 @@
 #include "../includes/minishell.h"
-#include "../includes/libft/libft.h"
 
 //parsing steps
 //call heardoc when you incounter it

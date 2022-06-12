@@ -4,7 +4,6 @@ static int check_pairs1(char *s)
 {
     int q;
     q = 0;
-    // printf("%s", s);
     while(*s)
     {
         if (q == 0 && (*s == '\"' || *s =='\''))
@@ -43,33 +42,31 @@ int check_quotes(token_t *token)
 }
 
 
-void    check_pipe(token_t *c)
+int    check_pipe(token_t *c)
 {
     token_t *tmp = NULL;
     tmp = c;
-    while(tmp)
+    while(tmp) 
     {
         if(tmp->type == PIPE)
         {
             if(tmp->next == NULL)
             {
                 printf("syntax pipe\n");
-                break ;
+                return (0);
             }
             else
             {
                 handle_spaces2(tmp->next);
-                break;
             }
              
         }
         tmp = tmp->next;
     }
-    return ;
-    
+    return (1);
 }
 
-void check_newline(token_t *c)
+int check_newline(token_t *c)
 {
     token_t *tmp = NULL;
 
@@ -83,29 +80,32 @@ void check_newline(token_t *c)
                     if(tmp->next != NULL && tmp->next->type == GREAT)
                     {
                         printf("newline2\n");
+                        return(0);
                     }
-                    else 
+                    else
+                    {
                         printf("fcfvfvfv\n");
-                    return ;
+                        return (0);
+                    } 
                 }
                 if(tmp->next == NULL)
                 {
                     printf("3la slamtk\n");
-                    break ;
+                    return(0);
                 }
                 else
                 {
                     handle_spaces(tmp->next);
-                    break;
                 }       
             }
                 
         tmp = tmp->next;
         }
+        return (1);
 }
 
 
-void   handle_spaces(token_t *c)
+int   handle_spaces(token_t *c)
 {
     token_t *tmp = NULL;
     
@@ -114,15 +114,24 @@ void   handle_spaces(token_t *c)
     while(tmp && tmp->type == SPAACE)
         tmp = tmp->next;
     if(tmp == NULL)
+    {
         printf("newline 2\n");
+        return (0);
+    }
     else if(is_other(tmp))
-        printf("syntax error near unexpected token tmp\n");
+    {
+         printf("syntax error near unexpected token tmp\n");
+         return (0);
+    }  
     else
-        printf("sent to redirections errors\n"); //word or quotes
-    return ;
+    {
+         printf("sent to redirections errors\n"); //word or quotes
+         return (0);
+    }
+    return (1);
 }
 
-void   handle_spaces2(token_t *c)
+int   handle_spaces2(token_t *c)
 {
     token_t *tmp = NULL;
     
@@ -131,10 +140,16 @@ void   handle_spaces2(token_t *c)
     while(tmp && tmp->type == SPAACE)
         tmp = tmp->next;
     if(tmp == NULL || is_other(tmp))
+    {
         printf("syntax error near unexpected token tmp\n");
+        return (0);
+    }   
     else
+    {
         printf("sent to redirections errors\n"); //word or quotes
-    return ;
+        return (0);
+    }
+    return (1);
 }
 
 
@@ -142,5 +157,15 @@ int is_other(token_t *c)
 {
     if(c->type == PIPE || c->type == LESS || c->type == DLESS || c->type ==DGREAT || c->type == WORD || c->type == DQUOTE || c->type == QUOTE)
         return (1);
+    return (0);
+}
+
+
+int syntax_err(token_t *token)
+{
+    if(check_quotes(token) == 1 && check_newline(token) == 1 && check_pipe(token) == 1)
+    {
+        return (1);
+    }
     return (0);
 }

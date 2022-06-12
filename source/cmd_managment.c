@@ -88,7 +88,7 @@ void	go_commands(t_gen *gen, char **line)
 	if (!ft_strcmp("env", line[0]))
 		ft_env(gen->env);
 	if (!ft_strcmp("pwd", line[0]))
-		printf("%s",ft_pwd(gen)); //it does not print the pwd
+		ft_pwd(); //it does not print the pwd
 	if (!ft_strcmp("echo", line[0]))
 		ft_echo(gen, line);
 	if (!ft_strcmp("cd", line[0]))

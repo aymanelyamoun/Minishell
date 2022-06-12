@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+         #
+#    By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/24 17:24:53 by yel-mrab          #+#    #+#              #
-#    Updated: 2022/06/03 21:19:53 by ael-yamo         ###   ########.fr        #
+#    Updated: 2022/06/12 18:44:03 by oufisaou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ DIRBUILD = objdir
 INC  = -I ./includes
 HEADERS = includes/minishell.h
 LIBFT = includes/libft/libft.a
-SRC = main list_manupulation token syntax_analyzer error_free signals enviroment 
+SRC = main list_manupulation expantion token syntax_analyzer error_free signals enviroment cmd_managment builtins/ft_cd builtins/ft_echo builtins/ft_env builtins/ft_pwd
 OBJ = $(addprefix $(DIRBUILD)/, $(SRC:=.o))
 all : $(NAME)
 $(NAME) : $(OBJ) $(LIBFT)

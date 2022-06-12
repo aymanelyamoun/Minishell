@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-static void	cd_home(t_gen *gen)
+void	cd_home(t_gen *gen)
 {
     char *home;
 
