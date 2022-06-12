@@ -41,27 +41,38 @@ int check_quotes(token_t *token)
     return (1);
 }
 
+//problem with echo | lefe
 
 int    check_pipe(token_t *c)
 {
     token_t *tmp = NULL;
     tmp = c;
-    while(tmp) 
+
+    if(tmp->type == PIPE)
     {
-        if(tmp->type == PIPE)
+        if(tmp->next == NULL)
         {
-            if(tmp->next == NULL)
-            {
-                printf("syntax pipe\n");
-                return (0);
-            }
-            else
-            {
-                handle_spaces2(tmp->next);
-            }
-             
+            printf("syntax pipe\n");
+            return (0);
         }
+        else
+        {
+            handle_spaces2(tmp->next);
+        } 
+    }
+    while(tmp->next)
         tmp = tmp->next;
+    if(tmp->type == PIPE)
+    {
+        if(tmp->next == NULL)
+        {
+            printf("syntax pipe\n");
+            return (0);
+        }
+        else
+        {
+            handle_spaces2(tmp->next);
+        } 
     }
     return (1);
 }
@@ -139,7 +150,7 @@ int   handle_spaces2(token_t *c)
     
     while(tmp && tmp->type == SPAACE)
         tmp = tmp->next;
-    if(tmp == NULL || is_other(tmp))
+    if((tmp == NULL || is_other(tmp)))
     {
         printf("syntax error near unexpected token tmp\n");
         return (0);

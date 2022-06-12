@@ -39,6 +39,7 @@ void change_env2(t_gen *gen)
                     tmp->content = NULL;
                 }
 				tmp->content = ft_strdup(find_value("PWD", gen->envp));
+				printf("%s\n", tmp->content);
 				break ;
 			}
 			tmp = tmp->next;

@@ -84,7 +84,6 @@ int	commands(char **line)
 
 void	go_commands(t_gen *gen, char **line)
 {
-	
 	if (!ft_strcmp("env", line[0]))
 		ft_env(gen->env);
 	if (!ft_strcmp("pwd", line[0]))

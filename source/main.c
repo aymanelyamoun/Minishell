@@ -30,11 +30,6 @@ void main(int argc, char **argv, char **envp)
                 go_commands(gen, arr);
             add_history(line);
             tokens = tokenize(line);
-            // if(check_quotes(tokens) == 1)
-            // {
-            // check_pipe(tokens);
-            // check_newline(tokens);
-            // }
             syntax_err(tokens);  
         }
     }
