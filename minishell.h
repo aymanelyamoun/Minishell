@@ -120,6 +120,7 @@ void go_commands(t_gen *gen, char **line);
 void ft_env(t_list *env);
 void free_env(t_list **env);
 int	array_len(char **array);
+int check_pairs1(char *s);
 int	ft_strcmp(char *s1, char *s2);
-
+int check_pairs2(char *s)
 #endif

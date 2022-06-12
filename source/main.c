@@ -26,19 +26,21 @@ void main(int argc, char **argv, char **envp)
         else if(line != NULL)
         {
             arr = ft_split(line, ' '); //imagining i have the splited commads 2d
-            if(line != NULL && commands(arr) == YES)
-                go_commands(gen, arr);
+            // if(line != NULL && commands(arr) == YES)
+            //     go_commands(gen, arr);
             add_history(line);
             tokens = tokenize(line);
-            if(check_quotes(tokens) == 1) //problem here accesiing some kind of memory it prints trash
+            if(check_quotes(tokens) == 1)
             {
-                check_pipe(tokens);
-                check_newline(tokens);
+            check_pipe(tokens);
+            check_newline(tokens);
             }
+          
         }
     }
     // free(line);
     // free_env(&gen->env);
+
 }
     
 

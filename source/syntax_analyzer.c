@@ -1,79 +1,47 @@
 #include "../includes/minishell.h"
 
-// int    check_quotes(token_t *tmp) //prbleeeeeeeem
-// {
-//     size_t index;
-//     static int squote;
-//     static int dquote;
-//     token_t *c = tmp;
-
-//     squote = 0;
-//     index = 0;
-//     dquote = 0;
-//     while(c)
-//     {
-//         while(index < ft_strlen(c->data))
-//         {
-//             if(c->data[index] == '\'')
-//                 squote += 1;
-//             if(c->data[index] == '\"')
-//                 dquote += 1;
-//             index++;
-//         }
-//         index = 0;
-//         c = c->next;
-//     }
-//     //printf(" dquote : %d\n", dquote);
-//      squote = squote % 2;
-//     dquote = dquote % 2;
-//     if(squote != 0 || dquote != 0)
-//     {
-//        error_free("QUOTES", c);
-//        return (0);
-//     }
-//     return 1;
-// }
-int check_quotes(token_t *tmp) //prbleeeeeeeem
+static int check_pairs1(char *s)
 {
-    size_t index;
-    int flag1;
-    int flag2;
-
-    // static int dquote;
-    token_t *c = tmp;
-
-    flag1 = 0;
-    flag2 = 0;
-    index = 0;
-    int len = 0;
-    while(c->next != NULL)
+    int q;
+    q = 0;
+    // printf("%s", s);
+    while(*s)
     {
-        index = 0;
-        len = ft_strlen(c->data);
-        flag1 = 2;
-        flag2= 2;
-        while(index < len -1)
+        if (q == 0 && (*s == '\"' || *s =='\''))
         {
-            if(c->data[index] == '\'')
-               flag1 = 1;
-            else if(c->data[index] == '\"')
-               flag2 = 1;
-            // printf("index:%d\n",index);
-            //printf("%d\n",flag2);
-            index++;
+            if(*(s++) == '\'')
+                q = 2;
+            else
+                q = 3;
         }
-        c = c->next;
+        while(*s && ((q == 3 && *s != '\"') || (q == 2 && *s != '\'')))
+            s++;
+        if((q == 3 && *s == '\"') || (q == 2 && *s == '\''))
+            q = 0;
+        s++;
     }
-    printf("%d\n", flag2);
-    if((flag1 == 1) || (flag2 == 1))
-    {
-       error_free("QUOTES", c);
-       return 0;
-    }
-    return 1;
+    return (!q);
 }
 
-// 
+int check_quotes(token_t *token)
+{
+    token_t *tmp;
+    char *s;
+    tmp = token;
+    
+    while(tmp)
+    { 
+        s = tmp->data;
+        if(!check_pairs1(s))
+        {
+            printf("unclosed quote\n");
+            return (0);
+        }
+        tmp = tmp->next;
+    }
+    return (1);
+}
+
 
 void    check_pipe(token_t *c)
 {
