@@ -149,11 +149,28 @@ void change_data(token_t **tokens, char *data)
 	(*tokens)->data = data;
 	(*tokens)->type = WORD;
 }
+
+char	*get_var_str(char *str, int *i)
+{
+	*i = 0;
+	while (ft_isalnum(str[*i]) || str[*i] == '_')
+		(*i)++;
+	return (ft_substr(str, 0, *i));
+}
+
 void play_with_tokens(token_t **tokens, char *str, t_list *env)
 {
-	char *env_var;
+	char	*env_var;
+	char	*second_part;
+	char	*new_str;
+	int		i;
 
-	env_var = find_value(str, env);
+	new_str = get_var_str(str, &i);
+	second_part = ft_substr(str, i, ft_strlen(str + i));
+	env_var = find_value(new_str, env);
+	env_var = ft_strjoin(env_var, second_part);
+	free(second_part);
+	free(new_str);
 	if ((*tokens)->next->type == WORD)
 	{
 		if (env_var != NULL)
