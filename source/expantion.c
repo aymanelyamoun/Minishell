@@ -360,6 +360,67 @@ void creat_cmd_args(t_cmd **cmds, int pipe)
 	}
 }
 
+void	fail_to_generat_pipes(int **pipes, int i)
+{
+	int	j;
+
+	j = 0;
+	while (j < i)
+	{
+		free(pipes[j]);
+		j++;
+	}
+	free(pipes);
+	exit (3);
+}
+
+void	free_pipes(int **pipes, int pipes_num)
+{
+	int	i;
+
+	i = 0;
+	if (pipes != NULL)
+	{
+		while (i < pipes_num)
+		{
+			free(pipes[i]);
+			i++;
+		}
+		free(pipes);
+	}
+}
+
+void	close_pipes(int **pipes, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i < count)
+	{
+		close(pipes[i][0]);
+		close(pipes[i][1]);
+		i++;
+	}
+}
+
+int	**creat_pipes(int pipes_num)
+{
+	int	**pipes;
+	int	i;
+
+	i = 0;
+	pipes = malloc(sizeof(int*) * pipes_num);
+	while (i < pipes_num)
+	{
+		pipes[i] = malloc(sizeof(int) * 2);
+		if (pipes == NULL)
+			fail_to_generat_pipes(pipes, i);
+		pipe(pipes[i]);
+		i++;
+	}
+	return (pipes);
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	t_list *env_l;
