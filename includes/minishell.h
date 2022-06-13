@@ -11,6 +11,7 @@
 #include <sys/types.h>
 #include <termios.h>
 #include <signal.h>
+#include <fcntl.h>
 #include "../includes/libft/libft.h"
 
 #define YES 1
@@ -34,6 +35,7 @@ typedef enum type_s
 typedef struct token_s
 {
     char *data;
+    char *old_data;
     unsigned int type;
     struct token_s *next;
     struct token_s *prev;
@@ -89,12 +91,28 @@ int ctrld(void);
 
 
 char *find_value(char *str, char **env);
+
+void check_redirection(token_t *c);
+int check_newline(token_t *c);
+void check_operators(token_t *c);
+int is_other(token_t *c);
+t_list *env_create(char **envp);
+int handle_spaces(token_t *c);
+int check_pipe(token_t *c);
+int handle_spaces2(token_t *c);
+int syntax_err(token_t *token);
+// int ctrld(void);
+
+////////////////////////////////////////////////
+char    *find_value(char *str, t_list *env_l);
+
 char *join_mix(token_t *token1, token_t *token2);
 void join_word(token_t **tokens);
 void rm_token(token_t **tokens);
 void rm_spaces(token_t **tokens);
 
 void	free_all(token_t *tokens);
+
 int    check_newline(token_t *c);
 int ctrld(void);
 int    check_operators(token_t *c);
@@ -104,6 +122,16 @@ int   handle_spaces(token_t *c);
 int    check_pipe(token_t *c);
 int   handle_spaces2(token_t *c);
 
+void    check_redirection(token_t *c);
+// void    check_newline(token_t *c);
+// int ctrld(void);
+void    check_operators(token_t *c);
+int is_other(token_t *c);
+t_list *env_create(char **envp);
+// void   handle_spaces(token_t *c);
+// void    check_pipe(token_t *c);
+// void   handle_spaces2(token_t *c);
+
 
 /*********************************/
 /********* CMD MANAGMENT *********/
@@ -112,6 +140,7 @@ int   handle_spaces2(token_t *c);
 int count_pipes(token_t *tokens);
 static t_cmd *creat_cmds_utils(token_t **tokens, t_cmd **cmds);
 t_cmd *creat_cmds(token_t **tokens);
+int	get_cmds_path(t_cmd **cmds, int pipes, t_list *env_l);
 
 /*********************************/
 /******** FILE MANAGMENT *********/
@@ -154,6 +183,7 @@ char *ft_pwd(t_gen *gen);
 int syntax_err(token_t *token);
 char*    change_env2(t_gen *gen);
 void    modify_env(t_list *gen, char *arr);
+
 int check_double(token_t *tmp);
 int check_inside(token_t *c);
 #endif
