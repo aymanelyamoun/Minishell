@@ -255,50 +255,189 @@ void	expander_in_quotes(token_t **tokens, char **env)
 	}
 }
 
-// int main(int argc, char **argv, char **envp)
-// {
-//     char **env;
-//     char *line;
-//     token_t *tokens;
-//     token_t *tok;
-// 	t_cmd	*cmds;
-    
-// 	int	pipes;
-// 	int	i = 0;
+int count_tokens(token_t *tokens)
+{
+	int count;
 
-//     // if(argc != 1)
-//     //     return (1);
-//     env = set_env(envp);
-//     while (1)
-//     {
-//         line = readline("ENTER PROMPT   ");
-//         if (line != NULL)
-//         {
-//             add_history(line);
-//             tokens = tokenize(line);
-//             expander(&tokens, env);
-// 			expander_in_quotes(&tokens, env);
-//             join_word(&tokens);
-//             rm_spaces(&tokens);
-// 			pipes = count_pipes(tokens) + 1;
-// 			cmds = creat_cmds(&tokens);
-// 			i = 0;
-// 			while (i <= pipes)
-// 			{
-//                 tok = cmds[i].tokens_cmd;
-// 				while (tok != NULL)
-// 				{
-// 					printf("from main %d : -- %d ---> %s\n", i, tok->type, tok->data);
-//                     tok = tok->next;
-// 				}
-// 				i++;
-// 			}
-//         }
-// 		else
-// 			exit(0); //last status
-//     }
-//     return (0);
-// }
+	count = 0;
+	while (tokens)
+	{
+		tokens = tokens->next;
+		count++;
+	}
+	return (count);
+}
+
+char **get_cmds(token_t *tokens)
+{
+	char	**cmds;
+	int		i;
+
+	i = 0;
+	cmds = malloc(sizeof(char *) * (count_tokens(tokens) + 1));
+	while (tokens)
+	{
+		cmds[i] = ft_strdup(tokens->data);
+		tokens = tokens->next;
+		i++;
+	}
+	cmds[i] = NULL;
+	return (cmds);
+}
+
+void	clear_tokens(token_t **tokens)
+{
+	if (*tokens == NULL)
+		return ;
+	if ((*tokens)->next == NULL)
+		rm_token(tokens);
+	else
+		rm_token(&((*tokens)->next));
+	clear_tokens(tokens);
+}
+
+void creat_cmd_args(t_cmd **cmds, int pipe)
+{
+	int i;
+
+	i = 0;
+	while (i <= pipe)
+	{
+		(*cmds)[i].cmd_args = get_cmds((*cmds)[i].tokens_cmd);
+		clear_tokens(&((*cmds)[i].tokens_cmd));
+		i++;
+	}
+}
+
+void	fail_to_generat_pipes(int **pipes, int i)
+{
+	int	j;
+
+	j = 0;
+	while (j < i)
+	{
+		free(pipes[j]);
+		j++;
+	}
+	free(pipes);
+	exit (3);
+}
+
+void	free_pipes(int **pipes, int pipes_num)
+{
+	int	i;
+
+	i = 0;
+	if (pipes != NULL)
+	{
+		while (i < pipes_num)
+		{
+			free(pipes[i]);
+			i++;
+		}
+		free(pipes);
+	}
+}
+
+void	close_pipes(int **pipes, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i < count)
+	{
+		close(pipes[i][0]);
+		close(pipes[i][1]);
+		i++;
+	}
+}
+
+int	**creat_pipes(int pipes_num)
+{
+	int	**pipes;
+	int	i;
+
+	i = 0;
+	pipes = malloc(sizeof(int*) * pipes_num);
+	while (i < pipes_num)
+	{
+		pipes[i] = malloc(sizeof(int) * 2);
+		if (pipes == NULL)
+			fail_to_generat_pipes(pipes, i);
+		pipe(pipes[i]);
+		i++;
+	}
+	return (pipes);
+}
+
+int main(int argc, char **argv, char **envp)
+{
+	t_list *env_l;
+	char *line;
+	token_t *tokens;
+	token_t *tok;
+	t_cmd *cmds;
+
+	int pipes;
+	int i = 0;
+	int j = 0;
+	int	status;
+	
+// if(argc != 1)
+	//     return (1);
+	env_l = env_create(envp);
+	// env = set_env(envp);
+	while (1)
+	{
+		line = readline("minishell> ");
+		if (line != NULL)
+		{
+			add_history(line);
+			tokens = tokenize(line);
+			expander(&tokens, env_l);
+			expander_in_quotes(&tokens, env_l);
+			join_word(&tokens);
+			rm_spaces(&tokens);
+			rm_quotes_tokens(&tokens);
+			pipes = count_pipes(tokens);
+			cmds = creat_cmds(&tokens);
+			check_file_direcitons(&cmds, pipes);
+			rm_redirecitons(&cmds, pipes);
+			creat_cmd_args(&cmds, pipes);
+			if (get_cmds_path(&cmds, pipes, env_l) == 0)
+			{
+				// execute_cmds(cmds);
+				printf("========\n\n------ i got executed ------\n\n========\n");
+			}
+			// i = 0;
+			// // while (i <= pipes)
+			// // {
+			// 	tok = tokens;
+			// 	// tok = cmds[i].tokens_cmd;
+			// 	// printf("from main %d : ---infile: %d --- outfile: %d\n", i, cmds[i].infile, cmds[i].outfile);
+			// 	while (tok != NULL)
+			// 	{
+			// 		printf(" -- %d ---> %s \n", tok->type, tok->data);
+			// 		tok = tok->next;
+			// 	}
+			// 	// j = 0;
+			// 	// while (cmds[i].cmd_args[j])
+			// 	// {
+			// 	// 	printf("arg %d : %s\n", j+1, cmds[i].cmd_args[j]);
+			// 	// 	j++;
+			// 	// }
+				
+			// 	i++;
+			// // // }
+		}
+		else
+		{
+			printf("\ni got a NULL\n");
+			exit(0); // last status
+		}
+	}
+	return (0);
+}
 
 // t_cmd   *parsing(token_t *kokens)
 // {
