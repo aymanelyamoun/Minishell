@@ -136,7 +136,7 @@ void	go_oldpwd(t_gen *gen);
 int    ft_cd(t_gen *gen, char *path);
 char *change_env(t_gen *gen, char *new);
 
-void change_env2(t_gen *gen);
+
 int check_pairs2(char *s);
 int	commands(char **line);
 void	go_commands(t_gen *gen, char **line);
@@ -150,8 +150,9 @@ void	cd_home(t_gen *gen);
 void	ft_echo(t_gen *gen, char **str) ;
 void	ft_env(t_list *env);
 int ft_exit(t_list **env, char **arg);
-int ft_pwd(void);
+char *ft_pwd(t_gen *gen);
 int syntax_err(token_t *token);
-void change_env2(t_gen *gen);
+char*    change_env2(t_gen *gen);
+void    modify_env(t_list *gen, char *arr);
 
 #endif
