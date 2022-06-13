@@ -187,4 +187,5 @@ void    modify_env(t_list *gen, char *arr);
 
 int check_double(token_t *tmp);
 int check_inside(token_t *c);
+int check_one(token_t *tmp);
 #endif

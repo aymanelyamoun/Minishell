@@ -107,13 +107,8 @@ int check_inside(token_t *tmp)
 // {
     
 // }
-
-int check_newline(token_t *c)
+int check_one(token_t *tmp)
 {
-    token_t *tmp = NULL;
-
-    tmp = c;
-
     if((tmp->type == LESS) || (tmp->type == GREAT) || (tmp->type == DGREAT) || (tmp->type == DLESS))
     {
         if(tmp->type == LESS)
@@ -135,6 +130,15 @@ int check_newline(token_t *c)
             handle_spaces(tmp->next);
         }       
     }
+}
+
+int check_newline(token_t *c)
+{
+    token_t *tmp = NULL;
+
+    tmp = c;
+
+    check_one(tmp);
     while(tmp->next)
         tmp = tmp->next;
     if((tmp->type == LESS) || (tmp->type == GREAT) || (tmp->type == DGREAT) || (tmp->type == DLESS))
@@ -162,7 +166,6 @@ int check_newline(token_t *c)
             handle_spaces(tmp->next);
         }       
     }    
-
     return (1);
 }
 
@@ -206,11 +209,6 @@ int   handle_spaces2(token_t *c)
         printf("syntax error near unexpected token tmp 1\n");
         return (0);
     }   
-    // else if(is_other(tmp) || tmp->type == WORD)
-    // {
-    //     printf("sent to redirections function\n"); //word or quotes
-    //     return (0);
-    // }
     return (1);
 }
 
@@ -224,10 +222,9 @@ int is_other(token_t *c)
 
 int syntax_err(token_t *token)
 {
-    if (check_inside(token) == 1)
+    // if (check_inside(token) == 1)
+    //     return (1);
+    if(check_quotes(token) == 1 && check_newline(token) == 1 && check_pipe(token) == 1 && check_inside(token) == 1)
         return (1);
-    if(check_quotes(token) == 1 && check_newline(token) == 1 && check_pipe(token) == 1)
-        return (1);
-
     return (0);
 }
