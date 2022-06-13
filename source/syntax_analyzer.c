@@ -41,29 +41,6 @@ int check_quotes(token_t *token)
     return (1);
 }
 
-//problem with echo | lefe
-// int check_inside(token_t *c)
-// {
-//     token_t *tmp = NULL;
-//     tmp = c;
-//     while(tmp)
-//     {
-//          if(tmp->type == PIPE)
-//         {
-//             if(tmp->next == NULL)
-//             {
-//                 printf("syntax pipe\n");
-//                 return (0);
-//             }
-//             else
-//             {
-//                 handle_spaces2(tmp->next);
-//             } 
-//         }
-//         tmp = tmp->next;
-//     }
-//     return (1);
-// }
 int    check_pipe(token_t *c)
 {
     token_t *tmp = NULL;
@@ -73,7 +50,7 @@ int    check_pipe(token_t *c)
     {
         if(tmp->next == NULL)
         {
-            printf("syntax pipe\n");
+            printf("syntax pipe 2\n");
             return (0);
         }
         else
@@ -100,26 +77,36 @@ int    check_pipe(token_t *c)
 
 int check_inside(token_t *tmp)
 {
+    if (tmp && tmp->type == PIPE)
+    {
+        printf("error first pipe\n");
+        return (0);
+    }
+       
     while(tmp)
     {
         if(tmp->type == PIPE)
         {
-            while(tmp && tmp->next->type == SPAACE)
+            tmp = tmp->next;
+            if (tmp == NULL)
+                return (0);
+            while(tmp && tmp->type == SPAACE)
               tmp = tmp->next;
-            if(tmp->type == PIPE)
+            if(tmp && tmp->type == PIPE)
             {
                 printf("pipe error in check_pipe\n");
                 return (0);
-            }
-            else
-            {
-                handle_spaces2(tmp);
             }
         }
         tmp = tmp->next;
     }
     return (1);
 }
+
+// int check_one(token_t *c)
+// {
+    
+// }
 
 int check_newline(token_t *c)
 {
@@ -219,11 +206,11 @@ int   handle_spaces2(token_t *c)
         printf("syntax error near unexpected token tmp 1\n");
         return (0);
     }   
-    else if(is_other(tmp) || tmp->type == WORD)
-    {
-        printf("sent to redirections function\n"); //word or quotes
-        return (0);
-    }
+    // else if(is_other(tmp) || tmp->type == WORD)
+    // {
+    //     printf("sent to redirections function\n"); //word or quotes
+    //     return (0);
+    // }
     return (1);
 }
 
@@ -237,7 +224,10 @@ int is_other(token_t *c)
 
 int syntax_err(token_t *token)
 {
-    if(check_quotes(token) == 1 && check_newline(token) == 1 && check_inside(token) == 1 && check_pipe(token) == 1)
+    if (check_inside(token) == 1)
         return (1);
+    if(check_quotes(token) == 1 && check_newline(token) == 1 && check_pipe(token) == 1)
+        return (1);
+
     return (0);
 }

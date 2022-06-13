@@ -88,10 +88,10 @@ void	go_commands(t_gen *gen, char **line)
 		ft_env(gen->env);
 	// if (!ft_strcmp("pwd", line[0]))
 	// 	printf("%s",ft_pwd(gen));//it does not print the pwd
-	if (!ft_strcmp("pwd", line[0]))
-		printf("%s",ft_pwd(gen));//it does not print the pwd
-	if (!ft_strcmp("echo", line[0]))
-		ft_echo(gen, line);
+	// if (!ft_strcmp("pwd", line[0]))
+	// 	printf("%s",ft_pwd(gen));//it does not print the pwd
+	// if (!ft_strcmp("echo", line[0]))
+	// 	ft_echo(gen, line);
 	// if (!ft_strcmp("cd", line[0]))
 	// 	ft_cd(gen, line[1]); //what if it has alot of spaces?
 	return ;

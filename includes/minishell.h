@@ -101,10 +101,12 @@ int handle_spaces(token_t *c);
 int check_pipe(token_t *c);
 int handle_spaces2(token_t *c);
 int syntax_err(token_t *token);
+
+int check_one(token_t *tmp);
 // int ctrld(void);
 
 ////////////////////////////////////////////////
-char    *find_value(char *str, t_list *env_l);
+//char    *find_value(char *str, t_list *env_l);
 
 char *join_mix(token_t *token1, token_t *token2);
 void join_word(token_t **tokens);
@@ -115,7 +117,7 @@ void	free_all(token_t *tokens);
 
 int    check_newline(token_t *c);
 int ctrld(void);
-int    check_operators(token_t *c);
+
 int is_other(token_t *c);
 t_list *env_create(char **envp);
 int   handle_spaces(token_t *c);
@@ -125,7 +127,6 @@ int   handle_spaces2(token_t *c);
 void    check_redirection(token_t *c);
 // void    check_newline(token_t *c);
 // int ctrld(void);
-void    check_operators(token_t *c);
 int is_other(token_t *c);
 t_list *env_create(char **envp);
 // void   handle_spaces(token_t *c);
