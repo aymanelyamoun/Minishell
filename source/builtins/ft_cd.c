@@ -73,10 +73,64 @@ int	ft_cd(t_gen *gen, char *path)
 
 
 
+int	commands(char **line)
+{
+    if (!ft_strcmp("echo", line[0]))
+		return (YES);
+	if (!ft_strcmp("export ", line[0]))
+		return (YES);
+	if (!ft_strcmp("pwd", line[0]) && ft_strlen(line[0]) == 3)
+		return (YES);
+	if (!ft_strcmp("unset ", line[0]))
+        return (YES);
+	if (!ft_strcmp("env", line[0]))
+		return (YES);
+	if (!ft_strcmp("exit", line[0]) && ft_strlen(line[0]) == 4)
+		return (YES);
+	if (!ft_strcmp("cd", line[0]))
+		return (YES);
+	return (NO);
+}
 
 
 
 
 
+
+
+void	go_commands(t_gen *gen, char **line)
+{
+	if (!ft_strcmp("env", line[0]))
+		ft_env(gen->env);
+	// if (!ft_strcmp("pwd", line[0]))
+	// 	printf("%s",ft_pwd(gen));//it does not print the pwd
+	// if (!ft_strcmp("pwd", line[0]))
+	// 	printf("%s",ft_pwd(gen));//it does not print the pwd
+	// if (!ft_strcmp("echo", line[0]))
+	// 	ft_echo(gen, line);
+	// if (!ft_strcmp("cd", line[0]))
+	// 	ft_cd(gen, line[1]); //what if it has alot of spaces?
+	return ;
+}
+
+int	array_len(char **array)
+{
+	int	index;
+
+	index = 0;
+	while (array[index + 1])
+		index++ ;
+	return (index);
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int i;
+
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
+		i++;
+	return (s1[i] - s2[i]);
+}
 
 
