@@ -13,7 +13,7 @@ void main(int argc, char **argv, char **envp)
         return ;
     gen = malloc(sizeof(t_gen*));
     gen->env = env_create(envp);
-    gen->envp = set_env(envp);
+    //gen->envp = set_env(envp);
     handle_signals();
     while (1)
     {

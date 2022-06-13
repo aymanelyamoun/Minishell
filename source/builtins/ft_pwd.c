@@ -1,14 +1,14 @@
 #include "../includes/minishell.h"
 
-
-int ft_pwd(void)
+//pwd should be returning char*
+char* ft_pwd(void)
 {
     char	pwd[PATH_MAX];
 
 	getcwd(pwd, PATH_MAX);
 	ft_putstr_fd(pwd, 1);
 	ft_putchar_fd('\n', 1);
-	return (0);
+	return (pwd);
 }
 
 
@@ -22,11 +22,9 @@ int ft_pwd(void)
 // 	if(!pwd)
 // 	{
 // 		printf("problem in pwd\n");
-// 		//exit status
+// 		//track_status
 // 	}
-// 	// ft_putstr_fd(pwd, 1);
-// 	// ft_putchar_fd('\n', 1);
-// 	// return (change_env(gen, pwd));
+// 	return (change_env(gen, pwd));
 // }
 
 
@@ -36,7 +34,7 @@ int ft_pwd(void)
 // 	tmp = env_create(gen->envp);
 // 	while(tmp)
 // 	{
-// 		if(strcmp(tmp->content, "PWD")== 0)
+// 		if(strcmp(tmp->content, "PWD") == 0)
 // 			{
 // 				free(tmp->content);
 // 				tmp->content = ft_strdup(new);
