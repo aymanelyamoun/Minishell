@@ -4,7 +4,7 @@
 // {
 //     int exit_num;
 
-//     // rl_clear_history();
+//     rl_clear_history();
 //     free_env(env);
 //     ft_putstr_fd("exit\n", 1);
 // }
