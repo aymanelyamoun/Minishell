@@ -20,7 +20,6 @@ token_t *new_token(unsigned int type, char *data)
 	token = malloc(sizeof(token_t));
 	token->type = type;
 	token->data = data;
-	token->old_data = NULL;
 	token->next = NULL;
 	token->prev = NULL;
 	return token;
