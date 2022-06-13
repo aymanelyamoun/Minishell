@@ -420,11 +420,6 @@ int main(int argc, char **argv, char **envp)
 			// 	i++;
 			// // // }
 		}
-		else
-		{
-			printf("\ni got a NULL\n");
-			exit(0); // last status
-		}
 	}
 	return (0);
 }
