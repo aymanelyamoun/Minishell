@@ -1,5 +1,4 @@
 #include "../includes/minishell.h"
-
 static int check_pairs1(char *s)
 {
     int q;
@@ -103,63 +102,34 @@ int check_inside(token_t *tmp)
     return (1);
 }
 
+
 int check_newline(token_t *c)
 {
     token_t *tmp = NULL;
 
     tmp = c;
-
-    if((tmp->type == LESS) || (tmp->type == GREAT) || (tmp->type == DGREAT) || (tmp->type == DLESS))
+    while(tmp)
     {
-        if(tmp->type == LESS)
+        if((tmp->type == LESS) || (tmp->type == GREAT) || (tmp->type == DGREAT) || (tmp->type == DLESS))
         {
-            if(tmp->next != NULL && tmp->next->type == GREAT)
+            tmp = tmp->next;
+           while(tmp && tmp->type == SPAACE)
+                tmp = tmp->next;
+            if(tmp && is_other2(tmp))
             {
-                printf("newline2\n");
+                printf("error successif operators %s\n", tmp->data);
                 return(0);
             }
-            return (1); //?
+            else if (tmp == NULL)
+            {
+                printf("redirection symbol alone!\n");
+                return(0);
+            }
         }
-        if(tmp->next == NULL)
-        {
-            printf("redirection symbol alone!\n");
-            return(0);
-        }
-        else
-        {
-            if(handle_spaces(tmp->next) == 0)
-                return (0);
-        }
-
-    }
-    while(tmp->next)
         tmp = tmp->next;
-    if((tmp->type == LESS) || (tmp->type == GREAT) || (tmp->type == DGREAT) || (tmp->type == DLESS))
-    {
-        if(tmp->type == LESS)
-        {
-            if(tmp->next != NULL && tmp->next->type == GREAT)
-            {
-                printf("newline2\n");
-                return(0);
-            }
-           return (1);//?
-        }
-        if(tmp->next == NULL)
-        {
-            printf("redirection symbol alone!\n");
-            return(0);
-        }
-        else
-        {
-            if(handle_spaces(tmp->next) == 0)
-                return (0);
-        }       
-    }    
+    }
     return (1);
 }
-
-
 int   handle_spaces(token_t *c)
 {
     token_t *tmp = NULL;
@@ -178,11 +148,7 @@ int   handle_spaces(token_t *c)
          printf("syntax error near unexpected token tmp 2\n");
          return (0);
     }  
-    // else
-    // {
-    //      printf("sent to redirections errors\n"); //word or quotes
-    //      return (0);
-    // }
+
     return (1);
 }
 
@@ -218,3 +184,12 @@ int syntax_err(token_t *token)
         return (1);
     return (0);
 }
+
+
+int is_other2(token_t *c)
+{
+    if(c->type == LESS || c->type == DLESS || c->type ==DGREAT || c->type == GREAT || c->type == PIPE)
+        return (1);
+    return (0);
+}
+

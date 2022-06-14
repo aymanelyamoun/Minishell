@@ -60,6 +60,7 @@ typedef struct s_gen
 
 } t_gen;
 
+t_gen *gen;
 /*********************************/
 /********** TOKENS LIST **********/
 /*********************************/
@@ -142,6 +143,7 @@ void    modify_env(t_list *gen, char *arr);
 
 int check_double(token_t *tmp);
 int check_inside(token_t *c);
-void check_one(token_t *tmp);;
-
+void check_one(token_t *tmp);
+int check_inside2(token_t *tmp);
+int is_other2(token_t *c);
 #endif
