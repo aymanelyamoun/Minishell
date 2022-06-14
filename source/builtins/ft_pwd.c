@@ -4,11 +4,13 @@
 char* ft_pwd(void)
 {
     char	pwd[PATH_MAX];
+    char *str;
 
-	getcwd(pwd, PATH_MAX);
+    str = NULL;
+	str = getcwd(pwd, PATH_MAX);
 	ft_putstr_fd(pwd, 1);
 	ft_putchar_fd('\n', 1);
-	return (pwd);
+	return (str);
 }
 
 
