@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 19:19:26 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/06/03 13:03:54 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/06/14 10:04:12 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ token_t *tokenize(char *line)
     tmp = tokens;
     while (tokens != NULL)
     {
-		//printf("type: %d ... data: %s\n",tokens->type, tokens->data);
+		printf("type: %d ... data: %s\n",tokens->type, tokens->data);
         tokens = tokens->next;
     }
     return (tmp);
