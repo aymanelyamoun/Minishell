@@ -354,17 +354,16 @@ void creat_cmd_args(t_cmd **cmds, int pipe)
 	}
 }
 
-t_cmd *cmds_and_redirections(token_t **tokens, t_list *env_l)
+t_cmd *cmds_and_redirections(token_t **tokens, t_list *env_l, int *pipes)
 {
-	int		pipes;
 	t_cmd	*cmds;
 	int		status;
 
-	pipes = count_pipes(tokens);
-	cmds = creat_cmds(&tokens);
-	check_file_direcitons(&cmds, pipes);
-	rm_redirecitons(&cmds, pipes);
-	creat_cmd_args(&cmds, pipes);
+	*pipes = count_pipes(*tokens);
+	cmds = creat_cmds(tokens);
+	check_file_direcitons(&cmds, *pipes);
+	rm_redirecitons(&cmds, *pipes);
+	creat_cmd_args(&cmds, *pipes);
 	
 	return (cmds);
 }
@@ -372,13 +371,13 @@ t_cmd *cmds_and_redirections(token_t **tokens, t_list *env_l)
 void	get_path_and_execute(token_t **toknes, t_list *env_l)
 {
 	t_cmd	*cmds;
-	int		pipes;
+	int		pipes_num;
 
-	cmds = cmds_and_redirections(toknes, env_l);
-	if (get_cmds_path(&cmds, pipes, env_l) == 0)
+	cmds = cmds_and_redirections(toknes, env_l, &pipes_num);
+	if (get_cmds_path(&cmds, pipes_num, env_l) == 0)
 	{	
-		printf("========\n\n------ i got executed ------\n\n========\n");
-		execution();
+		execution(cmds, pipes_num);
+		// printf("========\n\n------ i got executed ------\n\n========\n");
 	}
 }
 
@@ -395,6 +394,7 @@ int main(int argc, char **argv, char **envp)
 	int j = 0;
 	int	status;
 	
+    gen.envp = envp;
 	if(argc != 1)
 	    return (1);
 	env_l = env_create(envp);
@@ -412,6 +412,7 @@ int main(int argc, char **argv, char **envp)
 				join_word(&tokens);
 				rm_spaces(&tokens);
 				rm_quotes_tokens(&tokens);
+				get_path_and_execute(&tokens, env_l);
 			}
 	
 			// i = 0;

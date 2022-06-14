@@ -85,9 +85,9 @@ void    check_file_direcitons(t_cmd **cmds, int pipes)
                 fd = open_file(&tokens, tokens->type);
 				if ((*cmds)[i].infile != -1)
 				{
-					if (close((*cmds)[i].infile) != -1)
+					if (close((*cmds)[i].infile) == -1)
 					{
-						// puts("i failed to close");
+						perror("close : ");
 						exit(3);
 					}
 				}
@@ -100,7 +100,7 @@ void    check_file_direcitons(t_cmd **cmds, int pipes)
 				{
 					if (close((*cmds)[i].outfile) == -1)
 					{
-						// puts("i failed to close");
+						perror("close : ");
 						exit(3);
 					}
 				}
