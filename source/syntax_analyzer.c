@@ -122,13 +122,15 @@ int check_newline(token_t *c)
         }
         if(tmp->next == NULL)
         {
-            printf("3la slamtk\n");
+            printf("redirection symbol alone!\n");
             return(0);
         }
         else
         {
-            handle_spaces(tmp->next);
-        }       
+            if(handle_spaces(tmp->next) == 0)
+                return (0);
+        }
+
     }
     while(tmp->next)
         tmp = tmp->next;
@@ -141,20 +143,17 @@ int check_newline(token_t *c)
                 printf("newline2\n");
                 return(0);
             }
-            else
-            {
-                printf("fcfvfvfv\n");
-                return (0);
-            } 
+           return (1);//?
         }
         if(tmp->next == NULL)
         {
-            printf("3la slamtk\n");
+            printf("redirection symbol alone!\n");
             return(0);
         }
         else
         {
-            handle_spaces(tmp->next);
+            if(handle_spaces(tmp->next) == 0)
+                return (0);
         }       
     }    
     return (1);
@@ -179,11 +178,11 @@ int   handle_spaces(token_t *c)
          printf("syntax error near unexpected token tmp 2\n");
          return (0);
     }  
-    else
-    {
-         printf("sent to redirections errors\n"); //word or quotes
-         return (0);
-    }
+    // else
+    // {
+    //      printf("sent to redirections errors\n"); //word or quotes
+    //      return (0);
+    // }
     return (1);
 }
 
