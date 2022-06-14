@@ -103,12 +103,37 @@ int check_inside(token_t *tmp)
     return (1);
 }
 
-// int check_one(token_t *c)
+// void check_one(token_t *tmp)
 // {
-    
+//     if((tmp->type == LESS) || (tmp->type == GREAT) || (tmp->type == DGREAT) || (tmp->type == DLESS))
+//     {
+//         if(tmp->type == LESS)
+//         {
+//             if(tmp->next != NULL && tmp->next->type == GREAT)
+//             {
+//                 printf("newline2\n");
+//                 return(0);
+//             }
+//             return (1); //?
+//         }
+//         if(tmp->next == NULL)
+//         {
+//             printf("3la slamtk\n");
+//             return(0);
+//         }
+//         else
+//         {
+//             handle_spaces(tmp->next);
+//         }       
+//     }
 // }
-int check_one(token_t *tmp)
+
+int check_newline(token_t *c)
 {
+    token_t *tmp = NULL;
+
+    tmp = c;
+
     if((tmp->type == LESS) || (tmp->type == GREAT) || (tmp->type == DGREAT) || (tmp->type == DLESS))
     {
         if(tmp->type == LESS)
@@ -130,15 +155,6 @@ int check_one(token_t *tmp)
             handle_spaces(tmp->next);
         }       
     }
-}
-
-int check_newline(token_t *c)
-{
-    token_t *tmp = NULL;
-
-    tmp = c;
-
-    check_one(tmp);
     while(tmp->next)
         tmp = tmp->next;
     if((tmp->type == LESS) || (tmp->type == GREAT) || (tmp->type == DGREAT) || (tmp->type == DLESS))
