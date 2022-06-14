@@ -377,7 +377,7 @@ int main(int argc, char **argv, char **envp)
 		{
 			add_history(line);
 			tokens = tokenize(line);
-            if (syntax_err(tokens))
+			if (syntax_err(tokens))
 			{
 				expander(&tokens, env_l);
 				expander_in_quotes(&tokens, env_l);
@@ -413,6 +413,7 @@ int main(int argc, char **argv, char **envp)
 			// 	// 	printf("arg %d : %s\n", j+1, cmds[i].cmd_args[j]);
 			// 	// 	j++;
 			// 	// }
+
 
 				
 // 			// 	i++;
