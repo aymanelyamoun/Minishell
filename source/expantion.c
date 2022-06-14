@@ -378,27 +378,31 @@ int main(int argc, char **argv, char **envp)
 		{
 			add_history(line);
 			tokens = tokenize(line);
-			expander(&tokens, env_l);
-			expander_in_quotes(&tokens, env_l);
-			join_word(&tokens);
-			rm_spaces(&tokens);
-			rm_quotes_tokens(&tokens);
-			pipes = count_pipes(tokens);
-			cmds = creat_cmds(&tokens);
-			check_file_direcitons(&cmds, pipes);
-			rm_redirecitons(&cmds, pipes);
-			creat_cmd_args(&cmds, pipes);
-			if (get_cmds_path(&cmds, pipes, env_l) == 0)
+            if (syntax_err(tokens))
 			{
-				// execute_cmds(cmds);
-				printf("========\n\n------ i got executed ------\n\n========\n");
+				expander(&tokens, env_l);
+				expander_in_quotes(&tokens, env_l);
+				join_word(&tokens);
+				rm_spaces(&tokens);
+				rm_quotes_tokens(&tokens);
+				pipes = count_pipes(tokens);
+				cmds = creat_cmds(&tokens);
+				check_file_direcitons(&cmds, pipes);
+				rm_redirecitons(&cmds, pipes);
+				creat_cmd_args(&cmds, pipes);
+				if (get_cmds_path(&cmds, pipes, env_l) == 0)
+				{
+					// execute_cmds(cmds);
+					printf("========\n\n------ i got executed ------\n\n========\n");
+				}
 			}
+	
 			// i = 0;
 			// // while (i <= pipes)
 			// // {
 			// 	tok = tokens;
 			// 	// tok = cmds[i].tokens_cmd;
-			// 	// printf("from main %d : ---infile: %d --- outfile: %d\n", i, cmds[i].infile, cmds[i].outfile);
+				// printf("from main %d : ---infile: %d --- outfile: %d\n", i, cmds[i].infile, cmds[i].outfile);
 			// 	while (tok != NULL)
 			// 	{
 			// 		printf(" -- %d ---> %s \n", tok->type, tok->data);

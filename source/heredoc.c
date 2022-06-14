@@ -36,6 +36,5 @@ int heredoc(char *limiter)
 		free(line);
 	if (limiter)
 		free(limiter);
-	puts("hoi");
 	return (fd);
 }
