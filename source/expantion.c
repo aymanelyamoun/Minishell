@@ -431,9 +431,6 @@ int main(int argc, char **argv, char **envp)
 			// 	// 	printf("arg %d : %s\n", j+1, cmds[i].cmd_args[j]);
 			// 	// 	j++;
 			// 	// }
-
-
-				
 // 			// 	i++;
 // 			// // // }
 		}
