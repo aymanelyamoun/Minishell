@@ -367,8 +367,8 @@ int main(int argc, char **argv, char **envp)
 	int j = 0;
 	int	status;
 	
-// if(argc != 1)
-	//     return (1);
+	if(argc != 1)
+	    return (1);
 	env_l = env_create(envp);
 	// env = set_env(envp);
 	while (1)
@@ -414,9 +414,10 @@ int main(int argc, char **argv, char **envp)
 			// 	// 	printf("arg %d : %s\n", j+1, cmds[i].cmd_args[j]);
 			// 	// 	j++;
 			// 	// }
+
 				
-			// 	i++;
-			// // // }
+// 			// 	i++;
+// 			// // // }
 		}
 		else
 		{
@@ -427,7 +428,7 @@ int main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-// t_cmd   *parsing(token_t *kokens)
-// {
+// // t_cmd   *parsing(token_t *kokens)
+// // {
 
-// }
+// // }

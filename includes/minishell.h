@@ -135,13 +135,13 @@ void	cd_home(t_gen *gen);
 void	ft_echo(t_gen *gen, char **str) ;
 void	ft_env(t_list *env);
 int ft_exit(t_list **env, char **arg);
-char *ft_pwd(t_gen *gen);
+char *ft_pwd(void);
 int syntax_err(token_t *token);
 char*    change_env2(t_gen *gen);
 void    modify_env(t_list *gen, char *arr);
 
 int check_double(token_t *tmp);
 int check_inside(token_t *c);
-int check_one(token_t *tmp);;
+void check_one(token_t *tmp);;
 
 #endif
