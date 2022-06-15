@@ -70,29 +70,38 @@ void	assign_pipes(int **pipes, t_cmd **cmds, int pipes_num)
 	{
 		if (i == 0)
 		{
-			if ((*cmds)->infile == -1)
-				(*cmds)->infile = STDIN_FILENO;
-			if ((*cmds)->outfile == -1)
-				(*cmds)->outfile = pipes[i][1];
+			if ((*cmds)[i].infile == -1)
+				(*cmds)[i].infile = STDIN_FILENO;
+			if ((*cmds)[i].outfile == -1)
+			{
+				if (pipes_num == 0)
+				{
+					(*cmds)[i].outfile = STDIN_FILENO;
+					return ;
+				}
+				else
+					(*cmds)[i].outfile = pipes[i][1];
+			}
 			// else
 				// close(pipes[i][1]);
 
 		}
 		if (i == pipes_num)
 		{
-			if ((*cmds)->infile == -1)
-				(*cmds)->infile = pipes[i - 1][0];
+			if ((*cmds)[i].infile == -1)
+				(*cmds)[i].infile = pipes[i - 1][0];
 			// else
 			// 	close(pipes[i - 1][0]);
-			if ((*cmds)->outfile == -1)
-				(*cmds)->outfile = STDOUT_FILENO;
+			if ((*cmds)[i].outfile == -1)
+				(*cmds)[i].outfile = STDOUT_FILENO;
 		}
 		if (i < pipes_num)
 		{
-			if ((*cmds)->infile == -1)
-				(*cmds)->infile = pipes[i - 1][0];
-			if ((*cmds)->outfile == -1)
-				(*cmds)->outfile = pipes[i][1];
+			if ((*cmds)[i].infile == -1)
+				(*cmds)[i].infile = pipes[i - 1][0];
+			if ((*cmds)[i].outfile == -1)
+				(*cmds)[i].outfile = pipes[i][1];
 		}
+		i++;
 	}
 }
