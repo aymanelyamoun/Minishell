@@ -8,7 +8,7 @@ int    open_file(token_t **tokens, int type)
 	if (type == GREAT)
     	fd = open((*tokens)->next->data, O_RDWR | O_CREAT, 0777);
 	else if (type == LESS)
-    	fd = open((*tokens)->next->data, O_RDWR , 0777);
+    	fd = open((*tokens)->next->data, O_RDWR | O_TRUNC, 0777);
 	else if (type == DGREAT)
     	fd = open((*tokens)->next->data, O_RDWR | O_CREAT | O_APPEND, 0777);
 	else if (type == DLESS)
@@ -16,7 +16,15 @@ int    open_file(token_t **tokens, int type)
 		fd = heredoc(ft_strdup((*tokens)->next->data));
 	}
 	if (fd < 0)
-		perror("the error");
+	{
+		if ((*tokens)->next->old_data == NULL)
+			perror("the error");
+		else
+		{
+			printf("minishell: %s: ambiguous redirect\n", (*tokens)->next->old_data);
+			free((*tokens)->next->old_data);
+		}
+	}
 	// close(fd);
 	return (fd);
 }
@@ -77,12 +85,14 @@ void    check_file_direcitons(t_cmd **cmds, int pipes)
                 fd = open_file(&tokens, tokens->type);
 				if ((*cmds)[i].infile != -1)
 				{
-					if (close((*cmds)[i].infile) != -1)
+					if (close((*cmds)[i].infile) == -1)
 					{
-						// puts("i failed to close");
+						perror("close : ");
 						exit(3);
 					}
 				}
+				if (fd == -1)
+					(*cmds)[i].exec = 0;
 				(*cmds)[i].infile = fd;
 			}
 			else if (tokens->type == GREAT || tokens->type == DGREAT)
@@ -92,10 +102,12 @@ void    check_file_direcitons(t_cmd **cmds, int pipes)
 				{
 					if (close((*cmds)[i].outfile) == -1)
 					{
-						// puts("i failed to close");
+						perror("close : ");
 						exit(3);
 					}
 				}
+				if (fd == -1)
+					(*cmds)[i].exec = 0;
 				(*cmds)[i].outfile = fd;
 			}
 			tokens = tokens->next;

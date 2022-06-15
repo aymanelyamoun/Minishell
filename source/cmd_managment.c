@@ -31,6 +31,7 @@ static t_cmd *creat_cmds_utils(token_t **tokens, t_cmd **cmds)
 			(*cmds)[i].tokens_cmd = new_head;
 			(*cmds)[i].infile = -1;
 			(*cmds)[i].outfile = -1;
+			(*cmds)[i].exec = 1;
 			new_head = tmp->next;
 			new_head->prev = NULL;
 			tmp->next = NULL;
@@ -43,6 +44,7 @@ static t_cmd *creat_cmds_utils(token_t **tokens, t_cmd **cmds)
     (*cmds)[i].tokens_cmd = new_head;
 	(*cmds)[i].infile = -1;
 	(*cmds)[i].outfile = -1;
+	(*cmds)[i].exec = 1;
 	return (*cmds);
 }
 
@@ -62,6 +64,7 @@ t_cmd   *creat_cmds(token_t **tokens)
 		cmds[i].tokens_cmd = *tokens;
 		cmds[i].infile = -1;
 		cmds[i].outfile = -1;
+		cmds[i].exec = 1;
 		return (cmds);
 	}
     return (creat_cmds_utils(tokens, &cmds));
@@ -121,10 +124,10 @@ static char	*join_cmd(char *path, char *cmd)
 
 	to_free = ft_strjoin_1("/", cmd);
 	if (to_free == NULL)
-		exit(2);
+		return (NULL);
 	cmd_path = ft_strjoin_1(path, to_free);
 	if (cmd_path == NULL)
-		exit(2);
+		return (NULL);
 	free(to_free);
 	return (cmd_path);
 }
@@ -143,10 +146,12 @@ char	*get_cmd_path(char *path, char *cmd)
 	i = 0;
 	paths = ft_split(path, ':');
 	if (paths == NULL)
-		exit(2);
+		return (NULL);
 	while (paths[i] != NULL)
 	{
 		cmd_path = join_cmd(paths[i], cmd);
+		if (cmd_path == NULL)
+			return (NULL);
 		if (access(cmd_path, F_OK | X_OK) == 0)
 		{
 			free_arr(paths);

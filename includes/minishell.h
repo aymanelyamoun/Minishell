@@ -1,6 +1,3 @@
-
-
-
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
@@ -39,6 +36,7 @@ typedef enum type_s
 typedef struct token_s
 {
     char *data;
+    char *old_data;
     unsigned int type;
     struct token_s *next;
     struct token_s *prev;
@@ -52,6 +50,7 @@ typedef struct s_cmd
     int outfile;
     token_t *tokens_cmd;
     int pipes;
+    int exec;
 } t_cmd;
 
 typedef struct s_gen
@@ -62,6 +61,7 @@ typedef struct s_gen
 
 } t_gen;
 
+t_gen gen;
 /*********************************/
 /********** TOKENS LIST **********/
 /*********************************/
@@ -87,14 +87,14 @@ int get_quote(char **str, char c);
 int check_quotes(token_t *c);
 token_t *error_free(char *str, token_t *tokens);
 void free_all(token_t *tokens);
-void check_redirection(token_t *c);
-void check_newline(token_t *c);
-void check_operators(token_t *c);
+int check_redirection(token_t *c);
+int check_newline(token_t *c);
+
 int is_other(token_t *c);
 t_list *env_create(char **envp);
-void handle_spaces(token_t *c);
-void check_pipe(token_t *c);
-void handle_spaces2(token_t *c);
+int handle_spaces(token_t *c);
+int check_pipe(token_t *c);
+int handle_spaces2(token_t *c);
 // int ctrld(void);
 
 ////////////////////////////////////////////////
@@ -105,16 +105,10 @@ void rm_token(token_t **tokens);
 void rm_spaces(token_t **tokens);
 
 void	free_all(token_t *tokens);
-void    check_redirection(token_t *c);
-void    check_newline(token_t *c);
+int    check_newline(token_t *c);
 // int ctrld(void);
-void    check_operators(token_t *c);
 int is_other(token_t *c);
 t_list *env_create(char **envp);
-void   handle_spaces(token_t *c);
-void    check_pipe(token_t *c);
-void   handle_spaces2(token_t *c);
-
 
 /*********************************/
 /********* CMD MANAGMENT *********/
@@ -129,22 +123,38 @@ int	get_cmds_path(t_cmd **cmds, int pipes, t_list *env_l);
 /******** FILE MANAGMENT *********/
 /*********************************/
 
+int	ft_strcmp(char *s1, char *s2);
 int heredoc(char *limiter);
 void check_file_direcitons(t_cmd **cmds, int pipes);
 void rm_redirecitons(t_cmd **cmds, int pipes);
 
 /*********************************/
+/******** PIPE MANAGMENT *********/
+/*********************************/
+
+int     **creat_pipes(int pipes_num);
+void	close_pipes(int **pipes, int count);
+void	free_pipes(int **pipes, int pipes_num);
+void	assign_pipes(int **pipes, t_cmd **cmds, int pipes_num);
+void    execution(t_cmd *cmds, int pipes_num);
+
+/*********************************/
 /*********Builtins****************/
 /*********************************/
 
-int ft_pwd(void);
-void ft_echo(t_gen *gen, char **str);
-int is_flag(char *str);
-int commands(char **line);
-void go_commands(t_gen *gen, char **line);
-void ft_env(t_list *env);
-void free_env(t_list **env);
-int	array_len(char **array);
-int	ft_strcmp(char *s1, char *s2);
+int	ft_cd(t_gen *gen, char *path);
+void	cd_home(t_gen *gen);
+void	ft_echo(t_gen *gen, char **str) ;
+void	ft_env(t_list *env);
+int ft_exit(t_list **env, char **arg);
+char *ft_pwd(void);
+int syntax_err(token_t *token);
+char*    change_env2(t_gen *gen);
+void    modify_env(t_list *gen, char *arr);
 
+int check_double(token_t *tmp);
+int check_inside(token_t *c);
+void check_one(token_t *tmp);
+int check_inside2(token_t *tmp);
+int is_other2(token_t *c);
 #endif
