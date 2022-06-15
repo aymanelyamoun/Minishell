@@ -41,8 +41,12 @@ void    execution(t_cmd *cmds, int pipes_num)
             // close(cmds[i].outfile);
             // write(2, gen->envp[0], ft_strlen(gen->envp[0]));
             // write(2, cmds[i].cmd_args[0], ft_strlen(cmds[i].cmd_args[0]));
-            execve(cmds[i].cmd_path, cmds[i].cmd_args, gen.envp);
-            perror("execve : ");
+            if (cmds[i].exec)
+            {
+                execve(cmds[i].cmd_path, cmds[i].cmd_args, gen.envp);
+                perror("execve : ");
+            }
+            exit(0);
         }
         i++;
     }

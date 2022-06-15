@@ -50,6 +50,7 @@ typedef struct s_cmd
     int outfile;
     token_t *tokens_cmd;
     int pipes;
+    int exec;
 } t_cmd;
 
 typedef struct s_gen
