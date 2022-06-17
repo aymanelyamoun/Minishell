@@ -2,24 +2,23 @@
 
  //where to put it ?
 
-void	ft_echo(t_gen *gen, char **str) //hooooooooooooooooooow
+void	ft_echo(char **str) //hooooooooooooooooooow
 {
-    int index;
-	int	    flag;
-	
+	int index;
+
 	index = 1;
-	flag = 0;
-	if (str[1] && ft_strncmp(str[1], "-n", 2) == 0)
-	{
-		flag = 1;
-		index = 2;
-	}
-	while (str && str[index])
-	{
-        ft_putstr_fd(str[index], 1);
+	while(str[index] && !ft_strcmp("-n", str[index]))
 		index++;
+	if(index > 1 && str[index])
+		ft_putstr_fd(str[index], 1);
+	else if(index > 1 && !str[index])
+		ft_putchar_fd('\n', 1);
+	else if(ft_strcmp("$?", str[index]) == 0)
+		ft_putnbr_fd(gen->exit_status, 1);
+	else if(str[index])
+	{
+		ft_putstr_fd(str[index], 1);
+		ft_putchar_fd('\n', 1);
 	}
-	if (str[1] && flag == 0)
-		ft_putstr_fd("\n", 1);
 	gen->exit_status = 0;
 }

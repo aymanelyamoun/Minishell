@@ -9,7 +9,6 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <sys/types.h>
-#include "../includes/minishell.h"
 #include <termios.h>
 #include <signal.h>
 #include <fcntl.h>
@@ -40,6 +39,7 @@ typedef struct token_s
     unsigned int type;
     struct token_s *next;
     struct token_s *prev;
+
 } token_t;
 
 typedef struct s_cmd
@@ -58,10 +58,11 @@ typedef struct s_gen
     int exit_status;
     t_list *env;
     char **envp;
+    char *pwd;
 
 } t_gen;
 
-t_gen gen;
+t_gen *gen;
 /*********************************/
 /********** TOKENS LIST **********/
 /*********************************/
@@ -95,7 +96,7 @@ t_list *env_create(char **envp);
 int handle_spaces(token_t *c);
 int check_pipe(token_t *c);
 int handle_spaces2(token_t *c);
-// int ctrld(void);
+ int ctrld(void);
 
 ////////////////////////////////////////////////
 char    *find_value(char *str, t_list *env_l);
@@ -115,7 +116,7 @@ t_list *env_create(char **envp);
 /*********************************/
 
 int count_pipes(token_t *tokens);
-static t_cmd *creat_cmds_utils(token_t **tokens, t_cmd **cmds);
+//static t_cmd *creat_cmds_utils(token_t **tokens, t_cmd **cmds); unused function error
 t_cmd *creat_cmds(token_t **tokens);
 int	get_cmds_path(t_cmd **cmds, int pipes, t_list *env_l);
 
@@ -142,19 +143,25 @@ void    execution(t_cmd *cmds, int pipes_num);
 /*********Builtins****************/
 /*********************************/
 
-int	ft_cd(t_gen *gen, char *path);
+int	ft_cd(char *path);
 void	cd_home(t_gen *gen);
-void	ft_echo(t_gen *gen, char **str) ;
-void	ft_env(t_list *env);
+void	ft_echo(char **str) ;
+void	ft_env(void);
 int ft_exit(t_list **env, char **arg);
 char *ft_pwd(void);
 int syntax_err(token_t *token);
 char*    change_env2(t_gen *gen);
-void    modify_env(t_list *gen, char *arr);
+int    modify_env(char *path);
 
 int check_double(token_t *tmp);
 int check_inside(token_t *c);
 void check_one(token_t *tmp);
 int check_inside2(token_t *tmp);
 int is_other2(token_t *c);
+void    go_commands(char **line);
+int commands(char **line);
+char *ft_strjoin_free(char const *s1, char const *s2);
+int ft_add_list(t_list **alst, char *str);
+void    free_env(t_list **env);
+
 #endif

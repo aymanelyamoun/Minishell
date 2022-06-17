@@ -51,8 +51,8 @@ static t_cmd *creat_cmds_utils(token_t **tokens, t_cmd **cmds)
 t_cmd   *creat_cmds(token_t **tokens)
 {
     int		pipes;
-	token_t	*new_head;
-	token_t *tmp;
+	//token_t	*new_head;
+	//token_t *tmp;
 	t_cmd	*cmds;
 	int		i;
 

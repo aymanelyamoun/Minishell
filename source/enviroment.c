@@ -51,3 +51,18 @@ char **set_env(char **envp)
     tmp[index] = NULL;
     return (tmp);
 }
+void    free_env(t_list **env)
+{
+    t_list *tmp;
+    t_list *next;
+
+    tmp  = *env;
+    while(tmp)
+    {
+        free(tmp->content);
+        next = tmp->next;
+        free(tmp);
+        tmp = next;
+    }
+    env = NULL;
+}
