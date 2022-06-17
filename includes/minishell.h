@@ -50,6 +50,7 @@ typedef struct s_cmd
     int outfile;
     token_t *tokens_cmd;
     int pipes;
+    int exec;
 } t_cmd;
 
 typedef struct s_gen
@@ -60,6 +61,7 @@ typedef struct s_gen
 
 } t_gen;
 
+t_gen gen;
 /*********************************/
 /********** TOKENS LIST **********/
 /*********************************/
@@ -125,6 +127,16 @@ int	ft_strcmp(char *s1, char *s2);
 int heredoc(char *limiter);
 void check_file_direcitons(t_cmd **cmds, int pipes);
 void rm_redirecitons(t_cmd **cmds, int pipes);
+
+/*********************************/
+/******** PIPE MANAGMENT *********/
+/*********************************/
+
+int     **creat_pipes(int pipes_num);
+void	close_pipes(int **pipes, int count);
+void	free_pipes(int **pipes, int pipes_num);
+void	assign_pipes(int **pipes, t_cmd **cmds, int pipes_num);
+void    execution(t_cmd *cmds, int pipes_num);
 
 /*********************************/
 /*********Builtins****************/

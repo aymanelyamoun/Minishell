@@ -354,100 +354,30 @@ void creat_cmd_args(t_cmd **cmds, int pipe)
 	}
 }
 
-void	fail_to_generat_pipes(int **pipes, int i)
+t_cmd *cmds_and_redirections(token_t **tokens, t_list *env_l, int *pipes)
 {
-	int	j;
+	t_cmd	*cmds;
+	int		status;
 
-	j = 0;
-	while (j < i)
-	{
-		free(pipes[j]);
-		j++;
-	}
-	free(pipes);
-	exit (3);
+	*pipes = count_pipes(*tokens);
+	cmds = creat_cmds(tokens);
+	check_file_direcitons(&cmds, *pipes);
+	rm_redirecitons(&cmds, *pipes);
+	creat_cmd_args(&cmds, *pipes);
+	
+	return (cmds);
 }
 
-void	free_pipes(int **pipes, int pipes_num)
+void	get_path_and_execute(token_t **toknes, t_list *env_l)
 {
-	int	i;
+	t_cmd	*cmds;
+	int		pipes_num;
 
-	i = 0;
-	if (pipes != NULL)
-	{
-		while (i < pipes_num)
-		{
-			free(pipes[i]);
-			i++;
-		}
-		free(pipes);
-	}
-}
-
-void	close_pipes(int **pipes, int count)
-{
-	int	i;
-
-	i = 0;
-	while (i < count)
-	{
-		close(pipes[i][0]);
-		close(pipes[i][1]);
-		i++;
-	}
-}
-
-int	**creat_pipes(int pipes_num)
-{
-	int	**pipes;
-	int	i;
-
-	i = 0;
-	pipes = malloc(sizeof(int*) * pipes_num);
-	while (i < pipes_num)
-	{
-		pipes[i] = malloc(sizeof(int) * 2);
-		if (pipes == NULL)
-			fail_to_generat_pipes(pipes, i);
-		pipe(pipes[i]);
-		i++;
-	}
-	return (pipes);
-}
-
-void	assign_pipes(int **pipes, t_cmd **cmds, int pipes_num)
-{
-	int	i;
-
-	i = 0;
-	while (i <= pipes_num)
-	{
-		if (i == 0)
-		{
-			if ((*cmds)->infile == -1)
-				(*cmds)->infile = STDIN_FILENO;
-			if ((*cmds)->outfile == -1)
-				(*cmds)->outfile = pipes[i][1];
-			// else
-				// close(pipes[i][1]);
-
-		}
-		if (i == pipes_num)
-		{
-			if ((*cmds)->infile == -1)
-				(*cmds)->infile = pipes[i - 1][0];
-			// else
-			// 	close(pipes[i - 1][0]);
-			if ((*cmds)->outfile == -1)
-				(*cmds)->outfile = STDOUT_FILENO;
-		}
-		if (i < pipes_num)
-		{
-			if ((*cmds)->infile == -1)
-				(*cmds)->infile = pipes[i - 1][0];
-			if ((*cmds)->outfile == -1)
-				(*cmds)->outfile = pipes[i][1];
-		}
+	cmds = cmds_and_redirections(toknes, env_l, &pipes_num);
+	if (get_cmds_path(&cmds, pipes_num, env_l) == 0)
+	{	
+		execution(cmds, pipes_num);
+		// printf("========\n\n------ i got executed ------\n\n========\n");
 	}
 }
 
@@ -464,10 +394,10 @@ int main(int argc, char **argv, char **envp)
 	int j = 0;
 	int	status;
 	
+    gen.envp = envp;
 	if(argc != 1)
 	    return (1);
 	env_l = env_create(envp);
-	// env = set_env(envp);
 	while (1)
 	{
 		line = readline("minishell> ");
@@ -482,16 +412,7 @@ int main(int argc, char **argv, char **envp)
 				join_word(&tokens);
 				rm_spaces(&tokens);
 				rm_quotes_tokens(&tokens);
-				pipes = count_pipes(tokens);
-				cmds = creat_cmds(&tokens);
-				check_file_direcitons(&cmds, pipes);
-				rm_redirecitons(&cmds, pipes);
-				creat_cmd_args(&cmds, pipes);
-				if (get_cmds_path(&cmds, pipes, env_l) == 0)
-				{
-					// execute_cmds(cmds);
-					printf("========\n\n------ i got executed ------\n\n========\n");
-				}
+				get_path_and_execute(&tokens, env_l);
 			}
 	
 			// i = 0;
@@ -511,9 +432,6 @@ int main(int argc, char **argv, char **envp)
 			// 	// 	printf("arg %d : %s\n", j+1, cmds[i].cmd_args[j]);
 			// 	// 	j++;
 			// 	// }
-
-
-				
 // 			// 	i++;
 // 			// // // }
 		}

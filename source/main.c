@@ -1,7 +1,7 @@
 
 #include "../includes/minishell.h"
 
-t_gen *gen;
+t_gen gen;
 
 // void main(int argc, char **argv, char **envp)
 // {
