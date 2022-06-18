@@ -6,13 +6,13 @@
 /*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 11:18:42 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/06/18 00:57:19 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/06/18 01:00:15 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-token_t *error_free(char *str, token_t *tokens)
+void error_free(char *str, token_t *tokens)
 {
     ft_putstr_fd("bash: syntax error near unexpected token ", 2);
     ft_putstr_fd("\'", 2);
@@ -20,7 +20,7 @@ token_t *error_free(char *str, token_t *tokens)
 	ft_putstr_fd("\'", 2);
 	ft_putstr_fd("\n", 2);
 	//free_all(tokens);
-	return (NULL);
+	return ;
 }
 
 

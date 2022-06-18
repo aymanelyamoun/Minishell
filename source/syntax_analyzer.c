@@ -179,7 +179,8 @@ int is_other(token_t *c)
 
 int syntax_err(token_t *token)
 {
- 
+    // if (check_inside(token) == 1)
+    //     return (1);
     if(check_quotes(token) == 1 && check_newline(token) == 1 && check_pipe(token) == 1 && check_inside(token) == 1)
         return (1);
     return (0);
@@ -192,3 +193,4 @@ int is_other2(token_t *c)
         return (1);
     return (0);
 }
+

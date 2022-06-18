@@ -86,7 +86,7 @@ char *get_char(char **str, char *c, int increment);
 int get_word(char **str);
 int get_quote(char **str, char c);
 int check_quotes(token_t *c);
-token_t *error_free(char *str, token_t *tokens);
+void error_free(char *str, token_t *tokens);
 void free_all(token_t *tokens);
 int check_redirection(token_t *c);
 int check_newline(token_t *c);
