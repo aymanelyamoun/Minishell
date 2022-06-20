@@ -1,5 +1,8 @@
 #include "../includes/minishell.h"
 
+
+/* TODO : ADD EXIT STATUS 2 TO SYNTAX ERROR*/
+
 static int check_pairs1(char *s)
 {
     int q;
@@ -145,8 +148,6 @@ int is_other(token_t *c)
 
 int syntax_err(token_t *token)
 {
-    // if (check_inside(token) == 1)
-    //     return (1);
     if(check_quotes(token) == 1 && check_newline(token) == 1 && check_inside(token) == 1)
         return (1);
     return (0);

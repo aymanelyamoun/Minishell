@@ -143,14 +143,14 @@ void    execution(t_cmd *cmds, int pipes_num);
 /*********Builtins****************/
 /*********************************/
 
-int	ft_cd(char *path);
+int	ft_cd(char **path);
 void	cd_home(t_gen *gen);
 void	ft_echo(char **str) ;
 void	ft_env(void);
 int ft_exit(t_list **env, char **arg);
-char *ft_pwd(void);
+void	ft_pwd(void);
 int syntax_err(token_t *token);
-char*    change_env2(t_gen *gen);
+int change_env(char *p);
 int    modify_env(char *path);
 
 int check_double(token_t *tmp);
@@ -163,5 +163,7 @@ int commands(char **line);
 char *ft_strjoin_free(char const *s1, char const *s2);
 int ft_add_list(t_list **alst, char *str);
 void    free_env(t_list **env);
+int	ft_strlen2(char **str);
+char *join_str(char const *s1, char const *s2);
 
 #endif

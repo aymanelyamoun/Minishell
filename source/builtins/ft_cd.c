@@ -1,42 +1,8 @@
 #include "../includes/minishell.h"
 
-void	cd_home(t_gen *gen)
-{
-    char *home;
-    home =  find_value("HOME", gen->env);
-	if (chdir(home) == -1)
-	{
-		printf("problem in chdir\n");
-		gen->exit_status = 1;
-	}
-	return ;
-}
 
-int	ft_cd(char *path)
-{
-	char *pwd;
-
-	if (!path || (path[0] == '~' && !path[1])) 
-		cd_home(gen);
-	gen->pwd = ft_pwd();
-	pwd = ft_strjoin_free("OLDPWD=", gen->pwd);
-	if (!chdir(path))
-	{
-		modify_env(pwd);
-		free(pwd);
-		pwd = ft_strjoin_free("PWD=", gen->pwd);
-		modify_env(pwd);
-	}
-	else if (chdir(path) == -1)
-	{
-		perror("cd");
-		gen->exit_status = 1;
-	}
-	free(path);
-	gen->pwd = getcwd(NULL, 0);
-	free(pwd);
-	return(gen->exit_status);
-}
+//TODO: FIX THE RETURN STATUS /VALUES
+//TODO : FREE THE UNUSED ALLOCATIONS
 
 int    modify_env(char *pwd)
 {
@@ -45,7 +11,68 @@ int    modify_env(char *pwd)
 	return (1);
 }
 
-char *ft_strjoin_free(char const *s1, char const *s2)
+int change_dir(char **p, char **path)
+{
+	char *pa;
+
+	if (!path[1] || !strncmp(path[1], "--", 2) || (!strncmp(path[1], "~", 2) && !path[2]))
+	{
+		pa =  find_value("HOME", gen->env);
+		if(chdir(pa) == -1)
+		{
+			ft_putstr_fd("Problem in chdir.\n", 2);
+			gen->exit_status = 1;
+			return (-1);
+		}
+	}
+	else if(ft_strlen2(path) == 2)
+		pa = ft_strdup(path[1]);
+	*p = pa;
+	return (0);
+
+}
+int	ft_cd(char **path)
+{
+	char	*pwd;
+	char	*p;
+
+	if (!path[1] || !strncmp(path[1], "--", 2) || (!strncmp(path[1], "~", 2)&& !path[2]))
+	{
+		p =  find_value("HOME", gen->env);
+		if(chdir(p) == -1)
+		{
+			ft_putstr_fd("Problem in chdir.\n", 2);
+			gen->exit_status = 1;
+			return (1);
+		}
+	}
+	else if(ft_strlen2(path) == 2)
+		p = ft_strdup(path[1]);
+	change_env(p);
+	return (0);
+}
+
+int change_env(char *p)
+{
+	char *pwd;
+
+	pwd = join_str("OLDPWD=", gen->pwd);
+	if(!chdir(p))
+	{
+		modify_env(pwd);
+		free(pwd);
+		pwd = join_str("PWD=", getcwd(NULL, 0));
+		modify_env(pwd);
+	}
+	else
+		perror("cd");
+	free(p);
+	gen->pwd = getcwd(NULL, 0);
+	free(pwd);
+	return (0);
+}
+
+char *join_str(char const *s1, char const *s2)
 {
 	int index;
 	int len;
@@ -73,36 +100,36 @@ char *ft_strjoin_free(char const *s1, char const *s2)
 }
 
 
-int ft_add_list(t_list **alst, char *str)
+int ft_add_list(t_list **env_list, char *str)
 {
 	t_list *tmp;
 	size_t index1;
 	size_t index2;
+	char *tmp_str;
 
-	tmp = *alst;
-	index1 = 0;
-	index2 = 0;
+	if(!tmp)
+		return (0);
+	tmp = *env_list;
+	tmp_str = ft_strdup(str);
 	while(tmp)
 	{
 		index1 = 0;
 		index2 = 0;
-
+		while(((char *)tmp->content)[index1] && ((char *)tmp->content)[index1] != '=')
+			index1++;
 		while(str[index2] && str[index2] != '=')
 			index2++;
-		while(((char *)tmp->content)[index1] \
-		&& ((char *)tmp->content)[index2] != '=')
-			index1++;
 		if(!ft_strncmp(tmp->content, str, index1) && index1 == index2)
 		{
 			if(ft_strchr(str, '='))
 			{
 				free(tmp->content);
-				tmp->content = ft_strdup(str);
+				tmp->content = tmp_str;
 			}
 			return (1);
 		}
 		tmp = tmp->next;
 	}
+	free(tmp_str); //free everything
 	return (0);
 }
-

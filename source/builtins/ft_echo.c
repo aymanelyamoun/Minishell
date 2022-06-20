@@ -1,8 +1,8 @@
 #include "../includes/minishell.h"
 
- //where to put it ?
+//TODO: printf the exit status even if there is a nothere element before or after the echo whil e printing it too
 
-void	ft_echo(char **str) //hooooooooooooooooooow
+void	ft_echo(char **str) 
 {
 	int index;
 

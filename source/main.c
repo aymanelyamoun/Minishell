@@ -12,8 +12,8 @@ int main(int argc, char **argv, char **envp)
     if(argc != 1)
         return 1;
     gen = malloc(sizeof(t_gen *));
-    gen->env = env_create(envp);
-    gen->pwd = NULL;
+    gen->env = env_create(envp); //TODO : put this in a function
+    gen->pwd = getcwd(NULL, 0);
     //gen->envp = set_env(envp);
     handle_signals();
     while (1)
@@ -28,7 +28,7 @@ int main(int argc, char **argv, char **envp)
         }
         else if(line != NULL)
         {
-            arr = ft_split(line, ' '); //imagining i have the splited commads 2d
+            arr = ft_split(line, ' '); // imagining i have the splited commads 2d
             if(line != NULL && commands(arr) == YES)
                 go_commands(arr);
             add_history(line);
