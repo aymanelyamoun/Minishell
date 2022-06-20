@@ -19,7 +19,6 @@ int	commands(char **line)
 	return (NO);
 }
 
-
 void	go_commands(char **line)
 {
 	if (!ft_strncmp("env", line[0], 3))
