@@ -1,7 +1,5 @@
 #include "../includes/minishell.h"
 
-//TODO: printf the exit status
-
 void	ft_echo(char **str) 
 {
 	int index;
