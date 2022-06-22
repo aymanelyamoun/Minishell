@@ -1,8 +1,5 @@
 #include "../includes/minishell.h"
 
-
-
-
 // int ft_exit(t_gen *gen, char **next)
 // {
 //     if(ft_strlen2(next) == 1)

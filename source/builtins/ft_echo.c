@@ -18,9 +18,7 @@ void	ft_echo(char **str)
 		ft_putchar_fd('\n', 1);
 	while(str[index] && !ft_strncmp("-n", str[index], 2))
 	{
-		while(str[index][j] == 'n')
-				j++;
-		while(str[index][j] == ' ')
+		while(str[index][j] && (str[index][j] == 'n' || (str[index][j] == ' ')))
 				j++;
 		index++;
 		flag = 1;
@@ -41,6 +39,27 @@ void	ft_echo(char **str)
 		ft_putchar_fd('\n', 1);
 	gen->exit_status = 0;
 }
+
+
+// void	ft_echo(char **str)
+// {
+// 	int index;
+// 	int j;
+// 	int flag;
+
+// 	index = 1;
+// 	flag = 0;
+// 	j = 0;
+
+// 	while(str[index] && !ft_strncmp("-n", str[index]))
+// 	{
+// 		index++;
+// 		flag = 1;
+// 	}
+
+
+
+// }
 
 int ft_strchr1(const char *str, int n)
 {

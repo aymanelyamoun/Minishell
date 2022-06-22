@@ -3,10 +3,10 @@ int    terminal_settings(void)
 {
     struct termios  term;
 
-    if (tcgetattr(STDIN_FILENO, &term) == -1)
+    if (tcgetattr(0, &term) == -1)
         return (1);
     term.c_lflag &= ~(ECHOCTL);
-    tcsetattr(STDIN_FILENO, TCSANOW, &term);
+    tcsetattr(0, TCSANOW, &term);
     signal(SIGQUIT, handler);
     signal(SIGINT, handler);
     return (0); 

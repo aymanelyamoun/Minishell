@@ -11,6 +11,7 @@
 #include <sys/types.h>
 #include <termios.h>
 #include <signal.h>
+#include <string.h>
 #include <fcntl.h>
 #include "../includes/libft/libft.h"
 
@@ -176,5 +177,6 @@ void	print_export(t_list *env);
 int ft_unset(char **next);
 int check_arg2(char *next);
 int start_unset(t_list *env, char *next);
-
+int ft_strchr1(const char *str, int n);
+int is_alone(char *s);
 #endif

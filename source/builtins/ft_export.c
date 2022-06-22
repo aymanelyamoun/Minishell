@@ -64,6 +64,9 @@ void ft_sort (t_gen **gen)
     print_export((*gen)->env);
 }
 
+//if the name aline : print the name alone
+//if the name with = : print "
+
 void	print_export(t_list *env)
 {
 	int		index;
@@ -75,36 +78,34 @@ void	print_export(t_list *env)
         return ;
     while (env && env->content)
     {
-        split = ft_split(env->content, '=');
-        if (!split)
-            continue ;
-        ft_putstr_fd("declare -x ", 1);
-        ft_putstr_fd(split[0], 1);
-        if (split[1])
+        if (!ft_strchr(((char *)env->content), '='))
         {
-            ft_putstr_fd("=", 1);
-            ft_putstr_fd("\"", 1);
-            ft_putstr_fd(split[1], 1);
-            ft_putstr_fd("\"", 1);
+            ft_putstr_fd("declare -x ", 1);
+            ft_putstr_fd((char *)env->content, 1);
+            ft_putchar_fd('\n', 1);
         }
         else
-            ft_putstr_fd("\0", 1);
-        ft_putchar_fd('\n', 1);
+        {
+            split = ft_split(env->content, '=');
+            ft_putstr_fd("declare -x ", 1);
+            ft_putstr_fd(split[0], 1);
+            ft_putstr_fd("=", 1);
+            if (split[1])
+            {
+                if(split[0])
+                    ft_putstr_fd("\"", 1);
+                ft_putstr_fd(split[1], 1);
+                if(split[0])
+                    ft_putstr_fd("\"", 1);
+            }
+            else
+                ft_putstr_fd("\"\"", 1);
+            ft_putchar_fd('\n', 1);
+        }
         env = env->next;
     }
     free_split(split);
 }
-
-// int is_alone(char *s)
-// {
-//     if(!ft_strchr(s, '='))
-//     {
-//         ft_putstr_fd(s, 1);
-//         ft_putchar_fd('\n', 1);
-//         return (1);
-//     }
-//     return (0);
-// }
 
 void	free_split(char **array)
 {

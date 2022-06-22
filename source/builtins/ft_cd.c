@@ -3,7 +3,8 @@
 
 //TODO: FIX THE RETURN STATUS /VALUES
 //TODO : FREE THE UNUSED ALLOCATIONS
-
+// TODO : HANDLE QUOTES
+ 
 int	ft_strlen2(char **str)
 {
 	int	index;
@@ -82,7 +83,9 @@ int change_env(char *p)
 	free(pwd);
 	return (0);
 }
+
 //TODO : STRJOIN AND JOIN STR
+
 char *join_str(char const *s1, char const *s2)
 {
 	int index;
@@ -116,12 +119,10 @@ int ft_add_list(t_list **env_list, char *str)
 	t_list *tmp;
 	size_t index1;
 	size_t index2;
-	char *tmp_str;
 
-	if(!tmp)
+	if(!*env_list)
 		return (0);
 	tmp = *env_list;
-	tmp_str = ft_strdup(str);
 	while(tmp)
 	{
 		index1 = 0;
@@ -135,12 +136,11 @@ int ft_add_list(t_list **env_list, char *str)
 			if(ft_strchr(str, '='))
 			{
 				free(tmp->content);
-				tmp->content = tmp_str;
+				tmp->content = ft_strdup(str);
 			}
 			return (1);
 		}
 		tmp = tmp->next;
 	}
-	free(tmp_str); //free everything
 	return (0);
 }

@@ -18,6 +18,7 @@ int main(int argc, char **argv, char **envp)
     handle_signals();
     while (1)
     {
+        //line = ft_strdup("export HOME=davinci");
         line = readline("Minishell: ");
         if (!line)
              ctrld();
