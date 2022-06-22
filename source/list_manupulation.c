@@ -18,6 +18,8 @@ token_t *new_token(unsigned int type, char *data)
 	token_t *token;
 
 	token = malloc(sizeof(token_t));
+	if (token == NULL)
+		return (NULL);
 	token->type = type;
 	token->data = data;
 	token->old_data = NULL;
