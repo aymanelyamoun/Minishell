@@ -4,6 +4,17 @@
 //TODO: FIX THE RETURN STATUS /VALUES
 //TODO : FREE THE UNUSED ALLOCATIONS
 
+int	ft_strlen2(char **str)
+{
+	int	index;
+
+	index = 0;
+	if (str)
+		while (str[index])
+			index++;
+	return (index);
+}             
+
 int    modify_env(char *pwd)
 {
 	if(!ft_add_list(&gen->env, pwd))
@@ -71,7 +82,7 @@ int change_env(char *p)
 	free(pwd);
 	return (0);
 }
-
+//TODO : STRJOIN AND JOIN STR
 char *join_str(char const *s1, char const *s2)
 {
 	int index;

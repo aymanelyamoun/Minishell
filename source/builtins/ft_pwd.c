@@ -2,7 +2,6 @@
 
 void	ft_pwd(void)
 {
-
     char	pwd[PATH_MAX];
     char *str;
 

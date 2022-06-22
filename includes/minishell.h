@@ -166,4 +166,11 @@ void    free_env(t_list **env);
 int	ft_strlen2(char **str);
 char *join_str(char const *s1, char const *s2);
 
+////////////////////////////////////////////////
+int ft_export(char **next);
+int check_arg(char *next);
+void  print_err_exp(char *next);
+void	free_split(char **array);
+void	print_export(t_list *env);
+
 #endif
