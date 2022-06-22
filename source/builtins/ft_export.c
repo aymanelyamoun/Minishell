@@ -1,6 +1,7 @@
 #include "../includes/minishell.h"
 
 //TODO :fix names
+
 t_list *swap(t_list *ptr1, t_list *ptr2)
 {
     t_list *tmp = ptr2->next;
@@ -12,7 +13,7 @@ t_list *swap(t_list *ptr1, t_list *ptr2)
 
 void bubbleSort(t_list **head, int count)
 {
-    t_list **h;
+    t_list **h; 
     t_list *p1;
     t_list *p2;
     int index1;
@@ -56,12 +57,11 @@ int len_list(t_list **list)
     return (index);
 }
 
-void ft_sort (t_gen *gen)
+void ft_sort (t_gen **gen)
 {
-    t_list *tmp = gen->env;
 
-    bubbleSort(&tmp, len_list(&tmp));
-    print_export(tmp);
+    bubbleSort(&(*gen)->env, len_list(&(*gen)->env));
+    print_export((*gen)->env);
 }
 
 void	print_export(t_list *env)
@@ -88,12 +88,23 @@ void	print_export(t_list *env)
             ft_putstr_fd("\"", 1);
         }
         else
-            ft_putstr_fd(" ", 1);
+            ft_putstr_fd("\0", 1);
         ft_putchar_fd('\n', 1);
         env = env->next;
     }
     free_split(split);
 }
+
+// int is_alone(char *s)
+// {
+//     if(!ft_strchr(s, '='))
+//     {
+//         ft_putstr_fd(s, 1);
+//         ft_putchar_fd('\n', 1);
+//         return (1);
+//     }
+//     return (0);
+// }
 
 void	free_split(char **array)
 {
@@ -117,7 +128,7 @@ int ft_export(char **next)
         return (0);
     if (ft_strlen2(next) == 1)
     {
-        ft_sort(gen);
+        ft_sort(&gen);
         return (0);
     }
     index = 1;
