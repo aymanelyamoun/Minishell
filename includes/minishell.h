@@ -173,4 +173,8 @@ void  print_err_exp(char *next);
 void	free_split(char **array);
 void	print_export(t_list *env);
 
+int ft_unset(char **next);
+int check_arg2(char *next);
+int start_unset(t_list *env, char *next);
+
 #endif

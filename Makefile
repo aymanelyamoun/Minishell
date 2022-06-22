@@ -7,7 +7,7 @@ LIBFT = includes/libft/libft.a
 SRC = main cmd_managment builtins/go_build in_out_file_managment \
  heredoc list_manupulation token execution pipe_management\
   builtins/ft_exit builtins/ft_env builtins/ft_echo\
-   syntax_analyzer builtins/ft_export error_free expantion signals enviroment builtins/ft_pwd builtins/ft_cd
+   syntax_analyzer builtins/unset builtins/ft_export error_free expantion signals enviroment builtins/ft_pwd builtins/ft_cd
 OBJ = $(addprefix $(DIRBUILD)/, $(SRC:=.o))
 OBJ = $(addprefix $(DIRBUILD)/, $(SRC:=.o))
 all : $(NAME)

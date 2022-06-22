@@ -38,8 +38,8 @@ void	go_commands(char **line)
 		else
 			ft_cd(line);
 	}
-	// if(!ft_strncmp("unset", line[0], 6))
-	// 	ft_unset(line);
+	if(!ft_strncmp("unset", line[0], 6))
+		ft_unset(line);
 	// if(!ft_strncmp("exit", line[0], 4))
 	// 	ft_exit(line);
 	return ;
