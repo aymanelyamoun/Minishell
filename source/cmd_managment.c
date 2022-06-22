@@ -59,6 +59,8 @@ t_cmd   *creat_cmds(token_t **tokens)
 	i = 0;
 	pipes = count_pipes(*tokens);
 	cmds = malloc(sizeof(t_cmd) * (pipes + 1));
+	if (cmds == NULL)
+		return (NULL);
 	if (pipes == 0)
 	{
 		cmds[i].tokens_cmd = *tokens;
