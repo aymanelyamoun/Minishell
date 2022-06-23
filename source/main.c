@@ -14,7 +14,6 @@ int main(int argc, char **argv, char **envp)
     gen = malloc(sizeof(t_gen *));
     gen->env = env_create(envp); //TODO : put this in a function
     gen->pwd = getcwd(NULL, 0);
-    //gen->envp = set_env(envp);
     handle_signals();
     while (1)
     {

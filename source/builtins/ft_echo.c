@@ -1,7 +1,5 @@
 #include "../includes/minishell.h"
 
-// TODO: -nnnnn-n fix
-
 void	ft_echo(char **str) 
 {
 	int index;

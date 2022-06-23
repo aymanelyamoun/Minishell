@@ -179,5 +179,6 @@ int check_arg2(char *next);
 int start_unset(t_list *env, char *next);
 int ft_strchr1(const char *str, int n);
 int is_alone(char *s);
+int len_list(t_list **list);
 int set_flag(char *s);
 #endif

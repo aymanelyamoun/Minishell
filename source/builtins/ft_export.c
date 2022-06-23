@@ -42,21 +42,6 @@ void bubbleSort(t_list **head, int count)
     }
 }
 
-int len_list(t_list **list)
-{
-    t_list *tmp;
-    int index;
-
-    index = 0;
-    tmp = *list;
-    while (tmp)
-    {
-        tmp = tmp->next;
-        index++;
-    }
-    return (index);
-}
-
 void ft_sort (t_gen **gen)
 {
 
@@ -64,8 +49,9 @@ void ft_sort (t_gen **gen)
     print_export((*gen)->env);
 }
 
-//if the name aline : print the name alone
-//if the name with = : print "
+
+//create two functions for the different prints
+//REPLACE INDEX WITH POINTER DEREFERENCING
 
 void	print_export(t_list *env)
 {
@@ -73,7 +59,6 @@ void	print_export(t_list *env)
 	char	**split;
 
 	index = 0;
-
     if(!env)
         return ;
     while (env && env->content)
@@ -81,14 +66,14 @@ void	print_export(t_list *env)
         if (!ft_strchr(((char *)env->content), '='))
         {
             ft_putstr_fd("declare -x ", 1);
-            ft_putstr_fd((char *)env->content, 1);
+            ft_putstr_fd((char *)env->content, 1); //TODO:1
             ft_putchar_fd('\n', 1);
         }
         else
         {
             split = ft_split(env->content, '=');
             ft_putstr_fd("declare -x ", 1);
-            ft_putstr_fd(split[0], 1);
+            ft_putstr_fd(split[0], 1);              //TODO:2
             ft_putstr_fd("=", 1);
             if (split[1])
             {
@@ -105,19 +90,6 @@ void	print_export(t_list *env)
         env = env->next;
     }
     free_split(split);
-}
-
-void	free_split(char **array)
-{
-	int	index;
-
-	index = 0;
-	while (array[index])
-	{
-		free(array[index]);
-		index++;
-	}
-	free(array);
 }
 
 
@@ -141,33 +113,6 @@ int ft_export(char **next)
         }
         else if (!ft_add_list(&gen->env, next[index]))
             ft_lstadd_back(&gen->env, ft_lstnew(ft_strdup(next[index])));
-        index++;
-    }
-    return (0);
-}
-
-void  print_err_exp(char *next)
-{
-    ft_putstr_fd("Minishell: export: `", 2);
-	ft_putstr_fd(next, 2);
-	ft_putstr_fd("': not a valid identifier\n", 2);
-}
-
-int check_arg(char *next)
-{    
-    int index;
-
-    index = 0;
-    if(!next)
-        return (0);
-    if(ft_isdigit(next[0]) || next[0] == '=')
-        return (1);
-    while (next[index])
-    {
-        if(next[index] == '=')
-            break ;
-        if(!ft_isalnum(next[index]) && next[index] != '_')
-            return(1);
         index++;
     }
     return (0);

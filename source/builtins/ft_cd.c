@@ -1,19 +1,5 @@
 #include "../includes/minishell.h"
 
-//TODO: FIX THE RETURN STATUS /VALUES
-//TODO : FREE THE UNUSED ALLOCATIONS
-
-int	ft_strlen2(char **str)
-{
-	int	index;
-
-	index = 0;
-	if (str)
-		while (str[index])
-			index++;
-	return (index);
-}             
-
 int    modify_env(char *pwd)
 {
 	if(!ft_add_list(&gen->env, pwd))
@@ -26,9 +12,9 @@ int	ft_cd(char **path)
 	char	*pwd;
 	char	*p;
 
-	if (!path[1] || !strncmp(path[1], "--", 2) || (!strncmp(path[1], "~", 2)&& !path[2]))
+	if (!path[1] || !ft_strncmp(path[1], "--", 2) || (!ft_strncmp(path[1], "~", 2)&& !path[2]))
 	{
-		p =  find_value("HOME", gen->env);
+		p = find_value("HOME", gen->env);
 		if(chdir(p) == -1)
 		{
 			ft_putstr_fd("Minishell : HOME not set.\n", 2);
@@ -72,36 +58,6 @@ int change_env(char *p)
 	return (0);
 }
 
-//TODO : STRJOIN AND JOIN STR
-
-char *join_str(char const *s1, char const *s2)
-{
-	int index;
-	int len;
-	char *s;
-
-	if(!s1 || !s2)
-		return (NULL);
-	len = ft_strlen(s1);
-	s = (char *)malloc(sizeof(char) * (len + ft_strlen(s2) + 1));
-	if(!s)
-		return (NULL);
-	index = 0;
-	while(s1 && s1[index])
-	{
-		s[index] = s1[index];
-		index++;
-	}
-	while(s2 && s2[index - len])
-	{
-		s[index] = s2[index - len];
-		index++;
-	}
-	s[index] = '\0';
-	return (s);
-}
-
-
 int ft_add_list(t_list **env_list, char *str)
 {
 	t_list *tmp;
@@ -130,5 +86,6 @@ int ft_add_list(t_list **env_list, char *str)
 		}
 		tmp = tmp->next;
 	}
+	free(tmp);
 	return (0);
 }
