@@ -38,6 +38,8 @@ char *rm_quotes(char *str, char c)
 
 char *join_mix(token_t *token1, token_t *token2)
 {
+	char	*tmp;
+
 	if (token1->data[0] == '\"' || token1->data[0] == '\'')
 	{
 		token1->data = rm_quotes(token1->data, token1->data[0]);
@@ -46,12 +48,15 @@ char *join_mix(token_t *token1, token_t *token2)
 	{
 		token2->data = rm_quotes(token2->data, token2->data[0]);
 	}
-	return (ft_strjoin(token1->data, token2->data));
+	tmp = ft_strjoin(token1->data, token2->data);
+	free(token1->data);
+	return (tmp);
 }
 
 void join_word(token_t **tokens)
 {
 	token_t *tmp;
+	// char	*to_free;
 
 	tmp = *tokens;
 	while (tmp != NULL)
@@ -184,7 +189,7 @@ void play_with_tokens(token_t **tokens, char *str, t_list *env)
 		(*tokens)->data = ft_strdup((*tokens)->next->data);
 		(*tokens)->type = DQUOTE;
 	}
-
+	free(str);
 	rm_token(&((*tokens)->next));
 }
 
@@ -320,6 +325,8 @@ char **get_cmds(token_t *tokens)
 
 	i = 0;
 	cmds = malloc(sizeof(char *) * (count_tokens(tokens) + 1));
+	if (cmds == NULL)
+		return (NULL);
 	while (tokens)
 	{
 		cmds[i] = ft_strdup(tokens->data);
@@ -377,7 +384,6 @@ void	get_path_and_execute(token_t **toknes, t_list *env_l)
 	if (get_cmds_path(&cmds, pipes_num, env_l) == 0)
 	{	
 		execution(cmds, pipes_num);
-		// printf("========\n\n------ i got executed ------\n\n========\n");
 	}
 }
 
@@ -394,10 +400,11 @@ void	get_path_and_execute(token_t **toknes, t_list *env_l)
 // 	int j = 0;
 // 	int	status;
 	
-//     gen.envp = envp;
+//     gen->envp = set_env(envp);
 // 	if(argc != 1)
 // 	    return (1);
 // 	env_l = env_create(envp);
+// 	gen->env = env_l;
 // 	while (1)
 // 	{
 // 		line = readline("minishell> ");
@@ -414,6 +421,7 @@ void	get_path_and_execute(token_t **toknes, t_list *env_l)
 // 				rm_quotes_tokens(&tokens);
 // 				get_path_and_execute(&tokens, env_l);
 // 			}
+
 	
 // 			// i = 0;
 // 			// // while (i <= pipes)
