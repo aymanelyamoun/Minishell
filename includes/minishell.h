@@ -186,4 +186,6 @@ int ft_strchr1(const char *str, int n);
 int is_alone(char *s);
 int len_list(t_list **list);
 int set_flag(char *s);
+
+char **convert_array(t_list **env);
 #endif
