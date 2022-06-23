@@ -8,7 +8,7 @@ int    open_file(token_t **tokens, int type)
 	if (type == GREAT)
     	fd = open((*tokens)->next->data, O_RDWR | O_CREAT, 0777);
 	else if (type == LESS)
-    	fd = open((*tokens)->next->data, O_RDWR | O_TRUNC, 0777);
+    	fd = open((*tokens)->next->data, O_RDWR, 0777);
 	else if (type == DGREAT)
     	fd = open((*tokens)->next->data, O_RDWR | O_CREAT | O_APPEND, 0777);
 	else if (type == DLESS)
@@ -91,6 +91,7 @@ void    check_file_direcitons(t_cmd **cmds, int pipes)
 						exit(3);
 					}
 				}
+				printf("fd ---> %d\n", fd);
 				if (fd == -1)
 					(*cmds)[i].exec = 0;
 				(*cmds)[i].infile = fd;

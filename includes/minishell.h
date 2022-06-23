@@ -58,6 +58,7 @@ typedef struct s_gen
     int exit_status;
     t_list *env;
     char **envp;
+    int herdoc_num;
 
 } t_gen;
 

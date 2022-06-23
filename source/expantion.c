@@ -384,7 +384,6 @@ void	get_path_and_execute(token_t **toknes, t_list *env_l)
 	if (get_cmds_path(&cmds, pipes_num, env_l) == 0)
 	{	
 		execution(cmds, pipes_num);
-		// printf("========\n\n------ i got executed ------\n\n========\n");
 	}
 }
 
@@ -402,6 +401,7 @@ int main(int argc, char **argv, char **envp)
 	int	status;
 	
     gen.envp = envp;
+	gen.herdoc_num = 0;
 	if(argc != 1)
 	    return (1);
 	env_l = env_create(envp);

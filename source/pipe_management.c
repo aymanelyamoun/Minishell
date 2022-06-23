@@ -78,7 +78,7 @@ void	assign_pipes(int **pipes, t_cmd **cmds, int pipes_num)
 			{
 				if (pipes_num == 0)
 				{
-					(*cmds)[i].outfile = STDIN_FILENO;
+					(*cmds)[i].outfile = STDOUT_FILENO;
 					return ;
 				}
 				else
