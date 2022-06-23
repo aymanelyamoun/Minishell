@@ -10,8 +10,6 @@ t_list *env_create(char **envp)
     int index;
 
     index = 1;
-    if (!envp[0])
-        exit (1);
     if(!(**envp) || !(envp) || !(envp[0]))
     {
         head = ft_lstnew(NULL);
