@@ -5,73 +5,48 @@
 void	ft_echo(char **str) 
 {
 	int index;
-	int flag = 0;
-	int j= 0;
+	int flag;
 
-	index = 1;
-	while(str[index] && !ft_strcmp("-n", str[index]))
-	{
-		index++;
-		flag = 1;
-	}
-	if(index > 1 && !str[index])
+	flag = 0;
+	if(ft_strlen2(str) == 1)
 		ft_putchar_fd('\n', 1);
-	while(str[index] && !ft_strncmp("-n", str[index], 2))
+	index = 1;
+	while(str[index] && set_flag(str[index]))
 	{
-		while(str[index][j] && (str[index][j] == 'n' || (str[index][j] == ' ')))
-				j++;
-		index++;
 		flag = 1;
+		index++;
 	}
 	while(str[index])
 	{
-		if(ft_strcmp("$?", str[index]) != 0)
-			ft_putstr_fd(str[index], 1);
-		else if(ft_strchr1(str[index], ' ') == 1)
-			ft_putchar_fd(' ', 1);
-		else if(ft_strcmp("$?", str[index]) == 0)
-			ft_putnbr_fd(gen->exit_status, 1);
-		if (str[index + 1])
-			ft_putchar_fd(' ', 1);
+		ft_putstr_fd(str[index], 1);
 		index++;
+		if(str[index])
+			ft_putchar_fd(' ', 1);
 	}
-	if(flag == 0)
+	if (flag == 0)
 		ft_putchar_fd('\n', 1);
-	gen->exit_status = 0;
+	return ;
 }
 
 
-// void	ft_echo(char **str)
-// {
-// 	int index;
-// 	int j;
-// 	int flag;
-
-// 	index = 1;
-// 	flag = 0;
-// 	j = 0;
-
-// 	while(str[index] && !ft_strncmp("-n", str[index]))
-// 	{
-// 		index++;
-// 		flag = 1;
-// 	}
-
-
-
-// }
-
-int ft_strchr1(const char *str, int n)
+int set_flag(char *s)
 {
-	int	l_str;
+	int index;
+	int size;
 
-	l_str = ft_strlen(str);
-	while (l_str >= 0)
+	if (!s)
+		return (0);
+	index = 0;
+	size = ft_strlen(s);
+	if(s[index] == '-')
 	{
-		if (*str == (char)n)
-			return (1);
-		str++;
-		l_str--;
+		index++;
+		while(s[index] == 'n')
+			index++;
 	}
-	return 0;
+	if(index == size)
+	{
+		return (1);
+	}
+	return (0);
 }
