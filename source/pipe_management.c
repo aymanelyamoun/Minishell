@@ -50,10 +50,12 @@ int	**creat_pipes(int pipes_num)
 
 	i = 0;
 	pipes = malloc(sizeof(int*) * pipes_num);
+	if (pipes == NULL)
+		return (NULL);
 	while (i < pipes_num)
 	{
 		pipes[i] = malloc(sizeof(int) * 2);
-		if (pipes == NULL)
+		if (pipes[i] == NULL)
 			fail_to_generat_pipes(pipes, i);
 		pipe(pipes[i]);
 		i++;
@@ -76,7 +78,7 @@ void	assign_pipes(int **pipes, t_cmd **cmds, int pipes_num)
 			{
 				if (pipes_num == 0)
 				{
-					(*cmds)[i].outfile = STDIN_FILENO;
+					(*cmds)[i].outfile = STDOUT_FILENO;
 					return ;
 				}
 				else

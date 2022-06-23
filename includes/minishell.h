@@ -60,7 +60,6 @@ typedef struct s_gen
     t_list *env;
     char **envp;
     char *pwd;
-
 } t_gen;
 
 t_gen *gen;
@@ -112,6 +111,12 @@ int    check_newline(token_t *c);
 int is_other(token_t *c);
 t_list *env_create(char **envp);
 
+/*********************************/
+/********* EXPANTION *********/
+/*********************************/
+
+char *get_var(char **str, char *final_quote, t_list *env);
+char *join(char *final_quote, char *tmp);
 /*********************************/
 /********* CMD MANAGMENT *********/
 /*********************************/
