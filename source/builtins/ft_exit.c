@@ -7,6 +7,7 @@
 //         ft_putstr("exit\n", 2);
 //         exit(0);
 //     }
-    
+    //handle next argument
+    //handle if there is a value beside it
 
 // }

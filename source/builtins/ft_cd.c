@@ -1,10 +1,8 @@
 #include "../includes/minishell.h"
 
-
 //TODO: FIX THE RETURN STATUS /VALUES
 //TODO : FREE THE UNUSED ALLOCATIONS
-// TODO : HANDLE QUOTES
- 
+
 int	ft_strlen2(char **str)
 {
 	int	index;
@@ -23,26 +21,6 @@ int    modify_env(char *pwd)
 	return (1);
 }
 
-int change_dir(char **p, char **path)
-{
-	char *pa;
-
-	if (!path[1] || !strncmp(path[1], "--", 2) || (!strncmp(path[1], "~", 2) && !path[2]))
-	{
-		pa =  find_value("HOME", gen->env);
-		if(chdir(pa) == -1)
-		{
-			ft_putstr_fd("Problem in chdir.\n", 2);
-			gen->exit_status = 1;
-			return (-1);
-		}
-	}
-	else if(ft_strlen2(path) == 2)
-		pa = ft_strdup(path[1]);
-	*p = pa;
-	return (0);
-
-}
 int	ft_cd(char **path)
 {
 	char	*pwd;
@@ -53,7 +31,17 @@ int	ft_cd(char **path)
 		p =  find_value("HOME", gen->env);
 		if(chdir(p) == -1)
 		{
-			ft_putstr_fd("Problem in chdir.\n", 2);
+			ft_putstr_fd("Minishell : HOME not set.\n", 2);
+			gen->exit_status = 1;
+			return (1);
+		}
+	}
+	else if(!strncmp(path[1], "-", 1))
+	{
+		p = find_value("OLDPWD", gen->env);
+		if(chdir(p) == -1)
+		{
+			ft_putstr_fd("Minishell: OLDPWD not set.\n", 2);
 			gen->exit_status = 1;
 			return (1);
 		}
