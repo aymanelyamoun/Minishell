@@ -1,7 +1,5 @@
 #include "../includes/minishell.h"
 
-//TODO :fix names
-
 t_list *swap(t_list *ptr1, t_list *ptr2)
 {
     t_list *tmp = ptr2->next;
@@ -13,7 +11,7 @@ t_list *swap(t_list *ptr1, t_list *ptr2)
 
 void bubbleSort(t_list **head, int count)
 {
-    t_list **list; 
+    t_list **h; 
     t_list *p1;
     t_list *p2;
     int index1;
@@ -22,24 +20,39 @@ void bubbleSort(t_list **head, int count)
 
     for (index1 = 0; index1 <= count; index1++)
     {
-        list = head;
+        h = head;
         swapped = 0;
 
         for (index2 = 0; index2 < count - index1 - 1; index2++)
         {
-            p1 = *list;
+            p1 = *h;
             p2 = p1->next;
             if (((char *)p1->content)[0] > ((char *)p2->content)[0])
             {
-                *list = swap(p1, p2);
+                *h = swap(p1, p2);
                 swapped = 1;
             }
 
-            list = &(*list)->next;
+            h = &(*h)->next;
         }
         if (swapped == 0)
             break;
     }
+}
+
+int len_list(t_list **list)
+{
+    t_list *tmp;
+    int index;
+
+    index = 0;
+    tmp = *list;
+    while (tmp)
+    {
+        tmp = tmp->next;
+        index++;
+    }
+    return (index);
 }
 
 void ft_sort (t_gen **gen)
@@ -49,9 +62,8 @@ void ft_sort (t_gen **gen)
     print_export((*gen)->env);
 }
 
-
-//create two functions for the different prints
-//REPLACE INDEX WITH POINTER DEREFERENCING
+//if the name aline : print the name alone
+//if the name with = : print "
 
 void	print_export(t_list *env)
 {
@@ -59,6 +71,7 @@ void	print_export(t_list *env)
 	char	**split;
 
 	index = 0;
+
     if(!env)
         return ;
     while (env && env->content)
@@ -66,14 +79,14 @@ void	print_export(t_list *env)
         if (!ft_strchr(((char *)env->content), '='))
         {
             ft_putstr_fd("declare -x ", 1);
-            ft_putstr_fd((char *)env->content, 1); //TODO:1
+            ft_putstr_fd((char *)env->content, 1);
             ft_putchar_fd('\n', 1);
         }
         else
         {
             split = ft_split(env->content, '=');
             ft_putstr_fd("declare -x ", 1);
-            ft_putstr_fd(split[0], 1);              //TODO:2
+            ft_putstr_fd(split[0], 1);
             ft_putstr_fd("=", 1);
             if (split[1])
             {
@@ -90,6 +103,19 @@ void	print_export(t_list *env)
         env = env->next;
     }
     free_split(split);
+}
+
+void	free_split(char **array)
+{
+	int	index;
+
+	index = 0;
+	while (array[index])
+	{
+		free(array[index]);
+		index++;
+	}
+	free(array);
 }
 
 
@@ -118,3 +144,29 @@ int ft_export(char **next)
     return (0);
 }
 
+void  print_err_exp(char *next)
+{
+    ft_putstr_fd("Minishell: export: `", 2);
+	ft_putstr_fd(next, 2);
+	ft_putstr_fd("': not a valid identifier\n", 2);
+}
+
+// int check_arg(char *next)
+// {    
+//     int index;
+
+//     index = 0;
+//     if(!next)
+//         return (0);
+//     if(ft_isdigit(next[0]) || next[0] == '=')
+//         return (1);
+//     while (next[index])
+//     {
+//         if(next[index] == '=')
+//             break ;
+//         if(!ft_isalnum(next[index]) && next[index] != '_')
+//             return(1);
+//         index++;
+//     }
+//     return (0);
+// }

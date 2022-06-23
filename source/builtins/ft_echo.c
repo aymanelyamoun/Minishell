@@ -45,9 +45,15 @@ int set_flag(char *s)
 		while(s[index] == 'n')
 			index++;
 	}
-	if(index == size)
+	if(index == size && index != 1)
 	{
 		return (1);
 	}
 	return (0);
 }
+/*
+	void *
+	next->
+	env ==== ft_malloc();
+	
+*/

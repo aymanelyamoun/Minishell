@@ -12,22 +12,14 @@ int	ft_cd(char **path)
 	char	*pwd;
 	char	*p;
 
-	if (!path[1] || !ft_strncmp(path[1], "--", 2) || (!ft_strncmp(path[1], "~", 2)&& !path[2]))
+	if (!path[1] || !strncmp(path[1], "--", 2) || (!strncmp(path[1], "~", 2)&& !path[2]))
 	{
-		p = find_value("HOME", gen->env);
-		if(chdir(p) == -1)
+		p =  find_value("HOME", gen->env);
+		if(!p)
+			ft_putstr_fd("Home not set\n", 2);
+		if(chdir(p) == -1 && errno == ENOENT)
 		{
-			ft_putstr_fd("Minishell : HOME not set.\n", 2);
-			gen->exit_status = 1;
-			return (1);
-		}
-	}
-	else if(!strncmp(path[1], "-", 1))
-	{
-		p = find_value("OLDPWD", gen->env);
-		if(chdir(p) == -1)
-		{
-			ft_putstr_fd("Minishell: OLDPWD not set.\n", 2);
+			ft_putstr_fd("Problem in chdir.\n", 2);
 			gen->exit_status = 1;
 			return (1);
 		}
@@ -43,10 +35,16 @@ int change_env(char *p)
 	char *pwd;
 
 	pwd = join_str("OLDPWD=", gen->pwd);
-	if(!chdir(p))
+	if(chdir(p) != -1 && errno != ENOENT)
 	{
 		modify_env(pwd);
 		free(pwd);
+		if (!getcwd(NULL, 0) && errno == ENOENT)
+		{
+			perror("minishell: cd: error retrieving current directory: "
+				"getcwd: cannot access parent directories");
+			return (1);
+		}
 		pwd = join_str("PWD=", getcwd(NULL, 0));
 		modify_env(pwd);
 	}
@@ -63,10 +61,11 @@ int ft_add_list(t_list **env_list, char *str)
 	t_list *tmp;
 	size_t index1;
 	size_t index2;
+	char *tmp_str;
 
-	if(!*env_list)
-		return (0);
+
 	tmp = *env_list;
+	tmp_str = ft_strdup(str);
 	while(tmp)
 	{
 		index1 = 0;
@@ -80,12 +79,14 @@ int ft_add_list(t_list **env_list, char *str)
 			if(ft_strchr(str, '='))
 			{
 				free(tmp->content);
-				tmp->content = ft_strdup(str);
+				tmp->content = tmp_str;
 			}
 			return (1);
 		}
 		tmp = tmp->next;
 	}
-	free(tmp);
+	free(tmp_str); //free everything
 	return (0);
 }
+
+

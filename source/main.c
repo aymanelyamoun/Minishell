@@ -31,13 +31,13 @@ int main(int argc, char **argv, char **envp)
             arr = ft_split(line, ' '); // imagining i have the splited commads 2d
             if(line != NULL && commands(arr) == YES)
                 go_commands(arr);
+            free_split(arr);
             add_history(line);
             tokens = tokenize(line);
             syntax_err(tokens);  
         }
+        free(line);
     }
-    // free(line);
-free_env(&gen->env);
 return(0);
 }
     

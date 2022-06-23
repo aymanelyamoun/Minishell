@@ -38,38 +38,3 @@ char *join_str(char const *s1, char const *s2)
 	return (s);
     free(s);
 }
-
-void	free_split(char **array)
-{
-	int	index;
-
-	index = 0;
-	while (array[index])
-	{
-		free(array[index]);
-		index++;
-	}
-	free(array);
-}
-
-void  print_err_exp(char *next)
-{
-    ft_putstr_fd("Minishell: export: `", 2);
-	ft_putstr_fd(next, 2);
-	ft_putstr_fd("': not a valid identifier\n", 2);
-}
-
-int len_list(t_list **list)
-{
-    t_list *tmp;
-    int index;
-
-    index = 0;
-    tmp = *list;
-    while (tmp)
-    {
-        tmp = tmp->next;
-        index++;
-    }
-    return (index);
-}

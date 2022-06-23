@@ -10,5 +10,6 @@ int ft_exit(char **next)
         ft_putstr_fd("exit\n", 2);
         exit(0);
     }
+
     return (0);
 }
