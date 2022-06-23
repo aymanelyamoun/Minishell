@@ -389,22 +389,17 @@ void	get_path_and_execute(token_t **toknes, t_list *env_l)
 
 // int main(int argc, char **argv, char **envp)
 // {
-// 	t_list *env_l;
 // 	char *line;
 // 	token_t *tokens;
-// 	token_t *tok;
 // 	t_cmd *cmds;
 
-// 	int pipes;
-// 	int i = 0;
-// 	int j = 0;
-// 	int	status;
-	
+//     gen = malloc(sizeof(t_gen *));
 //     gen->envp = set_env(envp);
+// 	gen->env = env_create(envp);
+// 	gen->pwd = getcwd(NULL, 0);
+//     handle_signals();
 // 	if(argc != 1)
 // 	    return (1);
-// 	env_l = env_create(envp);
-// 	gen->env = env_l;
 // 	while (1)
 // 	{
 // 		line = readline("minishell> ");
@@ -414,40 +409,21 @@ void	get_path_and_execute(token_t **toknes, t_list *env_l)
 // 			tokens = tokenize(line);
 // 			if (syntax_err(tokens))
 // 			{
-// 				expander(&tokens, env_l);
-// 				expander_in_quotes(&tokens, env_l);
+// 				expander(&tokens, gen->env);
+// 				expander_in_quotes(&tokens, gen->env);
 // 				join_word(&tokens);
 // 				rm_spaces(&tokens);
 // 				rm_quotes_tokens(&tokens);
-// 				get_path_and_execute(&tokens, env_l);
+// 				get_path_and_execute(&tokens, gen->env);
 // 			}
-
-	
-// 			// i = 0;
-// 			// // while (i <= pipes)
-// 			// // {
-// 			// 	tok = tokens;
-// 			// 	// tok = cmds[i].tokens_cmd;
-// 				// printf("from main %d : ---infile: %d --- outfile: %d\n", i, cmds[i].infile, cmds[i].outfile);
-// 			// 	while (tok != NULL)
-// 			// 	{
-// 			// 		printf(" -- %d ---> %s \n", tok->type, tok->data);
-// 			// 		tok = tok->next;
-// 			// 	}
-// 			// 	// j = 0;
-// 			// 	// while (cmds[i].cmd_args[j])
-// 			// 	// {
-// 			// 	// 	printf("arg %d : %s\n", j+1, cmds[i].cmd_args[j]);
-// 			// 	// 	j++;
-// 			// 	// }
-// // 			// 	i++;
-// // 			// // // }
 // 		}
 // 		else
-// 		{
-// 			printf("\ni got a NULL\n");
-// 			exit(0); // last status
-// 		}
+// 			ctrld();
+// 		// else
+// 		// {
+// 		// 	printf("\ni got a NULL\n");
+// 		// 	exit(0); // last status
+// 		// }
 // 	}
 // 	return (0);
 // }
