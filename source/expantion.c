@@ -387,18 +387,18 @@ void	get_path_and_execute(token_t **toknes, t_list *env_l)
 	}
 }
 
-int main(int argc, char **argv, char **envp)
-{
-	t_list *env_l;
-	char *line;
-	token_t *tokens;
-	token_t *tok;
-	t_cmd *cmds;
+// int main(int argc, char **argv, char **envp)
+// {
+// 	t_list *env_l;
+// 	char *line;
+// 	token_t *tokens;
+// 	token_t *tok;
+// 	t_cmd *cmds;
 
-	int pipes;
-	int i = 0;
-	int j = 0;
-	int	status;
+// 	int pipes;
+// 	int i = 0;
+// 	int j = 0;
+// 	int	status;
 	
     gen.envp = envp;
 	gen.herdoc_num = 0;
@@ -421,35 +421,36 @@ int main(int argc, char **argv, char **envp)
 				rm_quotes_tokens(&tokens);
 				get_path_and_execute(&tokens, env_l);
 			}
+
 	
-			// i = 0;
-			// // while (i <= pipes)
-			// // {
-			// 	tok = tokens;
-			// 	// tok = cmds[i].tokens_cmd;
-				// printf("from main %d : ---infile: %d --- outfile: %d\n", i, cmds[i].infile, cmds[i].outfile);
-			// 	while (tok != NULL)
-			// 	{
-			// 		printf(" -- %d ---> %s \n", tok->type, tok->data);
-			// 		tok = tok->next;
-			// 	}
-			// 	// j = 0;
-			// 	// while (cmds[i].cmd_args[j])
-			// 	// {
-			// 	// 	printf("arg %d : %s\n", j+1, cmds[i].cmd_args[j]);
-			// 	// 	j++;
-			// 	// }
-// 			// 	i++;
-// 			// // // }
-		}
-		else
-		{
-			printf("\ni got a NULL\n");
-			exit(0); // last status
-		}
-	}
-	return (0);
-}
+// 			// i = 0;
+// 			// // while (i <= pipes)
+// 			// // {
+// 			// 	tok = tokens;
+// 			// 	// tok = cmds[i].tokens_cmd;
+// 				// printf("from main %d : ---infile: %d --- outfile: %d\n", i, cmds[i].infile, cmds[i].outfile);
+// 			// 	while (tok != NULL)
+// 			// 	{
+// 			// 		printf(" -- %d ---> %s \n", tok->type, tok->data);
+// 			// 		tok = tok->next;
+// 			// 	}
+// 			// 	// j = 0;
+// 			// 	// while (cmds[i].cmd_args[j])
+// 			// 	// {
+// 			// 	// 	printf("arg %d : %s\n", j+1, cmds[i].cmd_args[j]);
+// 			// 	// 	j++;
+// 			// 	// }
+// // 			// 	i++;
+// // 			// // // }
+// 		}
+// 		else
+// 		{
+// 			printf("\ni got a NULL\n");
+// 			exit(0); // last status
+// 		}
+// 	}
+// 	return (0);
+// }
 
 // // t_cmd   *parsing(token_t *kokens)
 // // {

@@ -42,7 +42,7 @@ void    execution(t_cmd *cmds, int pipes_num)
             // write(2, cmds[i].cmd_args[0], ft_strlen(cmds[i].cmd_args[0]));
             if (cmds[i].exec)
             {
-                execve(cmds[i].cmd_path, cmds[i].cmd_args, gen.envp);
+                execve(cmds[i].cmd_path, cmds[i].cmd_args, gen->envp); //i changed this to an arrow 
                 perror("execve : ");
             }
             exit(0);

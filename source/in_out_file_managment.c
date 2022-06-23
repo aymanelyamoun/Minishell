@@ -4,7 +4,7 @@
 int    open_file(token_t **tokens, int type)
 {
     int fd;
-
+	
 	if (type == GREAT)
     	fd = open((*tokens)->next->data, O_RDWR | O_CREAT, 0777);
 	else if (type == LESS)
