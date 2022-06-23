@@ -30,13 +30,14 @@ void    execution(t_cmd *cmds, int pipes_num)
         if (pid == 0)
         {
             dup2(cmds[i].infile, STDIN_FILENO);
-            printf("i am sucks : %d\n", cmds[i].outfile);
             dup2(cmds[i].outfile, STDOUT_FILENO);
             close_pipes(pipes, pipes_num);
             // close_cmd_files(cmds, pipes_num);
-            close(cmds[i].infile);
+            if (cmds[i].infile != STDIN_FILENO)
+                close(cmds[i].infile);
             // write(cmds[i].outfile,"the out", 7);
-            // close(cmds[i].outfile);
+            if (cmds[i].outfile != STDOUT_FILENO)
+                close(cmds[i].outfile);
             // write(2, gen->envp[0], ft_strlen(gen->envp[0]));
             // write(2, cmds[i].cmd_args[0], ft_strlen(cmds[i].cmd_args[0]));
             if (cmds[i].exec)

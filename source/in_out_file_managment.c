@@ -91,7 +91,6 @@ void    check_file_direcitons(t_cmd **cmds, int pipes)
 						exit(3);
 					}
 				}
-				printf("fd ---> %d\n", fd);
 				if (fd == -1)
 					(*cmds)[i].exec = 0;
 				(*cmds)[i].infile = fd;
