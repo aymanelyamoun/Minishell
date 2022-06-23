@@ -24,6 +24,7 @@ void    execution(t_cmd *cmds, int pipes_num)
     assign_pipes(pipes, &cmds, pipes_num);
     while (i <= pipes_num)
     {
+		// printf("%p\n",  gen.envp);
         pid = fork();
         if (pid == -1)
             perror("fork : ");
