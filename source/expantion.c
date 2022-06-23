@@ -400,11 +400,12 @@ int main(int argc, char **argv, char **envp)
 	int j = 0;
 	int	status;
 	
-    gen.envp = envp;
+    gen.envp = set_env(envp);
 	gen.herdoc_num = 0;
 	if(argc != 1)
 	    return (1);
 	env_l = env_create(envp);
+	gen.env = env_l;
 	while (1)
 	{
 		line = readline("minishell> ");
