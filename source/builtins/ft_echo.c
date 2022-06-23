@@ -1,7 +1,5 @@
 #include "../includes/minishell.h"
 
-// TODO: -nnnnn-n fix
-
 void	ft_echo(char **str) 
 {
 	int index;
@@ -18,7 +16,10 @@ void	ft_echo(char **str)
 	}
 	while(str[index])
 	{
-		ft_putstr_fd(str[index], 1);
+		if(!ft_strcmp("$?", str[index]))
+				ft_putnbr_fd(gen->exit_status, 1);
+		else
+			ft_putstr_fd(str[index], 1);
 		index++;
 		if(str[index])
 			ft_putchar_fd(' ', 1);
@@ -44,9 +45,15 @@ int set_flag(char *s)
 		while(s[index] == 'n')
 			index++;
 	}
-	if(index == size)
+	if(index == size && index != 1)
 	{
 		return (1);
 	}
 	return (0);
 }
+/*
+	void *
+	next->
+	env ==== ft_malloc();
+	
+*/

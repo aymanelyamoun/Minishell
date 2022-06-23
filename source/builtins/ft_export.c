@@ -1,7 +1,5 @@
 #include "../includes/minishell.h"
 
-//TODO :fix names
-
 t_list *swap(t_list *ptr1, t_list *ptr2)
 {
     t_list *tmp = ptr2->next;
@@ -153,23 +151,22 @@ void  print_err_exp(char *next)
 	ft_putstr_fd("': not a valid identifier\n", 2);
 }
 
-int check_arg(char *next)
-{    
-    int index;
+// int check_arg(char *next)
+// {    
+//     int index;
 
-    index = 0;
-    if(!next)
-        return (0);
-    if(ft_isdigit(next[0]) || next[0] == '=')
-        return (1);
-    while (next[index])
-    {
-        if(next[index] == '=')
-            break ;
-        if(!ft_isalnum(next[index]) && next[index] != '_')
-            return(1);
-        index++;
-    }
-    return (0);
-}
-
+//     index = 0;
+//     if(!next)
+//         return (0);
+//     if(ft_isdigit(next[0]) || next[0] == '=')
+//         return (1);
+//     while (next[index])
+//     {
+//         if(next[index] == '=')
+//             break ;
+//         if(!ft_isalnum(next[index]) && next[index] != '_')
+//             return(1);
+//         index++;
+//     }
+//     return (0);
+// }

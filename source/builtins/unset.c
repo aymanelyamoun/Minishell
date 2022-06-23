@@ -26,26 +26,6 @@ int ft_unset(char **next)
     return (0);
 }
 
-int check_arg2(char *next)
-{
-    int	index;
-
-	index = 0;
-	if (!next)
-		return (0);
-	if (!next[index] || (!ft_isalpha(next[index]) && next[index] != '_'))
-		return (1);
-	index++;
-	while (next[index])
-	{
-		if ((next[index] != '_' && !ft_isalnum(next[index])))
-			return (1);
-		index++;
-	}
-	return (0);
-}
-
-
 int start_unset(t_list *env, char *next)
 {
     size_t len;
