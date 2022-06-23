@@ -100,35 +100,38 @@ char *join_str(char const *s1, char const *s2)
 	s[index] = '\0';
 	return (s);
 }
+// <<<<<<< aymane_
+// =======
 
 
-int ft_add_list(t_list **env_list, char *str)
-{
-	t_list *tmp;
-	size_t index1;
-	size_t index2;
+// int ft_add_list(t_list **env_list, char *str)
+// {
+// 	t_list *tmp;
+// 	size_t index1;
+// 	size_t index2;
 
-	if(!*env_list)
-		return (0);
-	tmp = *env_list;
-	while(tmp)
-	{
-		index1 = 0;
-		index2 = 0;
-		while(((char *)tmp->content)[index1] && ((char *)tmp->content)[index1] != '=')
-			index1++;
-		while(str[index2] && str[index2] != '=')
-			index2++;
-		if(!ft_strncmp(tmp->content, str, index1) && index1 == index2)
-		{
-			if(ft_strchr(str, '='))
-			{
-				free(tmp->content);
-				tmp->content = ft_strdup(str);
-			}
-			return (1);
-		}
-		tmp = tmp->next;
-	}
-	return (0);
-}
+// 	if(!*env_list)
+// 		return (0);
+// 	tmp = *env_list;
+// 	while(tmp)
+// 	{
+// 		index1 = 0;
+// 		index2 = 0;
+// 		while(((char *)tmp->content)[index1] && ((char *)tmp->content)[index1] != '=')
+// 			index1++;
+// 		while(str[index2] && str[index2] != '=')
+// 			index2++;
+// 		if(!ft_strncmp(tmp->content, str, index1) && index1 == index2)
+// 		{
+// 			if(ft_strchr(str, '='))
+// 			{
+// 				free(tmp->content);
+// 				tmp->content = ft_strdup(str);
+// 			}
+// 			return (1);
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// 	return (0);
+// }
+// >>>>>>> main

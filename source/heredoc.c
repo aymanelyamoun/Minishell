@@ -15,26 +15,27 @@ void	write_to_fd(int fd, char *str)
 	int	status;
 
 	status = write(fd, str, ft_strlen(str));
+	write(fd, "\n", 1);
 }
 
 int heredoc(char *limiter)
 {
     char	*line;
-	int		fd;
+	int		pipe_fd[2];
 
-	fd = open("heredoc",  O_CREAT | O_RDWR | O_TRUNC);
-	if (fd < 0)
+	if (pipe(pipe_fd) < 0)
 		exit(3);
     line = readline("> ");
     while (line != NULL && ft_strcmp(line, limiter))
     {
-        write_to_fd(fd, line);
-		// free(line);
+        write_to_fd(pipe_fd[1], line);
+		free(line);
     	line = readline("> ");
     }
 	if (line != NULL)
 		free(line);
 	if (limiter)
 		free(limiter);
-	return (fd);
+	close(pipe_fd[1]);
+	return (pipe_fd[0]);
 }

@@ -29,16 +29,15 @@ void    execution(t_cmd *cmds, int pipes_num)
             perror("fork : ");
         if (pid == 0)
         {
-            // printf("\n--infile-%d\n--outfile-%d---\n", cmds[i].infile, cmds[i].outfile);
-            // write(2, "i got here\n", 12);
             dup2(cmds[i].infile, STDIN_FILENO);
-            // fprintf(stderr, "%d\n", cmds[i].infile);
             dup2(cmds[i].outfile, STDOUT_FILENO);
-            // fprintf(stderr, "%d\n", cmds[i].outfile);
             close_pipes(pipes, pipes_num);
             // close_cmd_files(cmds, pipes_num);
-            // close(cmds[i].infile);
-            // close(cmds[i].outfile);
+            if (cmds[i].infile != STDIN_FILENO)
+                close(cmds[i].infile);
+            // write(cmds[i].outfile,"the out", 7);
+            if (cmds[i].outfile != STDOUT_FILENO)
+                close(cmds[i].outfile);
             // write(2, gen->envp[0], ft_strlen(gen->envp[0]));
             // write(2, cmds[i].cmd_args[0], ft_strlen(cmds[i].cmd_args[0]));
             if (cmds[i].exec)

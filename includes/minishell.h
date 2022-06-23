@@ -60,7 +60,6 @@ typedef struct s_gen
     t_list *env;
     char **envp;
     char *pwd;
-
 } t_gen;
 
 t_gen *gen;

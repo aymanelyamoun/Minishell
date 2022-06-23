@@ -384,7 +384,6 @@ void	get_path_and_execute(token_t **toknes, t_list *env_l)
 	if (get_cmds_path(&cmds, pipes_num, env_l) == 0)
 	{	
 		execution(cmds, pipes_num);
-		// printf("========\n\n------ i got executed ------\n\n========\n");
 	}
 }
 
@@ -401,26 +400,28 @@ void	get_path_and_execute(token_t **toknes, t_list *env_l)
 // 	int j = 0;
 // 	int	status;
 	
-//     gen.envp = envp;
-// 	if(argc != 1)
-// 	    return (1);
-// 	env_l = env_create(envp);
-// 	while (1)
-// 	{
-// 		line = readline("minishell> ");
-// 		if (line != NULL)
-// 		{
-// 			add_history(line);
-// 			tokens = tokenize(line);
-// 			if (syntax_err(tokens))
-// 			{
-// 				expander(&tokens, env_l);
-// 				expander_in_quotes(&tokens, env_l);
-// 				join_word(&tokens);
-// 				rm_spaces(&tokens);
-// 				rm_quotes_tokens(&tokens);
-// 				get_path_and_execute(&tokens, env_l);
-// 			}
+    gen.envp = envp;
+	gen.herdoc_num = 0;
+	if(argc != 1)
+	    return (1);
+	env_l = env_create(envp);
+	while (1)
+	{
+		line = readline("minishell> ");
+		if (line != NULL)
+		{
+			add_history(line);
+			tokens = tokenize(line);
+			if (syntax_err(tokens))
+			{
+				expander(&tokens, env_l);
+				expander_in_quotes(&tokens, env_l);
+				join_word(&tokens);
+				rm_spaces(&tokens);
+				rm_quotes_tokens(&tokens);
+				get_path_and_execute(&tokens, env_l);
+			}
+
 	
 // 			// i = 0;
 // 			// // while (i <= pipes)
