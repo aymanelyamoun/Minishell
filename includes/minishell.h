@@ -112,7 +112,7 @@ int is_other(token_t *c);
 t_list *env_create(char **envp);
 
 /*********************************/
-/********* EXPANTION *********/
+/*********** EXPANTION ***********/
 /*********************************/
 
 char *get_var(char **str, char *final_quote, t_list *env);
@@ -122,7 +122,7 @@ char *join(char *final_quote, char *tmp);
 /*********************************/
 
 int count_pipes(token_t *tokens);
-//static t_cmd *creat_cmds_utils(token_t **tokens, t_cmd **cmds); unused function error
+static t_cmd *creat_cmds_utils(token_t **tokens, t_cmd **cmds);
 t_cmd *creat_cmds(token_t **tokens);
 int	get_cmds_path(t_cmd **cmds, int pipes, t_list *env_l);
 
