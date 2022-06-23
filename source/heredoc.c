@@ -35,7 +35,7 @@ char	*expander_heredoc(char *line)
 			tmp = ft_substr(str, 0, i);
 			final_quote = join(final_quote, tmp);
 			str = str + i;
-			final_quote = get_var(&str, final_quote, gen.env);
+			final_quote = get_var(&str, final_quote, gen->env);
 			i = -1;
 		}
 		i++;
@@ -44,6 +44,7 @@ char	*expander_heredoc(char *line)
 	final_quote = join(final_quote, tmp);
 	return (final_quote);
 }
+
 int heredoc(char *limiter)
 {
     char	*line;

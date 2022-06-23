@@ -400,28 +400,27 @@ void	get_path_and_execute(token_t **toknes, t_list *env_l)
 // 	int j = 0;
 // 	int	status;
 	
-    gen.envp = set_env(envp);
-	gen.herdoc_num = 0;
-	if(argc != 1)
-	    return (1);
-	env_l = env_create(envp);
-	gen.env = env_l;
-	while (1)
-	{
-		line = readline("minishell> ");
-		if (line != NULL)
-		{
-			add_history(line);
-			tokens = tokenize(line);
-			if (syntax_err(tokens))
-			{
-				expander(&tokens, env_l);
-				expander_in_quotes(&tokens, env_l);
-				join_word(&tokens);
-				rm_spaces(&tokens);
-				rm_quotes_tokens(&tokens);
-				get_path_and_execute(&tokens, env_l);
-			}
+//     gen->envp = set_env(envp);
+// 	if(argc != 1)
+// 	    return (1);
+// 	env_l = env_create(envp);
+// 	gen->env = env_l;
+// 	while (1)
+// 	{
+// 		line = readline("minishell> ");
+// 		if (line != NULL)
+// 		{
+// 			add_history(line);
+// 			tokens = tokenize(line);
+// 			if (syntax_err(tokens))
+// 			{
+// 				expander(&tokens, env_l);
+// 				expander_in_quotes(&tokens, env_l);
+// 				join_word(&tokens);
+// 				rm_spaces(&tokens);
+// 				rm_quotes_tokens(&tokens);
+// 				get_path_and_execute(&tokens, env_l);
+// 			}
 
 	
 // 			// i = 0;
