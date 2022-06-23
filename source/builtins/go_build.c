@@ -22,11 +22,10 @@ int	commands(char **line)
 
 void	go_commands(char **line)
 {
-
 	if (!ft_strncmp("env", line[0], 3))
 		ft_env();
 	if (!ft_strncmp("pwd", line[0],3))
-		ft_pwd();//it does not print the pwd
+		ft_pwd();
 	if (!ft_strncmp("echo", line[0], 4))
 		ft_echo(line);
 	if(!ft_strncmp("export", line[0], 6))
@@ -40,8 +39,8 @@ void	go_commands(char **line)
 	}
 	if(!ft_strncmp("unset", line[0], 6))
 		ft_unset(line);
-	// if(!ft_strncmp("exit", line[0], 4))
-	// 	ft_exit(line);
+	if(!ft_strncmp("exit", line[0], 4))
+		ft_exit(line);
 	return ;
 }
 

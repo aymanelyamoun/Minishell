@@ -148,7 +148,7 @@ int	ft_cd(char **path);
 void	cd_home(t_gen *gen);
 void	ft_echo(char **str) ;
 void	ft_env(void);
-int ft_exit(t_list **env, char **arg);
+int ft_exit(char **arg);
 void	ft_pwd(void);
 int syntax_err(token_t *token);
 int change_env(char *p);
@@ -179,4 +179,5 @@ int check_arg2(char *next);
 int start_unset(t_list *env, char *next);
 int ft_strchr1(const char *str, int n);
 int is_alone(char *s);
+int set_flag(char *s);
 #endif
