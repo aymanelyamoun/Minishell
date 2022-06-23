@@ -1,19 +1,5 @@
 #include "../includes/minishell.h"
 
-//TODO: FIX THE RETURN STATUS /VALUES
-//TODO : FREE THE UNUSED ALLOCATIONS
-
-int	ft_strlen2(char **str)
-{
-	int	index;
-
-	index = 0;
-	if (str)
-		while (str[index])
-			index++;
-	return (index);
-}             
-
 int    modify_env(char *pwd)
 {
 	if(!ft_add_list(&gen->env, pwd))
@@ -29,19 +15,11 @@ int	ft_cd(char **path)
 	if (!path[1] || !strncmp(path[1], "--", 2) || (!strncmp(path[1], "~", 2)&& !path[2]))
 	{
 		p =  find_value("HOME", gen->env);
-		if(chdir(p) == -1)
+		if(!p)
+			ft_putstr_fd("Home not set\n", 2);
+		if(chdir(p) == -1 && errno == ENOENT)
 		{
-			ft_putstr_fd("Minishell : HOME not set.\n", 2);
-			gen->exit_status = 1;
-			return (1);
-		}
-	}
-	else if(!strncmp(path[1], "-", 1))
-	{
-		p = find_value("OLDPWD", gen->env);
-		if(chdir(p) == -1)
-		{
-			ft_putstr_fd("Minishell: OLDPWD not set.\n", 2);
+			ft_putstr_fd("Problem in chdir.\n", 2);
 			gen->exit_status = 1;
 			return (1);
 		}
@@ -57,10 +35,16 @@ int change_env(char *p)
 	char *pwd;
 
 	pwd = join_str("OLDPWD=", gen->pwd);
-	if(!chdir(p))
+	if(chdir(p) != -1 && errno != ENOENT)
 	{
 		modify_env(pwd);
 		free(pwd);
+		if (!getcwd(NULL, 0) && errno == ENOENT)
+		{
+			perror("minishell: cd: error retrieving current directory: "
+				"getcwd: cannot access parent directories");
+			return (1);
+		}
 		pwd = join_str("PWD=", getcwd(NULL, 0));
 		modify_env(pwd);
 	}
@@ -72,66 +56,37 @@ int change_env(char *p)
 	return (0);
 }
 
-//TODO : STRJOIN AND JOIN STR
-
-char *join_str(char const *s1, char const *s2)
+int ft_add_list(t_list **env_list, char *str)
 {
-	int index;
-	int len;
-	char *s;
+	t_list *tmp;
+	size_t index1;
+	size_t index2;
+	char *tmp_str;
 
-	if(!s1 || !s2)
-		return (NULL);
-	len = ft_strlen(s1);
-	s = (char *)malloc(sizeof(char) * (len + ft_strlen(s2) + 1));
-	if(!s)
-		return (NULL);
-	index = 0;
-	while(s1 && s1[index])
+
+	tmp = *env_list;
+	tmp_str = ft_strdup(str);
+	while(tmp)
 	{
-		s[index] = s1[index];
-		index++;
+		index1 = 0;
+		index2 = 0;
+		while(((char *)tmp->content)[index1] && ((char *)tmp->content)[index1] != '=')
+			index1++;
+		while(str[index2] && str[index2] != '=')
+			index2++;
+		if(!ft_strncmp(tmp->content, str, index1) && index1 == index2)
+		{
+			if(ft_strchr(str, '='))
+			{
+				free(tmp->content);
+				tmp->content = tmp_str;
+			}
+			return (1);
+		}
+		tmp = tmp->next;
 	}
-	while(s2 && s2[index - len])
-	{
-		s[index] = s2[index - len];
-		index++;
-	}
-	s[index] = '\0';
-	return (s);
+	free(tmp_str); //free everything
+	return (0);
 }
-// <<<<<<< aymane_
-// =======
 
 
-// int ft_add_list(t_list **env_list, char *str)
-// {
-// 	t_list *tmp;
-// 	size_t index1;
-// 	size_t index2;
-
-// 	if(!*env_list)
-// 		return (0);
-// 	tmp = *env_list;
-// 	while(tmp)
-// 	{
-// 		index1 = 0;
-// 		index2 = 0;
-// 		while(((char *)tmp->content)[index1] && ((char *)tmp->content)[index1] != '=')
-// 			index1++;
-// 		while(str[index2] && str[index2] != '=')
-// 			index2++;
-// 		if(!ft_strncmp(tmp->content, str, index1) && index1 == index2)
-// 		{
-// 			if(ft_strchr(str, '='))
-// 			{
-// 				free(tmp->content);
-// 				tmp->content = ft_strdup(str);
-// 			}
-// 			return (1);
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// 	return (0);
-// }
-// >>>>>>> main
