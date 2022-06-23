@@ -13,7 +13,7 @@ t_list *swap(t_list *ptr1, t_list *ptr2)
 
 void bubbleSort(t_list **head, int count)
 {
-    t_list **h; 
+    t_list **list; 
     t_list *p1;
     t_list *p2;
     int index1;
@@ -22,20 +22,20 @@ void bubbleSort(t_list **head, int count)
 
     for (index1 = 0; index1 <= count; index1++)
     {
-        h = head;
+        list = head;
         swapped = 0;
 
         for (index2 = 0; index2 < count - index1 - 1; index2++)
         {
-            p1 = *h;
+            p1 = *list;
             p2 = p1->next;
             if (((char *)p1->content)[0] > ((char *)p2->content)[0])
             {
-                *h = swap(p1, p2);
+                *list = swap(p1, p2);
                 swapped = 1;
             }
 
-            h = &(*h)->next;
+            list = &(*list)->next;
         }
         if (swapped == 0)
             break;
