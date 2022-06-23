@@ -1,10 +1,10 @@
 #include "../includes/minishell.h"
 
-void	ft_env(t_list *env)
+void	ft_env()
 {
 	t_list	*tmp;
 
-	tmp = env;
+	tmp = gen->env;
 	if (tmp->content)
 	{
 		while (tmp)

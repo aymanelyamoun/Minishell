@@ -1,25 +1,52 @@
 #include "../includes/minishell.h"
 
- //where to put it ?
+// TODO: -nnnnn-n fix
 
-void	ft_echo(t_gen *gen, char **str) //hooooooooooooooooooow
+void	ft_echo(char **str) 
 {
-    int index;
-	int	    flag;
-	
-	index = 1;
+	int index;
+	int flag;
+
 	flag = 0;
-	if (str[1] && ft_strncmp(str[1], "-n", 2) == 0)
+	if(ft_strlen2(str) == 1)
+		ft_putchar_fd('\n', 1);
+	index = 1;
+	while(str[index] && set_flag(str[index]))
 	{
 		flag = 1;
-		index = 2;
-	}
-	while (str && str[index])
-	{
-        ft_putstr_fd(str[index], 1);
 		index++;
 	}
-	if (str[1] && flag == 0)
-		ft_putstr_fd("\n", 1);
-	gen->exit_status = 0;
+	while(str[index])
+	{
+		ft_putstr_fd(str[index], 1);
+		index++;
+		if(str[index])
+			ft_putchar_fd(' ', 1);
+	}
+	if (flag == 0)
+		ft_putchar_fd('\n', 1);
+	return ;
+}
+
+
+int set_flag(char *s)
+{
+	int index;
+	int size;
+
+	if (!s)
+		return (0);
+	index = 0;
+	size = ft_strlen(s);
+	if(s[index] == '-')
+	{
+		index++;
+		while(s[index] == 'n')
+			index++;
+	}
+	if(index == size)
+	{
+		return (1);
+	}
+	return (0);
 }
