@@ -19,9 +19,9 @@ int ft_exit(char **next)
 
     if(ft_strlen2(next) == 1)
     {
-        //free_env(&gen->env);
+        //free_env(&gen.env);
         ft_putstr_fd("exit\n", 2);
-        gen->exit_status = ft_atoll(*next);
+        gen.exit_status = ft_atoll(*next);
     }
     if(ft_strlen2(next) == 2)
     {
@@ -30,11 +30,11 @@ int ft_exit(char **next)
             ft_putstr_fd("Minishell : exit : ", 2); //in one function
             ft_putstr_fd(next[1], 2);
             ft_putstr_fd("numeric argument required\n", 2);
-            gen->exit_status = 255;
+            gen.exit_status = 255;
         }
         else if(check_valid(*(next + 1)) == 1)
         {
-            gen->exit_status = ft_atoll(next[1]);
+            gen.exit_status = ft_atoll(next[1]);
         }
         
     }
@@ -42,9 +42,9 @@ int ft_exit(char **next)
     {
         ft_putstr_fd("exit\n", 2);
         ft_putstr_fd("exit : too many arguments\n", 2);
-        gen->exit_status = 255;
+        gen.exit_status = 255;
     }
-    exit(gen->exit_status);
+    exit(gen.exit_status);
     return (0);
 }
 
@@ -81,15 +81,15 @@ int check_valid(char *next)
 //If the exit code is a negative number, the resulting exit status is that number subtracted from 256.
 //check_num(next[1]) || check_range(next[1])
             // if(is_long(next[index]) == 1 && ft_atoll(next[index]) < 0) //=?
-            //     gen->exit_status = (ft_atoll(next[index]) | 1) % 256;
+            //     gen.exit_status = (ft_atoll(next[index]) | 1) % 256;
             // if(is_long(next[index]) == 1 && ft_atoll(next[index]) > 0) //=?
-            //     gen->exit_status = (ft_atoll(next[index])) % 256;
+            //     gen.exit_status = (ft_atoll(next[index])) % 256;
             // else if(is_long(next[index]) == 0 && ft_atoll(next[index]) > 0 && ft_atoll(next[index]) > 256)
-            //     gen->exit_status = ft_atoll(next[index]) % 256;
+            //     gen.exit_status = ft_atoll(next[index]) % 256;
             // else if(is_long(next[index]) == 0 && ft_atoll(next[index]) > 0 && ft_atoll(next[index]) < 256)
-            //      gen->exit_status = ft_atoll(next[index]);
+            //      gen.exit_status = ft_atoll(next[index]);
             // else if(is_long(next[index]) == 0 && ft_atoll(next[index]) < 0)
-            //     gen->exit_status = (256 + ft_atoll(next[index]));
+            //     gen.exit_status = (256 + ft_atoll(next[index]));
 // int check_long(char *next)
 // {
 //     int index;

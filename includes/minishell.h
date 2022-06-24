@@ -62,7 +62,7 @@ typedef struct s_gen
     char *pwd;
 } t_gen;
 
-t_gen *gen;
+t_gen gen;
 /*********************************/
 /********** TOKENS LIST **********/
 /*********************************/

@@ -39,11 +39,11 @@ void    execution(t_cmd *cmds, int pipes_num)
             // write(cmds[i].outfile,"the out", 7);
             if (cmds[i].outfile != STDOUT_FILENO)
                 close(cmds[i].outfile);
-            // write(2, gen->envp[0], ft_strlen(gen->envp[0]));
+            // write(2, gen.envp[0], ft_strlen(gen.envp[0]));
             // write(2, cmds[i].cmd_args[0], ft_strlen(cmds[i].cmd_args[0]));
             if (cmds[i].exec)
             {
-                execve(cmds[i].cmd_path, cmds[i].cmd_args, gen->envp); //i changed this to an arrow 
+                execve(cmds[i].cmd_path, cmds[i].cmd_args, gen.envp); //i changed this to an arrow 
                 perror("execve : ");
             }
             exit(0);

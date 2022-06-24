@@ -20,7 +20,7 @@ void	ft_echo(char **str)
 	while(str[index])
 	{
 		if(!ft_strcmp("$?", str[index]))
-				ft_putnbr_fd(gen->exit_status, 1);
+				ft_putnbr_fd(gen.exit_status, 1);
 		else
 			ft_putstr_fd(str[index], 1);
 		index++;

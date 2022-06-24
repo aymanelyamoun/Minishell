@@ -11,7 +11,7 @@ int	ft_strlen2(char **str)
 	return (index);
 }
 
-char *join_str(char const *s1, char const *s2)
+char *join_str(const char *s1, const char *s2)
 {
 	int index;
 	int len;
@@ -36,7 +36,6 @@ char *join_str(char const *s1, char const *s2)
 	}
 	s[index] = '\0';
 	return (s);
-    free(s);
 }
 
 long long	ft_atoll(const char *dest)

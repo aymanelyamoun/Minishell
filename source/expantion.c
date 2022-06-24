@@ -400,11 +400,11 @@ void	get_path_and_execute(token_t **toknes, t_list *env_l)
 // 	int j = 0;
 // 	int	status;
 	
-//     gen->envp = set_env(envp);
+//     gen.envp = set_env(envp);
 // 	if(argc != 1)
 // 	    return (1);
 // 	env_l = env_create(envp);
-// 	gen->env = env_l;
+// 	gen.env = env_l;
 // 	while (1)
 // 	{
 // 		line = readline("minishell> ");

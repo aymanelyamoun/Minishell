@@ -22,7 +22,7 @@ void    handler(int sig)
 {
     if(sig == SIGINT)
     {
-        gen->exit_status = 1;
+        gen.exit_status = 1;
         ft_putstr_fd("\n", 2); //print a new line
         rl_replace_line("", 1); //
         rl_on_new_line();

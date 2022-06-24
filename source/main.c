@@ -8,14 +8,13 @@ int main(int argc, char **argv, char **envp)
     token_t *tokens;
     char **arr;
     (void)argv;
+    char	p[PATH_MAX];
 
     int i=0;
     if(argc != 1)
         return 1;
-    gen = ft_calloc(sizeof(t_gen *), 1);
-    gen->pwd = getcwd(NULL, 0);
-    gen->env = env_create(envp); //TODO : put this in a function
-
+    gen.pwd =  getcwd(p, PATH_MAX);
+    gen.env = env_create(envp); //TODO : put this in a function
     handle_signals();
     while (1)
     {
