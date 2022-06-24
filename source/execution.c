@@ -57,11 +57,11 @@ void    execut(t_cmd *cmds, int **pipes, int pipes_num, int i)
         close(cmds[i].infile);
     if (cmds[i].outfile != STDOUT_FILENO)
         close(cmds[i].outfile);
-    if (!(ft_strcmp(built_in, "echo") && ft_strcmp(built_in, "cd") 
-    && ft_strcmp(built_in, "env") && ft_strcmp(built_in, "exit") 
-    && ft_strcmp(built_in, "export") && ft_strcmp(built_in, "pwd") 
-    && ft_strcmp(built_in, "unset")))
-        go_commands(cmds[i].cmd_args);
+   if (!(ft_strcmp(built_in, "echo") && ft_strcmp(built_in, "cd") 
+            && ft_strcmp(built_in, "env") && ft_strcmp(built_in, "exit") 
+            && ft_strcmp(built_in, "export") && ft_strcmp(built_in, "pwd") 
+            && ft_strcmp(built_in, "unset")))
+                go_commands(cmds[i].cmd_args);
     else if (cmds[i].exec)
     {
         free_envp();
@@ -104,19 +104,48 @@ void    execution(t_cmd *cmds, int pipes_num)
     int i;
     int pid;
     int **pipes;
+    char *built_in;
+    int in;
+    int out;
 
     i = 0;
+    built_in = str_to_lower(cmds[i].cmd_args[0]);
     pipes = creat_pipes(pipes_num);
-    assign_pipes(pipes, &cmds, pipes_num);
-    while (i <= pipes_num)
+    assign_pipes(pipes, &cmds, pipes_num); 
+    if (pipes_num == 0 && !(ft_strcmp(built_in, "echo") && ft_strcmp(built_in, "cd") 
+        && ft_strcmp(built_in, "env") && ft_strcmp(built_in, "exit") 
+        && ft_strcmp(built_in, "export") && ft_strcmp(built_in, "pwd") 
+        && ft_strcmp(built_in, "unset")))
+        {
+            printf("got here1\n");
+            in = dup(STDIN_FILENO);
+            out = dup(STDOUT_FILENO);
+            dup2(cmds[i].infile, STDIN_FILENO);
+            dup2(cmds[i].outfile, STDOUT_FILENO);
+            go_commands(cmds[i].cmd_args);
+            close(cmds[i].infile);
+            close(cmds[i].outfile);
+            dup2(in, STDIN_FILENO);
+            dup2(out, STDOUT_FILENO);
+            close(in);
+            close(out);
+        }
+    else
     {
-        pid = fork();
-        if (pid == -1)
-            perror("fork : ");
-        if (pid == 0)
-            execut(cmds, pipes, pipes_num, i);
-        i++;
+        printf("got here2\n");
+        while (i <= pipes_num)
+        {
+            pid = fork();
+            if (pid == -1)
+                perror("fork : ");
+            if (pid == 0)
+            {
+                execut(cmds, pipes, pipes_num, i);
+            }
+            i++;
+        }
     }
+
     close_pipes(pipes, pipes_num);
     free_cmds(cmds, pipes_num);
 	free_pipes(pipes, pipes_num);

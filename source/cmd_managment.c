@@ -137,7 +137,7 @@ static char	*join_cmd(char *path, char *cmd)
 
 void	cmd_not_found(char *cmd)
 {
-	printf("minishell: command not found: %s\n", cmd);
+	printf("minishell: command not found : %s\n", cmd);
 }
 
 char	*get_cmd_path(char *path, char *cmd)

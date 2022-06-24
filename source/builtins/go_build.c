@@ -22,7 +22,6 @@ int	commands(char **line)
 
 void	go_commands(char **line)
 {
-	// fprintf(stderr, "hi from go cmd\n");
 	if (!ft_strncmp("env", line[0], 3))
 		ft_env();
 	if (!ft_strncmp("pwd", line[0],3))
