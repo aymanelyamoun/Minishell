@@ -50,7 +50,6 @@ typedef struct s_cmd
     int infile;
     int outfile;
     token_t *tokens_cmd;
-    int pipes;
     int exec;
 } t_cmd;
 
@@ -96,7 +95,7 @@ t_list *env_create(char **envp);
 int handle_spaces(token_t *c);
 int check_pipe(token_t *c);
 int handle_spaces2(token_t *c);
- int ctrld(void);
+int ctrld(void);
 
 ////////////////////////////////////////////////
 char    *find_value(char *str, t_list *env_l);
@@ -110,6 +109,7 @@ int    check_newline(token_t *c);
 // int ctrld(void);
 int is_other(token_t *c);
 t_list *env_create(char **envp);
+char **convert_to_array(t_list **env);
 
 /*********************************/
 /*********** EXPANTION ***********/
@@ -124,7 +124,7 @@ char *join(char *final_quote, char *tmp);
 int count_pipes(token_t *tokens);
 static t_cmd *creat_cmds_utils(token_t **tokens, t_cmd **cmds);
 t_cmd *creat_cmds(token_t **tokens);
-int	get_cmds_path(t_cmd **cmds, int pipes, t_list *env_l);
+int	get_cmds_path(t_cmd **cmds, int pipes);
 
 /*********************************/
 /******** FILE MANAGMENT *********/

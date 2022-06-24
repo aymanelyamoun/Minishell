@@ -84,16 +84,11 @@ void	assign_pipes(int **pipes, t_cmd **cmds, int pipes_num)
 				else
 					(*cmds)[i].outfile = pipes[i][1];
 			}
-			// else
-				// close(pipes[i][1]);
-
 		}
 		if (i == pipes_num)
 		{
 			if ((*cmds)[i].infile == -1)
 				(*cmds)[i].infile = pipes[i - 1][0];
-			// else
-			// 	close(pipes[i - 1][0]);
 			if ((*cmds)[i].outfile == -1)
 				(*cmds)[i].outfile = STDOUT_FILENO;
 		}

@@ -13,6 +13,92 @@ void    close_cmd_files(t_cmd *cmds, int count)
     }
 }
 
+void    free_envp()
+{
+    int i;
+
+    i = 0;
+    if (gen->envp != NULL)
+    {
+        while (gen->envp[i] != NULL)
+        {
+            free(gen->envp[i]);
+            i++;
+        }
+        free(gen->envp);
+    }
+}
+
+char    *str_to_lower(char *str)
+{
+    char    *new_str;
+    int     i;
+
+    i = 0;
+    new_str = malloc(sizeof(char) * ft_strlen(str) + 1);
+    while (str[i] != '\0')
+    {
+        new_str[i] = ft_tolower(str[i]);
+        i++;
+    }
+    new_str[i] = '\0';
+    return (new_str);
+}
+
+void    execut(t_cmd *cmds, int **pipes, int pipes_num, int i)
+{
+    char    *built_in;
+
+    built_in = str_to_lower(cmds[i].cmd_args[0]);
+    dup2(cmds[i].infile, STDIN_FILENO);
+    dup2(cmds[i].outfile, STDOUT_FILENO);
+    close_pipes(pipes, pipes_num);
+    if (cmds[i].infile != STDIN_FILENO)
+        close(cmds[i].infile);
+    if (cmds[i].outfile != STDOUT_FILENO)
+        close(cmds[i].outfile);
+    if (!(ft_strcmp(built_in, "echo") && ft_strcmp(built_in, "cd") 
+    && ft_strcmp(built_in, "env") && ft_strcmp(built_in, "exit") 
+    && ft_strcmp(built_in, "export") && ft_strcmp(built_in, "pwd") 
+    && ft_strcmp(built_in, "unset")))
+        go_commands(cmds[i].cmd_args);
+    else if (cmds[i].exec)
+    {
+        free_envp();
+        gen->envp = convert_to_array(&gen->env);
+        execve(cmds[i].cmd_path, cmds[i].cmd_args, gen->envp);
+        perror("execve : ");
+    }
+    exit(0);
+}
+
+void    free_cmds(t_cmd *cmds, int pipes_num)
+{
+    int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	if (cmds == NULL)
+	{
+		while (i <= pipes_num)
+		{
+			if (cmds->cmd_args != NULL)
+			{
+				while (cmds->cmd_args[j] != NULL)
+				{
+					free(cmds->cmd_args[j]);
+					j++;
+				}
+				if (cmds->cmd_path != NULL)
+					free(cmds->cmd_path);
+			}
+			i++;
+		}
+		free(cmds);
+	}
+}
+
 void    execution(t_cmd *cmds, int pipes_num)
 {
     int i;
@@ -24,43 +110,16 @@ void    execution(t_cmd *cmds, int pipes_num)
     assign_pipes(pipes, &cmds, pipes_num);
     while (i <= pipes_num)
     {
-		// printf("%p\n",  gen.envp);
         pid = fork();
         if (pid == -1)
             perror("fork : ");
         if (pid == 0)
-        {
-            dup2(cmds[i].infile, STDIN_FILENO);
-            dup2(cmds[i].outfile, STDOUT_FILENO);
-            close_pipes(pipes, pipes_num);
-            // close_cmd_files(cmds, pipes_num);
-            if (cmds[i].infile != STDIN_FILENO)
-                close(cmds[i].infile);
-            // write(cmds[i].outfile,"the out", 7);
-            if (cmds[i].outfile != STDOUT_FILENO)
-                close(cmds[i].outfile);
-            // write(2, gen->envp[0], ft_strlen(gen->envp[0]));
-            // write(2, cmds[i].cmd_args[0], ft_strlen(cmds[i].cmd_args[0]));
-            if (cmds[i].exec)
-            {
-                execve(cmds[i].cmd_path, cmds[i].cmd_args, gen->envp); //i changed this to an arrow 
-                perror("execve : ");
-            }
-            exit(0);
-        }
+            execut(cmds, pipes, pipes_num, i);
         i++;
     }
     close_pipes(pipes, pipes_num);
-    while (waitpid(-1, 0, 0) != -1);
-    
-    // i = 0;
-    // while (i <= pipes_num)
-    // {
-    //     wait(NULL);
-    //     printf("lol1\n");
-    //     i++;
-    // }
-    // waitpid(-1, 0, 0);
-    // while (waitpid(-1, 0, 0) != -1);
-    // close_cmd_files(cmds, pipes_num);
-    }
+    free_cmds(cmds, pipes_num);
+	free_pipes(pipes, pipes_num);
+    while (waitpid(-1, &(gen->exit_status), 0) != -1)
+    ;
+}
