@@ -14,4 +14,5 @@ void	ft_env()
 			tmp = tmp->next;
 		}
 	}
+	return ;
 }

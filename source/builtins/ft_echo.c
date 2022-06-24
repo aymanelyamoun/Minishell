@@ -1,5 +1,8 @@
 #include "../includes/minishell.h"
 
+
+
+///////TODO: add $? alone without echo
 void	ft_echo(char **str) 
 {
 	int index;

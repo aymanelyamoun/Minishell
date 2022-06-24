@@ -19,7 +19,7 @@ int ft_exit(char **next)
 
     if(ft_strlen2(next) == 1)
     {
-        free_env(&gen->env);
+        //free_env(&gen->env);
         ft_putstr_fd("exit\n", 2);
         gen->exit_status = ft_atoll(*next);
     }
@@ -44,7 +44,6 @@ int ft_exit(char **next)
         ft_putstr_fd("exit : too many arguments\n", 2);
         gen->exit_status = 255;
     }
-    printf("%lld", gen->exit_status);
     exit(gen->exit_status);
     return (0);
 }
