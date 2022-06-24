@@ -38,3 +38,30 @@ char *join_str(char const *s1, char const *s2)
 	return (s);
     free(s);
 }
+
+long long	ft_atoll(const char *dest)
+{
+	int	sign;
+	long long 	result;
+	int	i;
+
+	i = 0;
+	sign = 1;
+	result = 0;
+
+	while ((dest[i] == ' ' || (dest[i] >= 9 && dest[i] <= 13) && !(dest[i] == '-' || dest[i] == '+')))
+		i++;
+	if (dest[i] == '-' || dest[i] == '+')
+	{
+		if (dest[i] == '-')
+			sign *= -1;
+		i++;
+	}
+	while (dest[i] && dest[i] <= '9' && dest[i] >= '0')
+	{
+		result *= 10;
+		result += (dest[i] - 48);
+		i++;
+	}
+	return (result * sign);
+}

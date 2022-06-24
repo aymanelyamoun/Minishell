@@ -17,7 +17,6 @@ int main(int argc, char **argv, char **envp)
     handle_signals();
     while (1)
     {
-        //line = ft_strdup("export HOME=davinci");
         line = readline("Minishell: ");
         if (!line)
              ctrld();
@@ -33,8 +32,8 @@ int main(int argc, char **argv, char **envp)
                 go_commands(arr);
             free_split(arr);
             add_history(line);
-            tokens = tokenize(line);
-            syntax_err(tokens);  
+            // tokens = tokenize(line);
+            // syntax_err(tokens);  
         }
         free(line);
     }
