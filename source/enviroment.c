@@ -5,7 +5,7 @@
 t_list *env_create(char **envp)
 {
     t_list *tmp = NULL;
-    t_list *head;
+    t_list *head = NULL;
     char *s;
     int index;
 
@@ -15,6 +15,7 @@ t_list *env_create(char **envp)
         head = ft_lstnew(NULL);
         return (head);
     }
+    
     s = ft_strdup(envp[0]);
     head = ft_lstnew(s);
     ft_lstadd_back(&head, tmp);
