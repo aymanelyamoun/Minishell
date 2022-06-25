@@ -42,7 +42,7 @@ return(0);
 }
     
 
-char **convert_array(t_list **env)
+char **convert_to_array(t_list **env)
 {
     int index;
     int size;
@@ -52,7 +52,7 @@ char **convert_array(t_list **env)
     size = len_list(env);
     
     tmp = *env;
-    arr = (char **)malloc(sizeof(char *) * size + 1);
+    arr = (char **)malloc(sizeof(char *) * (size + 1));
     index = 0;
     while(tmp->next)
     {
@@ -60,5 +60,6 @@ char **convert_array(t_list **env)
         tmp = tmp->next;
         index++;
     }
+    arr[index] = NULL;
     return (arr);
 }
