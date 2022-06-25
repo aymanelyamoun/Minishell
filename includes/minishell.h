@@ -89,6 +89,7 @@ void error_free(char *str, token_t *tokens);
 void free_all(token_t *tokens);
 int check_redirection(token_t *c);
 int check_newline(token_t *c);
+char    *str_to_lower(char *str);
 
 int is_other(token_t *c);
 t_list *env_create(char **envp);
@@ -158,6 +159,7 @@ void	ft_pwd(void);
 int syntax_err(token_t *token);
 int change_env(char *p);
 int    modify_env(char *path);
+int is_buit_in(char *cmd);
 
 int check_double(token_t *tmp);
 int check_inside(token_t *c);

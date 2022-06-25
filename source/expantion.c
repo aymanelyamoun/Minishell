@@ -8,6 +8,11 @@ char *find_value(char *str, t_list *env_l)
 
 	while (env_l != NULL)
 	{
+		if (strcmp(str, "?") == 0)
+		{
+
+			return (ft_itoa(gen.exit_status));
+		}
 		tmp = ft_strjoin(str, "=");
 		if (ft_strncmp(tmp, env_l->content, ft_strlen(tmp)) == 0)
 		{
@@ -152,9 +157,9 @@ void change_data(token_t **tokens, char *data)
 char	*get_var_str(char *str, int *i)
 {
 	*i = 0;
-	while (ft_isalnum(str[*i]) || str[*i] == '_')
+	while (ft_isalnum(str[*i]) || str[*i] == '_' || str[*i] == '?')
 	{
-		if (*i == 0 && ft_isdigit(str[*i]))
+		if ((*i == 0) && (ft_isdigit(str[*i]) || str[*i] == '?'))
 		{
 			(*i)++;
 			break;	
@@ -257,7 +262,7 @@ char *get_var(char **str, char *final_quote, t_list *env)
 		while ((*str)[i] != '\0' && (*str)[i] != ' ' && (*str)[i] != '\t' 
 		&& (*str)[i] != '\v' && (*str)[i] != '\f' && ft_isalnum((*str)[i]))
 		{
-			if (i == 1 && ft_isdigit((*str)[i]))
+			if (i == 1 && (ft_isdigit((*str)[i]) || (*str)[i] == '?'))
 			{
 				i++;
 				break;
@@ -397,7 +402,6 @@ void	get_path_and_execute(token_t **toknes)
 	cmds = cmds_and_redirections(toknes, &pipes_num);
 	if (get_cmds_path(&cmds, pipes_num) == 0)
 	{	
-	// printf("i got here :)\n");
 		execution(cmds, pipes_num);
 	}
 }
@@ -410,16 +414,18 @@ int main(int argc, char **argv, char **envp)
 	t_cmd	*cmds;
     char	p[PATH_MAX];
 
-    // gen = malloc(sizeof(t_gen *));
 	gen.pwd =  getcwd(p, PATH_MAX);
     gen.env = env_create(envp); //TODO : put this in a function
 	gen.envp = NULL;
+	gen.exit_status = 0;
     handle_signals();
 	if(argc != 1)
 	    return (1);
 	while (1)
 	{
-		line = readline("\033[0;36mminishell> \033[0;37m");
+		// no not valid file discribtor;
+		// fix the creation of fd's when a file is not valid
+		line = readline("\033[0;36m\x1B[1mminishell> \033[0;37m");
 		if (line != NULL)
 		{
 			add_history(line);

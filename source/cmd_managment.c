@@ -137,7 +137,14 @@ static char	*join_cmd(char *path, char *cmd)
 
 void	cmd_not_found(char *cmd)
 {
-	printf("minishell: command not found : %s\n", cmd);
+	char	*built_in;
+
+	built_in = str_to_lower(cmd);
+	if ((ft_strcmp(built_in, "echo") && ft_strcmp(built_in, "cd") 
+        && ft_strcmp(built_in, "env") && ft_strcmp(built_in, "exit") 
+        && ft_strcmp(built_in, "export") && ft_strcmp(built_in, "pwd") 
+        && ft_strcmp(built_in, "unset")))
+		printf("minishell: %s: command not found :\n", cmd);
 }
 
 char	*get_cmd_path(char *path, char *cmd)
@@ -175,6 +182,7 @@ int	get_cmds_path(t_cmd **cmds, int pipes)
 	int	i;
 	int	status;
 	char	*path;
+	char	*built_in;
 
 	status = 0;
 	i = 0;
@@ -184,14 +192,14 @@ int	get_cmds_path(t_cmd **cmds, int pipes)
 		printf("PATH not found\n");
 		return 1;
 	}
-		
 	while (i <= pipes)
 	{
 		(*cmds)[i].cmd_path = get_cmd_path(path, (*cmds)[i].cmd_args[0]);
-		if ((*cmds)[i].cmd_path == NULL)
+    	built_in = str_to_lower((*cmds)[i].cmd_args[0]);
+		if (((*cmds)[i].cmd_path == NULL) && !is_buit_in((*cmds)[i].cmd_args[0]))
 		{
-			// status = 0;
 			(*cmds)[i].exec = 0;
+			gen.exit_status = 127;
 		}
 		i++;
 	}
