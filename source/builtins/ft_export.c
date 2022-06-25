@@ -57,7 +57,6 @@ int len_list(t_list **list)
 
 void ft_sort (t_gen *gen)
 {
-
     bubbleSort(&(gen)->env, len_list(&(gen)->env));
     print_export((gen)->env);
 }

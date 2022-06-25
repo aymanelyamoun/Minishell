@@ -150,7 +150,7 @@ void    execution(t_cmd *cmds, int pipes_num);
 /*********************************/
 
 int	ft_cd(char **path);
-void	cd_home(t_gen *gen);
+void	cd_home(t_gen gen);
 void	ft_echo(char **str) ;
 void	ft_env(void);
 int ft_exit(char **arg);

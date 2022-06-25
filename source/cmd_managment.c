@@ -178,7 +178,7 @@ int	get_cmds_path(t_cmd **cmds, int pipes)
 
 	status = 0;
 	i = 0;
-	path = find_value("PATH", gen->env);
+	path = find_value("PATH", gen.env);
 	if (path == NULL)
 	{
 		printf("PATH not found\n");

@@ -18,14 +18,14 @@ void    free_envp()
     int i;
 
     i = 0;
-    if (gen->envp != NULL)
+    if (gen.envp != NULL)
     {
-        while (gen->envp[i] != NULL)
+        while (gen.envp[i] != NULL)
         {
-            free(gen->envp[i]);
+            free(gen.envp[i]);
             i++;
         }
-        free(gen->envp);
+        free(gen.envp);
     }
 }
 
@@ -69,8 +69,8 @@ void    execut(t_cmd *cmds, int **pipes, int pipes_num, int i)
     else if (cmds[i].exec)
     {
         free_envp();
-        gen->envp = convert_to_array(&gen->env);
-        execve(cmds[i].cmd_path, cmds[i].cmd_args, gen->envp);
+        gen.envp = convert_to_array(&gen.env);
+        execve(cmds[i].cmd_path, cmds[i].cmd_args, gen.envp);
         perror("execve : ");
     }
     exit(0);
@@ -156,6 +156,6 @@ void    execution(t_cmd *cmds, int pipes_num)
     close_pipes(pipes, pipes_num);
     free_cmds(cmds, pipes_num);
 	free_pipes(pipes, pipes_num);
-    while (waitpid(-1, &(gen->exit_status), 0) != -1)
+    while (waitpid(-1, &(gen.exit_status), 0) != -1)
     ;
 }

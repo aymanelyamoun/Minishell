@@ -212,7 +212,7 @@ void expander(token_t **tokens)
 		{
 			if (tmp->next != NULL && tmp->next->type != SPAACE &&
 				(tmp->next->type == WORD || tmp->next->type == DQUOTE || tmp->next->type == DOLLAR))
-				play_with_tokens(&tmp, ft_strdup(tmp->next->data), gen->env);
+				play_with_tokens(&tmp, ft_strdup(tmp->next->data), gen.env);
 			else if ((tmp->next != NULL && tmp->next->type == SPAACE) || (tmp->next == NULL))
 				tmp->type = WORD;
 		}
@@ -313,7 +313,7 @@ void expander_in_quotes(token_t **tokens)
 	{
 		if (token->type == DQUOTE)
 		{
-			expander_in_quotes_utils(&token, gen->env);
+			expander_in_quotes_utils(&token, gen.env);
 		}
 		token = token->next;
 	}
@@ -405,14 +405,15 @@ void	get_path_and_execute(token_t **toknes)
 
 int main(int argc, char **argv, char **envp)
 {
-	char *line;
+	char	*line;
 	token_t *tokens;
-	t_cmd *cmds;
+	t_cmd	*cmds;
+    char	p[PATH_MAX];
 
-    gen = malloc(sizeof(t_gen *));
-	gen->env = env_create(envp);
-	gen->envp = NULL;
-	gen->pwd = getcwd(NULL, 0);
+    // gen = malloc(sizeof(t_gen *));
+	gen.pwd =  getcwd(p, PATH_MAX);
+    gen.env = env_create(envp); //TODO : put this in a function
+	gen.envp = NULL;
     handle_signals();
 	if(argc != 1)
 	    return (1);

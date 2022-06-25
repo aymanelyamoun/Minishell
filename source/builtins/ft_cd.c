@@ -34,7 +34,6 @@ int change_env(char *p)
 {
 	char *pwd;
 
-	// ft_putstr_fd(gen.pwd, 2);
 	pwd = join_str("OLDPWD=", gen.pwd);
 	if(chdir(p) != -1 && errno != ENOENT)
 	{
@@ -49,7 +48,7 @@ int change_env(char *p)
 		pwd = join_str("PWD=", getcwd(NULL, 0));
 		modify_env(pwd);
 	}
-	else
+	else if(chdir(p) == -1)
 		perror("cd");
 	free(p);
 	gen.pwd = getcwd(NULL, 0);
