@@ -4,7 +4,7 @@ int ft_unset(char **next)
 {
     int index;
 
-    if (!gen->env)
+    if (!gen.env)
         return (0);
     if (ft_strlen2(next) == 1)
         return (0);
@@ -14,12 +14,12 @@ int ft_unset(char **next)
         if (check_arg2(next[index]))
         {
             print_err_exp(next[index]);
-            gen->exit_status = 1;
+            gen.exit_status = 1;
         }
         else
         {
-           start_unset(gen->env, next[index]);
-           gen->exit_status = 0;
+           start_unset(gen.env, next[index]);
+           gen.exit_status = 0;
         }
         index++;
     }

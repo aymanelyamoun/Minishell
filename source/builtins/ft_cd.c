@@ -2,8 +2,8 @@
 
 int    modify_env(char *pwd)
 {
-	if(!ft_add_list(&gen->env, pwd))
-        ft_lstadd_back(&gen->env, ft_lstnew(pwd));
+	if(!ft_add_list(&gen.env, pwd))
+        ft_lstadd_back(&gen.env, ft_lstnew(pwd));
 	return (1);
 }
 
@@ -14,13 +14,13 @@ int	ft_cd(char **path)
 
 	if (!path[1] || !strncmp(path[1], "--", 2) || (!strncmp(path[1], "~", 2)&& !path[2]))
 	{
-		p =  find_value("HOME", gen->env);
+		p =  find_value("HOME", gen.env);
 		if(!p)
 			ft_putstr_fd("Home not set\n", 2);
 		if(chdir(p) == -1 && errno == ENOENT)
 		{
 			ft_putstr_fd("Problem in chdir.\n", 2);
-			gen->exit_status = 1;
+			gen.exit_status = 1;
 			return (1);
 		}
 	}
@@ -34,7 +34,8 @@ int change_env(char *p)
 {
 	char *pwd;
 
-	pwd = join_str("OLDPWD=", gen->pwd);
+	// ft_putstr_fd(gen.pwd, 2);
+	pwd = join_str("OLDPWD=", gen.pwd);
 	if(chdir(p) != -1 && errno != ENOENT)
 	{
 		modify_env(pwd);
@@ -51,8 +52,7 @@ int change_env(char *p)
 	else
 		perror("cd");
 	free(p);
-	gen->pwd = getcwd(NULL, 0);
-	free(pwd);
+	gen.pwd = getcwd(NULL, 0);
 	return (0);
 }
 

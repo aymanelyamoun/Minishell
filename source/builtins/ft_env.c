@@ -4,7 +4,7 @@ void	ft_env()
 {
 	t_list	*tmp;
 
-	tmp = gen->env;
+	tmp = gen.env;
 	if (tmp->content)
 	{
 		while (tmp)
@@ -14,4 +14,5 @@ void	ft_env()
 			tmp = tmp->next;
 		}
 	}
+	return ;
 }

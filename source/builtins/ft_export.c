@@ -55,11 +55,11 @@ int len_list(t_list **list)
     return (index);
 }
 
-void ft_sort (t_gen **gen)
+void ft_sort (t_gen *gen)
 {
 
-    bubbleSort(&(*gen)->env, len_list(&(*gen)->env));
-    print_export((*gen)->env);
+    bubbleSort(&(gen)->env, len_list(&(gen)->env));
+    print_export((gen)->env);
 }
 
 //if the name aline : print the name alone
@@ -123,7 +123,7 @@ int ft_export(char **next)
 {
     int index;
 
-    if (!gen->env)
+    if (!gen.env)
         return (0);
     if (ft_strlen2(next) == 1)
     {
@@ -137,8 +137,8 @@ int ft_export(char **next)
         {
             print_err_exp(next[index]);
         }
-        else if (!ft_add_list(&gen->env, next[index]))
-            ft_lstadd_back(&gen->env, ft_lstnew(ft_strdup(next[index])));
+        else if (!ft_add_list(&gen.env, next[index]))
+            ft_lstadd_back(&gen.env, ft_lstnew(ft_strdup(next[index])));
         index++;
     }
     return (0);
