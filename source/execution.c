@@ -35,14 +35,18 @@ char    *str_to_lower(char *str)
     int     i;
 
     i = 0;
-    new_str = malloc(sizeof(char) * ft_strlen(str) + 1);
-    while (str[i] != '\0')
+    if (str != NULL)
     {
-        new_str[i] = ft_tolower(str[i]);
-        i++;
+        new_str = malloc(sizeof(char) * ft_strlen(str) + 1);
+        while (str[i] != '\0')
+        {
+            new_str[i] = ft_tolower(str[i]);
+            i++;
+        }
+        new_str[i] = '\0';
+        return (new_str);
     }
-    new_str[i] = '\0';
-    return (new_str);
+    return (NULL);
 }
 
 void    execut(t_cmd *cmds, int **pipes, int pipes_num, int i)
@@ -109,7 +113,11 @@ void    execution(t_cmd *cmds, int pipes_num)
     int out;
 
     i = 0;
-    built_in = str_to_lower(cmds[i].cmd_args[0]);
+    // printf("---> %s\n", built_in);
+    if (cmds->exec)
+        built_in = str_to_lower(cmds[i].cmd_args[0]);
+    else
+        built_in = ft_strdup("");
     pipes = creat_pipes(pipes_num);
     assign_pipes(pipes, &cmds, pipes_num); 
     if (pipes_num == 0 && !(ft_strcmp(built_in, "echo") && ft_strcmp(built_in, "cd") 
@@ -145,7 +153,6 @@ void    execution(t_cmd *cmds, int pipes_num)
             i++;
         }
     }
-
     close_pipes(pipes, pipes_num);
     free_cmds(cmds, pipes_num);
 	free_pipes(pipes, pipes_num);

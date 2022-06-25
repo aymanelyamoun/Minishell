@@ -153,7 +153,14 @@ char	*get_var_str(char *str, int *i)
 {
 	*i = 0;
 	while (ft_isalnum(str[*i]) || str[*i] == '_')
+	{
+		if (*i == 0 && ft_isdigit(str[*i]))
+		{
+			(*i)++;
+			break;	
+		}
 		(*i)++;
+	}
 	return (ft_substr(str, 0, *i));
 }
 
@@ -206,7 +213,7 @@ void expander(token_t **tokens)
 			if (tmp->next != NULL && tmp->next->type != SPAACE &&
 				(tmp->next->type == WORD || tmp->next->type == DQUOTE || tmp->next->type == DOLLAR))
 				play_with_tokens(&tmp, ft_strdup(tmp->next->data), gen->env);
-			if ((tmp->next != NULL && tmp->next->type == SPAACE) || (tmp->next == NULL))
+			else if ((tmp->next != NULL && tmp->next->type == SPAACE) || (tmp->next == NULL))
 				tmp->type = WORD;
 		}
 		tmp = tmp->next;
@@ -249,7 +256,14 @@ char *get_var(char **str, char *final_quote, t_list *env)
 	{
 		while ((*str)[i] != '\0' && (*str)[i] != ' ' && (*str)[i] != '\t' 
 		&& (*str)[i] != '\v' && (*str)[i] != '\f' && ft_isalnum((*str)[i]))
+		{
+			if (i == 1 && ft_isdigit((*str)[i]))
+			{
+				i++;
+				break;
+			}
 			i++;
+		}
 		to_free = ft_substr(*str, 1, i - 1);
 		env_var = find_value(to_free, env);
 		free(to_free);
