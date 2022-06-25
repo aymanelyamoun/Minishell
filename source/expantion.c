@@ -389,7 +389,6 @@ void	get_path_and_execute(token_t **toknes)
 }
 // t_gen	*gen;
 
-
 int main(int argc, char **argv, char **envp)
 {
 	char *line;
