@@ -62,7 +62,7 @@ int heredoc(char *limiter)
     }
 	if (line != NULL)
 		free(line);
-	if (limiter)
+	if (limiter != NULL)
 		free(limiter);
 	close(pipe_fd[1]);
 	return (pipe_fd[0]);
