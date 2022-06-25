@@ -28,13 +28,13 @@
 //         }
 //         else if(line != NULL)
 //         {
-//             arr = ft_split(line, ' '); // imagining i have the splited commads 2d
-//             if(line != NULL && commands(arr) == YES)
+//             // arr = ft_split(line, ' '); // imagining i have the splited commads 2d
+//             // if(line != NULL && commands(arr) == YES)
 //                 go_commands(arr);
-//             free_split(arr);
-//             add_history(line);
-//             tokens = tokenize(line);
-//             syntax_err(tokens);  
+//             // free_split(arr);
+//             // add_history(line);
+//             // tokens = tokenize(line);
+//             // syntax_err(tokens);  
 //         }
 //         free(line);
 //     }
@@ -42,7 +42,7 @@
 // }
     
 
-char **convert_array(t_list **env)
+char **convert_to_array(t_list **env)
 {
     int index;
     int size;
@@ -60,5 +60,6 @@ char **convert_array(t_list **env)
         tmp = tmp->next;
         index++;
     }
+    arr[index] = NULL;
     return (arr);
 }

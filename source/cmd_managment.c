@@ -5,6 +5,7 @@ int	count_pipes(token_t *tokens)
 	int	i;
 
 	i = 0;
+
 	while (tokens != NULL)
 	{
 		if (tokens->type == PIPE)
@@ -136,7 +137,7 @@ static char	*join_cmd(char *path, char *cmd)
 
 void	cmd_not_found(char *cmd)
 {
-	printf("minishell: command not found: %s\n", cmd);
+	printf("minishell: command not found : %s\n", cmd);
 }
 
 char	*get_cmd_path(char *path, char *cmd)
@@ -169,7 +170,7 @@ char	*get_cmd_path(char *path, char *cmd)
 	return (NULL);
 }
 
-int	get_cmds_path(t_cmd **cmds, int pipes, t_list *env_l)
+int	get_cmds_path(t_cmd **cmds, int pipes)
 {
 	int	i;
 	int	status;
@@ -177,7 +178,7 @@ int	get_cmds_path(t_cmd **cmds, int pipes, t_list *env_l)
 
 	status = 0;
 	i = 0;
-	path = find_value("PATH", env_l);
+	path = find_value("PATH", gen->env);
 	if (path == NULL)
 	{
 		printf("PATH not found\n");
@@ -188,7 +189,10 @@ int	get_cmds_path(t_cmd **cmds, int pipes, t_list *env_l)
 	{
 		(*cmds)[i].cmd_path = get_cmd_path(path, (*cmds)[i].cmd_args[0]);
 		if ((*cmds)[i].cmd_path == NULL)
-			status = 1;
+		{
+			// status = 0;
+			(*cmds)[i].exec = 0;
+		}
 		i++;
 	}
 	return (status);

@@ -32,6 +32,7 @@ void	go_commands(char **line)
 		ft_export(line);
 	if (!ft_strncmp("cd", line[0], 2))
 	{
+		// fprintf(stderr, "hi from go cmd cd\n");
 		if(ft_strlen2(line) > 2)
 			ft_putstr_fd("too much arguments\n", 2);
 		else
