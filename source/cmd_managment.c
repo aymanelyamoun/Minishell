@@ -32,7 +32,7 @@ static t_cmd *creat_cmds_utils(token_t **tokens, t_cmd **cmds)
 			(*cmds)[i].tokens_cmd = new_head;
 			(*cmds)[i].infile = -1;
 			(*cmds)[i].outfile = -1;
-			(*cmds)[i].exec = 1;
+			(*cmds)[i].exec = 0;
 			new_head = tmp->next;
 			new_head->prev = NULL;
 			tmp->next = NULL;
@@ -45,7 +45,7 @@ static t_cmd *creat_cmds_utils(token_t **tokens, t_cmd **cmds)
     (*cmds)[i].tokens_cmd = new_head;
 	(*cmds)[i].infile = -1;
 	(*cmds)[i].outfile = -1;
-	(*cmds)[i].exec = 1;
+	(*cmds)[i].exec = 0;
 	return (*cmds);
 }
 
@@ -67,7 +67,7 @@ t_cmd   *creat_cmds(token_t **tokens)
 		cmds[i].tokens_cmd = *tokens;
 		cmds[i].infile = -1;
 		cmds[i].outfile = -1;
-		cmds[i].exec = 1;
+		cmds[i].exec = 0;
 		return (cmds);
 	}
     return (creat_cmds_utils(tokens, &cmds));
@@ -196,11 +196,8 @@ int	get_cmds_path(t_cmd **cmds, int pipes)
 	{
 		(*cmds)[i].cmd_path = get_cmd_path(path, (*cmds)[i].cmd_args[0]);
     	built_in = str_to_lower((*cmds)[i].cmd_args[0]);
-		if (((*cmds)[i].cmd_path == NULL) && !is_buit_in((*cmds)[i].cmd_args[0]))
-		{
-			(*cmds)[i].exec = 0;
-			gen.exit_status = 127;
-		}
+		if (((*cmds)[i].cmd_path == NULL) && !is_buit_in((*cmds)[i].cmd_args[0]) && (*cmds)[i].exec == 0)
+			(*cmds)[i].exec = 127;
 		i++;
 	}
 	return (status);

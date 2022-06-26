@@ -61,16 +61,16 @@ void    execut(t_cmd *cmds, int **pipes, int pipes_num, int i)
 		close(cmds[i].infile);
 	if (cmds[i].outfile != STDOUT_FILENO)
 		close(cmds[i].outfile);
-	if (cmds[i].exec && is_buit_in(cmds[i].cmd_args[0]))
+	if ((cmds[i].exec == 0) && is_buit_in(cmds[i].cmd_args[0]))
 				go_commands(cmds[i].cmd_args);
-	else if (cmds[i].exec)
+	else if (cmds[i].exec == 0)
 	{
 		free_envp();
 		gen.envp = convert_to_array(&gen.env);
 		execve(cmds[i].cmd_path, cmds[i].cmd_args, gen.envp);
 		perror("execve : ");
 	}
-	exit(gen.exit_status);
+	exit(cmds[i].exec);
 }
 
 void    free_cmds(t_cmd *cmds, int pipes_num)
@@ -159,8 +159,9 @@ void    execution(t_cmd *cmds, int pipes_num)
 		close_pipes(pipes, pipes_num);
 		free_cmds(cmds, pipes_num);
 		free_pipes(pipes, pipes_num);
-		while (waitpid(-1, &(gen.exit_status), 0) != -1)
-		;
+		waitpid(pid, &(gen.exit_status), 0);
+		// while (waitpid(-1, &(gen.exit_status), 0) != -1)
+		// ;
 		gen.exit_status = WEXITSTATUS(gen.exit_status);
 	}
 }
