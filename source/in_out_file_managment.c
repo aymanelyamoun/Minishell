@@ -92,7 +92,12 @@ void    check_file_direcitons(t_cmd **cmds, int pipes)
 					}
 				}
 				if (fd == -1)
+				{
 					(*cmds)[i].exec = 0;
+					gen.exit_status = 1;
+					//this is in doubt
+					return ;
+				}
 				(*cmds)[i].infile = fd;
 			}
 			else if (tokens->type == GREAT || tokens->type == DGREAT)
@@ -107,7 +112,11 @@ void    check_file_direcitons(t_cmd **cmds, int pipes)
 					}
 				}
 				if (fd == -1)
+				{
 					(*cmds)[i].exec = 0;
+					gen.exit_status = 1;
+					return ;
+				}
 				(*cmds)[i].outfile = fd;
 			}
 			tokens = tokens->next;
