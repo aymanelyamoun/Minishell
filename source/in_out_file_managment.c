@@ -68,6 +68,50 @@ void	rm_redirecitons(t_cmd **cmds, int pipes)
 	}
 }
 
+int		creat_in_files(t_cmd **cmds, token_t *tokens, int i)
+{
+	int	fd;
+
+	fd = open_file(&tokens, tokens->type);
+	if ((*cmds)[i].infile != -1)
+	{
+		if (close((*cmds)[i].infile) == -1)
+		{
+			perror("close : ");
+			exit(3);
+		}
+	}
+	if (fd == -1)
+	{
+		(*cmds)[i].exec = 0;
+		gen.exit_status = 1;
+		//this is in doubt
+	}
+	(*cmds)[i].infile = fd;
+	return (fd);
+}
+
+int		creat_out_files(t_cmd **cmds, token_t *tokens, int i)
+{
+	int	fd;
+
+	fd = open_file(&tokens, tokens->type);
+	if ((*cmds)[i].outfile != -1)
+	{
+		if (close((*cmds)[i].outfile) == -1)
+		{
+			perror("close : ");
+			exit(3);
+		}
+	}
+	if (fd == -1)
+	{
+		(*cmds)[i].exec = 1;
+	}
+	(*cmds)[i].outfile = fd;
+	return (fd);
+}
+
 void    check_file_direcitons(t_cmd **cmds, int pipes)
 {
     int i;
@@ -81,44 +125,11 @@ void    check_file_direcitons(t_cmd **cmds, int pipes)
         while (tokens != NULL)
         {
             if (tokens->type == LESS || tokens->type == DLESS)
-			{
-                fd = open_file(&tokens, tokens->type);
-				if ((*cmds)[i].infile != -1)
-				{
-					if (close((*cmds)[i].infile) == -1)
-					{
-						perror("close : ");
-						exit(3);
-					}
-				}
-				if (fd == -1)
-				{
-					(*cmds)[i].exec = 0;
-					gen.exit_status = 1;
-					//this is in doubt
-					return ;
-				}
-				(*cmds)[i].infile = fd;
-			}
+				fd = creat_in_files(cmds, tokens, i);
 			else if (tokens->type == GREAT || tokens->type == DGREAT)
-			{
-                fd = open_file(&tokens, tokens->type);
-				if ((*cmds)[i].outfile != -1)
-				{
-					if (close((*cmds)[i].outfile) == -1)
-					{
-						perror("close : ");
-						exit(3);
-					}
-				}
-				if (fd == -1)
-				{
-					(*cmds)[i].exec = 0;
-					gen.exit_status = 1;
-					return ;
-				}
-				(*cmds)[i].outfile = fd;
-			}
+				fd = creat_out_files(cmds, tokens, i);
+			if (fd == -1)
+				return ;
 			tokens = tokens->next;
         }
         i++;
