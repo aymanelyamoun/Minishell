@@ -129,7 +129,7 @@ void    execution(t_cmd *cmds, int pipes_num)
 	i = 0;
 	pipes = creat_pipes(pipes_num);
 	assign_pipes(pipes, &cmds, pipes_num); 
-	if (cmds[i].exec && pipes_num == 0 && is_buit_in(cmds[i].cmd_args[0]))
+	if (cmds[i].exec == 0 && pipes_num == 0 && is_buit_in(cmds[i].cmd_args[0]))
 		{
 			in = dup(STDIN_FILENO);
 			out = dup(STDOUT_FILENO);
