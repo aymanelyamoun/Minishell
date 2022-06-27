@@ -132,7 +132,7 @@ int ft_export(char **next)
     index = 1;
     while (next[index])
     {
-        if (check_arg(next[index]))
+        if (check_arg(next[index]))   //handeling += ?
         {
             print_err_exp(next[index]);
         }
@@ -149,7 +149,12 @@ void  print_err_exp(char *next)
 	ft_putstr_fd(next, 2);
 	ft_putstr_fd("': not a valid identifier\n", 2);
 }
-
+void  print_err_uns(char *next)
+{
+    ft_putstr_fd("Minishell: unset: `", 2);
+	ft_putstr_fd(next, 2);
+	ft_putstr_fd("': not a valid identifier\n", 2);
+}
 // int check_arg(char *next)
 // {    
 //     int index;

@@ -28,7 +28,7 @@ int check_arg2(char *next)
 	index = 0;
 	if (!next)
 		return (0);
-	if (!next[index] || (!ft_isalpha(next[index]) && next[index] != '_'))
+	if (!next[index] || (!ft_isalpha(next[index]) && next[index] != '_' && next[index] != '$' && next[index] != '/' )) // TODO :WHYYYYYY UNSET WITHOUT $ WORKS?
 		return (1);
 	index++;
 	while (next[index])

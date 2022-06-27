@@ -1,25 +1,15 @@
 #include "../includes/minishell.h"
 
-//check the numbers of arguments : if it none : exit(0)
-//if there are two arguments, check the second one
-//-------------------->not digit = error
-//-------------------->if digit
-//=====================    |
-//---------------------> is it short and negative? = exit(256 - number)
-//--------------------->is it long ?
-//=====================>    | 
-//----------------------> is it long and negative ? = exit(256 - long)
-//---------------------->is it long and positive ? = exit (num % 256)
-//----------------------> more then an arg ? => error
-//----------------------> else aka short (exit(num))
-
-//take the arg as long anyways
 int ft_exit(char **next)
 {
-
+    // int i = 0;
+    // while(next[i])
+    // {
+    //     ft_putstr_fd(next[i], 1);
+    //     i++;
+    // }
     if(ft_strlen2(next) == 1)
     {
-        //free_env(&gen.env);
         ft_putstr_fd("exit\n", 2);
         gen.exit_status = ft_atoll(*next);
     }
@@ -108,3 +98,18 @@ int check_valid(char *next)
 
 
 
+
+//check the numbers of arguments : if it none : exit(0)
+//if there are two arguments, check the second one
+//-------------------->not digit = error
+//-------------------->if digit
+//=====================    |
+//---------------------> is it short and negative? = exit(256 - number)
+//--------------------->is it long ?
+//=====================>    | 
+//----------------------> is it long and negative ? = exit(256 - long)
+//---------------------->is it long and positive ? = exit (num % 256)
+//----------------------> more then an arg ? => error
+//----------------------> else aka short (exit(num))
+
+//take the arg as long anyways

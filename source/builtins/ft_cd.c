@@ -28,7 +28,7 @@ int	ft_cd(char **path)
 	}
 	else if(!strncmp(path[1], "-", 1))
 	{
-		p =  find_value("OLDPWD", gen.env);
+		p = find_value("OLDPWD", gen.env);
 		if(!p)
 			ft_putstr_fd("OLDPWD not set\n", 2);
 		if(chdir(p) == -1)

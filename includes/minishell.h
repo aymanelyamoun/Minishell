@@ -193,4 +193,6 @@ char **convert_array(t_list **env);
 long long	ft_atoll(const char *dest);
 int check_valid(char *next);
 int is_long(char *next);
+void  print_err_uns(char *next);
+char *ft_to_upper(char *str);
 #endif
