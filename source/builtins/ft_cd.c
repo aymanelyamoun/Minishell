@@ -111,27 +111,35 @@ int ft_add_list(t_list **env_list, char *str)
 	return (0);
 }
 
-
-
 void append_case(t_list **env_list, char *str)
 {
-	char **split;
-	char *str3;
-	char *part;
-	char **split2; //put split 2 is split 1 by freeing
-	char *str2;
+	int index = 0;
 
-	split2 = ft_split(str, '+');
-	if(split2)
+	ft_putendl_fd(str, 1);
+	while (str[index])
 	{
-		part = split2[0];
-		split = ft_split(str, '=');
+		if (str[index] == '+' && str[index + 1] == '=')
+			break;
+		index++;
 	}
-	str2 = ft_strjoin("=", split[1]);
-	str3 = ft_strjoin(part, str2);
-	if(!append_it(&gen.env, str3))
-		 ft_lstadd_back(&gen.env, ft_lstnew(str3));
-	return ;
+	char *var_name = ft_substr(str, 0, index);
+	char *value = ft_substr(str, index + 2, ft_strlen(str) - (index + 2));
+	t_list *head = *env_list;
+	while(head)
+	{
+		index = 0;
+		while (((char *)head->content)[index] != '=')
+			index++;
+		if (!ft_strncmp(ft_substr(((char *)head->content), 0, index), var_name, ft_strlen(var_name)))
+		{
+			ft_putendl_fd((char *)head->content, 1);
+			char *test = ft_strjoin(&((char *)head->content)[index], value);
+			test = ft_strjoin("=", test);
+			(head->content) = ft_strjoin(var_name, test);
+			break ;
+		}
+		head = head->next;
+	}
 }
 
 int append_it(t_list **env_list, char *str)
@@ -156,7 +164,7 @@ int append_it(t_list **env_list, char *str)
 		{
 			if(ft_strchr(str, '='))
 			{
-				ft_putendl_fd(tmp->content, 1);
+				//ft_putendl_fd(tmp->content, 1);
 				strr = ft_split(tmp_str, '=');
 				free(tmp->content);
 				tmp->content = ft_strjoin(tmp->content, strr[1]);
@@ -168,3 +176,19 @@ int append_it(t_list **env_list, char *str)
 	free(tmp_str);
 	return (0);
 }
+	// char **split;
+	// char *str3;
+	// char *part;
+	// char **split2; //put split 2 is split 1 by freeing
+	// char *str2;
+
+	// split2 = ft_split(str, '+');
+	// if(split2)
+	// {
+	// 	part = split2[0];
+	// 	split = ft_split(str, '=');
+	// }
+	// str2 = ft_strjoin("=", split[1]);
+	// str3 = ft_strjoin(part, str2);
+	// if(!append_it(&gen.env, str3))
+	// 	 ft_lstadd_back(&gen.env, ft_lstnew(str3));

@@ -118,7 +118,6 @@ int ft_export(char **next)
 {
     int index;
     char	**split;
-    int j = 0;
     char *str;
 
     if (!gen.env)
