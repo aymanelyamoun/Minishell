@@ -26,7 +26,7 @@ void	go_commands(char **line)
 		ft_env();
 	if (!ft_strncmp("pwd", line[0],3))
 		ft_pwd();
-	if (!ft_strncmp("ECHO",ft_to_upper(line[0]), 4)) //SHOULD BE CASE SENSITIVE HOW?
+	if (!ft_strncmp("echo",ft_to_lower(line[0]), 5)) //SHOULD BE CASE SENSITIVE HOW?
 		ft_echo(line);
 	if(!ft_strncmp("export", line[0], 6))
 		ft_export(line);
@@ -54,16 +54,16 @@ int	array_len(char **array)
 	return (index);
 }
 
-char *ft_to_upper(char *str)
+char *ft_to_lower(char *str)
 {
 	int index;
 
 	index = 0;
 	while(str[index])
 	{
-		if(str[index]>='a' && str[index]<='z')
+		if(str[index] >= 'A' && str[index] <= 'Z')
         {
-            str[index] = str[index] - 32;
+            str[index] = str[index] + 32;
         }
 		index++;
 	}

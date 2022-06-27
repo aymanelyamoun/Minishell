@@ -2,12 +2,6 @@
 
 int ft_exit(char **next)
 {
-    // int i = 0;
-    // while(next[i])
-    // {
-    //     ft_putstr_fd(next[i], 1);
-    //     i++;
-    // }
     if(ft_strlen2(next) == 1)
     {
         ft_putstr_fd("exit\n", 2);
@@ -26,7 +20,6 @@ int ft_exit(char **next)
         {
             gen.exit_status = ft_atoll(next[1]);
         }
-        
     }
     if(ft_strlen2(next) > 2)
     {
@@ -44,7 +37,6 @@ int is_long(char *next)
             return (1);
     return (0);
 }
-
 
 int check_valid(char *next)
 {
