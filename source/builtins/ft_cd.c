@@ -71,22 +71,32 @@ int change_env(char *p)
 	return (0);
 }
 
+int find_plus(char *str)
+{
+	int index;
+	int j;
+
+	index = 0;
+	j = 0;
+	while(str[index])
+	{
+		if(str[index] == '+')
+			j++;
+		index++;
+	}
+	return (j);
+}
+
 int ft_add_list(t_list **env_list, char *str)
 {
 	t_list *tmp;
 	size_t index1;
 	size_t index2;
 	char *tmp_str;
-	char **split;
+	//char **split;
 
 	tmp = *env_list;
 	tmp_str = ft_strdup(str);
-	split = ft_split(str, '+'); //while =x increments
-	if(ft_strlen2(split) > 1)
-	{
-		append_case(&gen.env, str);
-		return (1);
-	}
 	while(tmp)
 	{
 		index1 = 0;
@@ -106,12 +116,17 @@ int ft_add_list(t_list **env_list, char *str)
 		}
 		tmp = tmp->next;
 	}
-	free_split(split);
+	//free_split(split);
 	free(tmp_str); //free everything
 	return (0);
 }
 
-void append_case(t_list **env_list, char *str)
+//handle adding a new one if it sis 
+//TODO: two problems: it writes character twice + it should add the variable if it is not here + the += should be handeled
+//TODO: Norme should be handled
+//TODO :Leaks
+
+int append_case(t_list **env_list, char *str) //how to break this one
 {
 	int index = 0;
 
@@ -123,7 +138,9 @@ void append_case(t_list **env_list, char *str)
 		index++;
 	}
 	char *var_name = ft_substr(str, 0, index);
+	ft_putendl_fd(var_name, 1);
 	char *value = ft_substr(str, index + 2, ft_strlen(str) - (index + 2));
+	ft_putendl_fd(value, 1);
 	t_list *head = *env_list;
 	while(head)
 	{
@@ -132,14 +149,21 @@ void append_case(t_list **env_list, char *str)
 			index++;
 		if (!ft_strncmp(ft_substr(((char *)head->content), 0, index), var_name, ft_strlen(var_name)))
 		{
-			ft_putendl_fd((char *)head->content, 1);
+			ft_putendl_fd("was here", 1);
 			char *test = ft_strjoin(&((char *)head->content)[index], value);
 			test = ft_strjoin("=", test);
+			ft_putendl_fd("was here2", 1);
 			(head->content) = ft_strjoin(var_name, test);
 			break ;
 		}
+		else if(head == NULL && ft_strncmp(ft_substr(((char *)head->content), 0, index), var_name, ft_strlen(var_name))) //i need to say , if there is match, create one idk how
+		{
+			ft_putendl_fd("was here3", 1);
+			ft_lstadd_back(&gen.env, ft_lstnew(str));
+		}
 		head = head->next;
 	}
+	return (1);
 }
 
 int append_it(t_list **env_list, char *str)
@@ -164,7 +188,6 @@ int append_it(t_list **env_list, char *str)
 		{
 			if(ft_strchr(str, '='))
 			{
-				//ft_putendl_fd(tmp->content, 1);
 				strr = ft_split(tmp_str, '=');
 				free(tmp->content);
 				tmp->content = ft_strjoin(tmp->content, strr[1]);

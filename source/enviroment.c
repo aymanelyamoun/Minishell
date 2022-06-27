@@ -11,7 +11,7 @@ t_list *env_create(char **envp)
     index = 1;
     if(!(*envp))
         exit(0);
-    if(!(**envp) || !(envp) || !(envp[0]))
+    if(!(**envp) || !(envp) || !(envp[0])) //TODO : fix this
     {
         head = ft_lstnew(NULL);
         return (head);
@@ -52,6 +52,7 @@ char **set_env(char **envp)
     tmp[index] = NULL;
     return (tmp);
 }
+
 void    free_env(t_list **env)
 {
     t_list *tmp;
