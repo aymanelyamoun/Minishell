@@ -24,6 +24,18 @@ int	ft_cd(char **path)
 			return (1);
 		}
 	}
+	else if(!strncmp(path[1], "-", 1))
+	{
+		p =  find_value("OLDPWD", gen.env);
+		if(!p)
+			ft_putstr_fd("OLDPWD not set\n", 2);
+		if(chdir(p) == -1)
+		{
+			ft_putstr_fd("Problem in chdir.\n", 2);
+			gen.exit_status = 1;
+			return (1);
+		}
+	}
 	else if(ft_strlen2(path) == 2)
 		p = ft_strdup(path[1]);
 	change_env(p);
@@ -38,7 +50,6 @@ int change_env(char *p)
 	pwd = join_str("OLDPWD=", gen.pwd);
 	if(chdir(p) != -1)
 	{
-		write(1, "6\n", 1);
 		modify_env(pwd);
 		free(pwd);
 		if (!getcwd(NULL, 0))
@@ -64,7 +75,6 @@ int ft_add_list(t_list **env_list, char *str)
 	size_t index2;
 	char *tmp_str;
 
-	write(1, "7\n", 1);
 	tmp = *env_list;
 	tmp_str = ft_strdup(str);
 	while(tmp)
