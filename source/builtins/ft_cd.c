@@ -129,6 +129,7 @@ void append_case(t_list **env_list, char *str)
 	}
 	str2 = ft_strjoin("=", split[1]);
 	str3 = ft_strjoin(part, str2);
+	puts(str3);
 	if(!append_it(&gen.env, str3))
 		 ft_lstadd_back(&gen.env, ft_lstnew(str3));
 	return ;
