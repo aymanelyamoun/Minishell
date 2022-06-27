@@ -11,7 +11,7 @@ int check_arg(char *next)
         return (1);
     while (next[index])
     {
-        if(next[index] == '=')
+        if((next[index] == '+' && next[index + 1] == '=') || next[index] == '=')
             break ;
         if(!ft_isalnum(next[index]) && next[index] != '_')
             return(1);

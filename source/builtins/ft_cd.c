@@ -77,9 +77,16 @@ int ft_add_list(t_list **env_list, char *str)
 	size_t index1;
 	size_t index2;
 	char *tmp_str;
+	char **split;
 
 	tmp = *env_list;
 	tmp_str = ft_strdup(str);
+	split = ft_split(str, '+');
+	if(ft_strlen2(split) > 1)
+	{
+		append_case(&gen.env, str);
+		return (1);
+	}
 	while(tmp)
 	{
 		index1 = 0;
@@ -99,8 +106,64 @@ int ft_add_list(t_list **env_list, char *str)
 		}
 		tmp = tmp->next;
 	}
+	free_split(split);
 	free(tmp_str); //free everything
 	return (0);
 }
 
 
+
+void append_case(t_list **env_list, char *str)
+{
+	char **split;
+	char *str3;
+	char *part;
+	char **split2; //put split 2 is split 1 by freeing
+	char *str2;
+
+	split2 = ft_split(str, '+');
+	if(split2)
+	{
+		part = split2[0];
+		split = ft_split(str, '=');
+	}
+	str2 = ft_strjoin("=", split[1]);
+	str3 = ft_strjoin(part, str2);
+	if(!append_it(&gen.env, str3))
+		 ft_lstadd_back(&gen.env, ft_lstnew(str3));
+	return ;
+}
+
+int append_it(t_list **env_list, char *str)
+{
+	char *tmp_str;
+	size_t index1;
+	t_list *tmp;
+	size_t index2;
+	char *strr;
+
+	tmp_str = ft_strdup(str);
+	tmp = *env_list;
+	while(tmp)
+	{
+		index1 = 0;
+		index2 = 0;
+		while(((char *)tmp->content)[index1] && ((char *)tmp->content)[index1] != '=')
+			index1++;
+		while(str[index2] && str[index2] != '=')
+			index2++;
+		if(!ft_strncmp(tmp->content, str, index1) && index1 == index2)
+		{
+			if(ft_strchr(str, '='))
+			{
+				strr = tmp->content;
+				free(tmp->content);
+				tmp->content = ft_strjoin(strr, tmp_str);
+			}
+			return (1);
+		}
+		tmp = tmp->next;
+	}
+	free(tmp_str);
+	return (0);
+}

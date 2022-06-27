@@ -195,4 +195,6 @@ int check_valid(char *next);
 int is_long(char *next);
 void  print_err_uns(char *next);
 char *ft_to_lower(char *str);
+void append_case(t_list **env_list, char *str);
+int append_it(t_list **env_list, char *str);
 #endif
