@@ -12,7 +12,7 @@ int	ft_cd(char **path)
 	char	*pwd;
 	char	*p;
 
-	if (!path[1] || !strncmp(path[1], "--", 2) || (!strncmp(path[1], "~", 2) && !path[2]))
+	if (!path[1] || !strncmp(path[1], "--", 2) || !strncmp(path[1], "-", 2) || (!strncmp(path[1], "~", 2) && !path[2]))
 	{
 		p =  find_value("HOME", gen.env);
 		if(!p)
