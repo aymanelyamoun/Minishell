@@ -12,6 +12,7 @@ int	ft_cd(char **path)
 	char	*pwd;
 	char	*p;
 
+
 	if (!path[1] || !strncmp(path[1], "--", 2) || (!strncmp(path[1], "~", 2) && !path[2]))
 	{
 		p =  find_value("HOME", gen.env);
@@ -35,6 +36,7 @@ int	ft_cd(char **path)
 			gen.exit_status = 1;
 			return (1);
 		}
+		ft_putendl_fd(p, 2);
 	}
 	else if(ft_strlen2(path) == 2)
 		p = ft_strdup(path[1]);
