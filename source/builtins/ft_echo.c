@@ -9,8 +9,11 @@ void	ft_echo(char **str)
 	int flag;
 
 	flag = 0;
-	if(ft_strlen2(str) == 1)
+	if(ft_strlen2(str) == 1 || !str[index + 1])
+	{
 		ft_putchar_fd('\n', 1);
+		return ;
+	}
 	index = 1;
 	while(str[index] && set_flag(str[index]))
 	{
@@ -54,9 +57,3 @@ int set_flag(char *s)
 	}
 	return (0);
 }
-/*
-	void *
-	next->
-	env ==== ft_malloc();
-	
-*/
