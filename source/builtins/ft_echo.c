@@ -9,23 +9,20 @@ void	ft_echo(char **str)
 	int flag;
 
 	flag = 0;
-	if(ft_strlen2(str) == 1 || !str[index + 1])
+	if(ft_strlen2(str) == 1 || (ft_strlen2(str) == 1 && !str[index + 1]))
 	{
 		ft_putchar_fd('\n', 1);
 		return ;
 	}
 	index = 1;
-	while(str[index] && set_flag(str[index]))
+	while (str[index] && set_flag(str[index]))
 	{
 		flag = 1;
 		index++;
 	}
 	while(str[index])
 	{
-		if(!ft_strcmp("$?", str[index]))
-				ft_putnbr_fd(gen.exit_status, 1);
-		else
-			ft_putstr_fd(str[index], 1);
+		ft_putstr_fd(str[index], 1);
 		index++;
 		if(str[index])
 			ft_putchar_fd(' ', 1);
