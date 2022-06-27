@@ -3,14 +3,14 @@
 
 char *find_value(char *str, t_list *env_l)
 {
-	int i;
+	int flag = 0;
 	char *tmp;
 
 	while (env_l != NULL)
 	{
+		flag = 1;
 		if (strcmp(str, "?") == 0)
 		{
-
 			return (ft_itoa(gen.exit_status));
 		}
 		tmp = ft_strjoin(str, "=");
@@ -401,7 +401,7 @@ void	get_path_and_execute(token_t **toknes)
 
 	cmds = cmds_and_redirections(toknes, &pipes_num);
 	if (get_cmds_path(&cmds, pipes_num) == 0)
-	{	
+	{
 		execution(cmds, pipes_num);
 	}
 }
@@ -416,6 +416,7 @@ int main(int argc, char **argv, char **envp)
 
 	gen.pwd =  getcwd(p, PATH_MAX);
     gen.env = env_create(envp); //TODO : put this in a function
+	//fix the case env -i ./mini....
 	gen.envp = NULL;
 	gen.exit_status = 0;
     handle_signals();

@@ -8,7 +8,6 @@ t_list *swap(t_list *ptr1, t_list *ptr2)
     return (ptr2);
 }
 
-
 void bubbleSort(t_list **head, int count)
 {
     t_list **h; 
@@ -60,9 +59,6 @@ void ft_sort (t_gen *gen)
     bubbleSort(&(gen)->env, len_list(&(gen)->env));
     print_export((gen)->env);
 }
-
-//if the name aline : print the name alone
-//if the name with = : print "
 
 void	print_export(t_list *env)
 {
@@ -135,7 +131,7 @@ int ft_export(char **next)
     index = 1;
     while (next[index])
     {
-        if (check_arg(next[index]))   //handeling += ?
+        if (check_arg(next[index]))
         {
             print_err_exp(next[index]);
         }
@@ -145,35 +141,3 @@ int ft_export(char **next)
     }
     return (0);
 }
-
-void  print_err_exp(char *next)
-{
-    ft_putstr_fd("Minishell: export: `", 2);
-	ft_putstr_fd(next, 2);
-	ft_putstr_fd("': not a valid identifier\n", 2);
-}
-void  print_err_uns(char *next)
-{
-    ft_putstr_fd("Minishell: unset: `", 2);
-	ft_putstr_fd(next, 2);
-	ft_putstr_fd("': not a valid identifier\n", 2);
-}
-// int check_arg(char *next)
-// {    
-//     int index;
-
-//     index = 0;
-//     if(!next)
-//         return (0);
-//     if(ft_isdigit(next[0]) || next[0] == '=')
-//         return (1);
-//     while (next[index])
-//     {
-//         if(next[index] == '=')
-//             break ;
-//         if(!ft_isalnum(next[index]) && next[index] != '_')
-//             return(1);
-//         index++;
-//     }
-//     return (0);
-// }

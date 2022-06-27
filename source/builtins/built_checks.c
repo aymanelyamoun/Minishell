@@ -11,7 +11,7 @@ int check_arg(char *next)
         return (1);
     while (next[index])
     {
-        if((next[index] == '+' && next[index + 1] == '=') || next[index] == '=')
+        if((next[index] == '+' && next[index + 1] == '=' && ft_isalpha(next[index +2])) || next[index] == '=')
             break ;
         if(!ft_isalnum(next[index]) && next[index] != '_')
             return(1);
@@ -28,7 +28,7 @@ int check_arg2(char *next)
 	index = 0;
 	if (!next)
 		return (0);
-	if (!next[index] || (!ft_isalpha(next[index]) && next[index] != '_')) // TODO :WHYYYYYY UNSET WITHOUT $ WORKS?
+	if (!next[index] || (!ft_isalpha(next[index]) && next[index] != '_')) 
 		return (1);
 	index++;
 	while (next[index])

@@ -82,11 +82,7 @@ int		creat_in_files(t_cmd **cmds, token_t *tokens, int i)
 		}
 	}
 	if (fd == -1)
-	{
-		(*cmds)[i].exec = 0;
-		gen.exit_status = 1;
-		//this is in doubt
-	}
+		(*cmds)[i].exec = 1;
 	(*cmds)[i].infile = fd;
 	return (fd);
 }

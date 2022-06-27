@@ -156,7 +156,9 @@ char	*get_cmd_path(char *path, char *cmd)
 	i = 0;
 	paths = ft_split(path, ':');
 	if (paths == NULL)
+	{
 		return (NULL);
+	}
 	while (paths[i] != NULL)
 	{
 		cmd_path = join_cmd(paths[i], cmd);
@@ -189,12 +191,19 @@ int	get_cmds_path(t_cmd **cmds, int pipes)
 	path = find_value("PATH", gen.env);
 	if (path == NULL)
 	{
-		printf("PATH not found\n");
+		// printf("PATH not found\n");
 		return 1;
 	}
 	while (i <= pipes)
 	{
-		(*cmds)[i].cmd_path = get_cmd_path(path, (*cmds)[i].cmd_args[0]);
+		// (*cmds)[i].cmd_path = ft_strdup((*cmds)[i].cmd_args[0]);
+		if ((*cmds)[i].cmd_args[0] != NULL)
+		{
+			(*cmds)[i].cmd_path = get_cmd_path(path, (*cmds)[i].cmd_args[0]);
+		}
+		else
+			(*cmds)[i].cmd_path = NULL;
+
     	built_in = str_to_lower((*cmds)[i].cmd_args[0]);
 		if (((*cmds)[i].cmd_path == NULL) && !is_buit_in((*cmds)[i].cmd_args[0]) && (*cmds)[i].exec == 0)
 			(*cmds)[i].exec = 127;

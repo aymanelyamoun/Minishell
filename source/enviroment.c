@@ -8,14 +8,15 @@ t_list *env_create(char **envp)
     t_list *head = NULL;
     char *s;
     int index;
-
     index = 1;
-    if(!(*envp) || !(envp) || !(envp[0]))
+    // if(!(**envp) || !(envp) || !(envp[0]))
+    if(!(envp) || !(*envp))
+        return (NULL);
+    if(!(envp[0]))
     {
         head = ft_lstnew(NULL);
         return (head);
     }
-    
     s = ft_strdup(envp[0]);
     head = ft_lstnew(s);
     ft_lstadd_back(&head, tmp);
