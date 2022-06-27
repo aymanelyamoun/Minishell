@@ -12,7 +12,7 @@ int	ft_cd(char **path)
 	char	*pwd;
 	char	*p;
 
-	if (!path[1] || !strncmp(path[1], "--", 2) || (!strncmp(path[1], "~", 2)&& !path[2]))
+	if (!path[1] || !strncmp(path[1], "--", 2) || (!strncmp(path[1], "~", 2) && !path[2]))
 	{
 		p =  find_value("HOME", gen.env);
 		if(!p)
@@ -34,8 +34,10 @@ int change_env(char *p)
 {
 	char *pwd;
 
+	// ft_putstr_fd(gen.pwd, 2);
 	pwd = join_str("OLDPWD=", gen.pwd);
-	if(chdir(p) != -1 && errno != ENOENT)
+	ft_putstr_fd(pwd, 1);
+	if(chdir(p) != -1)
 	{
 		modify_env(pwd);
 		free(pwd);
@@ -61,7 +63,6 @@ int ft_add_list(t_list **env_list, char *str)
 	size_t index1;
 	size_t index2;
 	char *tmp_str;
-
 
 	tmp = *env_list;
 	tmp_str = ft_strdup(str);
