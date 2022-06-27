@@ -81,7 +81,7 @@ int ft_add_list(t_list **env_list, char *str)
 
 	tmp = *env_list;
 	tmp_str = ft_strdup(str);
-	split = ft_split(str, '+');
+	split = ft_split(str, '+'); //while =x increments
 	if(ft_strlen2(split) > 1)
 	{
 		append_case(&gen.env, str);
@@ -129,7 +129,6 @@ void append_case(t_list **env_list, char *str)
 	}
 	str2 = ft_strjoin("=", split[1]);
 	str3 = ft_strjoin(part, str2);
-	puts(str3);
 	if(!append_it(&gen.env, str3))
 		 ft_lstadd_back(&gen.env, ft_lstnew(str3));
 	return ;
@@ -141,7 +140,7 @@ int append_it(t_list **env_list, char *str)
 	size_t index1;
 	t_list *tmp;
 	size_t index2;
-	char *strr;
+	char **strr;
 
 	tmp_str = ft_strdup(str);
 	tmp = *env_list;
@@ -157,9 +156,10 @@ int append_it(t_list **env_list, char *str)
 		{
 			if(ft_strchr(str, '='))
 			{
-				strr = tmp->content;
+				ft_putendl_fd(tmp->content, 1);
+				strr = ft_split(tmp_str, '=');
 				free(tmp->content);
-				tmp->content = ft_strjoin(strr, tmp_str);
+				tmp->content = ft_strjoin(tmp->content, strr[1]);
 			}
 			return (1);
 		}
