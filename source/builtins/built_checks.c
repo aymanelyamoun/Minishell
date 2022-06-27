@@ -13,7 +13,7 @@ int check_arg(char *next)
     {
         if(next[index] == '=')
             break ;
-        if(!ft_isalnum(next[index]) && next[index] != '_')
+        if(!ft_isalnum(next[index]) && next[index] != '_' && next[index] != '-')
             return(1);
         index++;
     }
@@ -39,4 +39,3 @@ int check_arg2(char *next)
 	}
 	return (0);
 }
-
