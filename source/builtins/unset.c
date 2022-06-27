@@ -2,33 +2,27 @@
 
 int ft_unset(char **next)
 {
-    int i;
-    while(next[i])
-    {
-        ft_putstr_fd(next[i], 1);
-        i++;
-    }
-    // int index;
+    int index;
 
-    // if (!gen.env)
-    //     return (0);
-    // if (ft_strlen2(next) == 1)
-    //     return (0);
-    // index = 1;
-    // while (next[index])
-    // {
-    //     if (check_arg2(next[index]))
-    //     {
-    //         print_err_uns(next[index]);
-    //         gen.exit_status = 1;
-    //     }
-    //     else
-    //     {
-    //        start_unset(gen.env, next[index]);
-    //        gen.exit_status = 0;
-    //     }
-    //     index++;
-    // }
+    if (!gen.env)
+        return (0);
+    if (ft_strlen2(next) == 1)
+        return (0);
+    index = 1;
+    while (next[index])
+    {
+        if (check_arg2(next[index]))
+        {
+            print_err_uns(next[index]);
+            gen.exit_status = 1;
+        }
+        else
+        {
+           start_unset(gen.env, next[index]);
+           gen.exit_status = 0;
+        }
+        index++;
+    }
     return (0);
 }
 

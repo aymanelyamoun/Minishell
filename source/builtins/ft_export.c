@@ -120,12 +120,6 @@ void	free_split(char **array)
 
 int ft_export(char **next)
 {
-    int i = 0;
-    while(next[i])
-    {
-        ft_putstr_fd(next[i], 1);
-        i++;
-    }
     int index;
 
     if (!gen.env)
