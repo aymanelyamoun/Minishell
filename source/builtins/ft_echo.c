@@ -14,8 +14,6 @@ void	ft_echo(char **str)
 		return ;
 	}
 	index = 1;
-	if(!ft_strcmp(str[index], "$"))
-		ft_putstr_fd("$", 1);
 	while (str[index] && set_flag(str[index]))
 	{
 		flag = 1;
