@@ -1,15 +1,12 @@
 #include "../includes/minishell.h"
 
-
-
-///////TODO: add $? alone without echo
 void	ft_echo(char **str) 
 {
 	int index;
 	int flag;
 
 	flag = 0;
-	if(ft_strlen2(str) == 1 || (ft_strlen2(str) == 1 && !str[index + 1]))
+	if(ft_strlen2(str) == 1 || (ft_strlen2(str) != 1 && !str[index + 1]))
 	{
 		ft_putchar_fd('\n', 1);
 		return ;

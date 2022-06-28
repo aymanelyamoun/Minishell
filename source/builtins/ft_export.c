@@ -118,7 +118,6 @@ int ft_export(char **next)
 {
     int index;
     char	**split;
-    int j = 0;
     char *str;
 
     if (!gen.env)
@@ -129,6 +128,12 @@ int ft_export(char **next)
         return (0);
     }
     index = 1;
+    if(find_plus(next[index]) >= 1)
+	{
+		append_case(&gen.env, next[index]);
+        ft_putendl_fd("mm", 1);
+		return (0);
+	}
     while (next[index])
     {
         if (check_arg(next[index]))

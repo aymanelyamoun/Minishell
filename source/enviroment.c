@@ -9,7 +9,6 @@ t_list *env_create(char **envp)
     char *s;
     int index;
     index = 1;
-    // if(!(**envp) || !(envp) || !(envp[0]))
     if(!(envp) || !(*envp))
         return (NULL);
     if(!(envp[0]))
@@ -53,6 +52,7 @@ char **set_env(char **envp)
     tmp[index] = NULL;
     return (tmp);
 }
+
 void    free_env(t_list **env)
 {
     t_list *tmp;

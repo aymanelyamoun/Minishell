@@ -1,5 +1,7 @@
 #include "../includes/minishell.h"
 
+//TODO:exit is fucked
+
 int ft_exit(char **next)
 {
     if(ft_strlen2(next) == 1)

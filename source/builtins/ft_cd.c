@@ -71,22 +71,31 @@ int change_env(char *p)
 	return (0);
 }
 
+int find_plus(char *str)
+{
+	int index;
+	int j;
+
+	index = 0;
+	j = 0;
+	while(str[index])
+	{
+		if(str[index] == '+')
+			j++;
+		index++;
+	}
+	return (j);
+}
+
 int ft_add_list(t_list **env_list, char *str)
 {
 	t_list *tmp;
 	size_t index1;
 	size_t index2;
 	char *tmp_str;
-	char **split;
 
 	tmp = *env_list;
 	tmp_str = ft_strdup(str);
-	split = ft_split(str, '+');
-	if(ft_strlen2(split) > 1)
-	{
-		append_case(&gen.env, str);
-		return (1);
-	}
 	while(tmp)
 	{
 		index1 = 0;
@@ -106,65 +115,57 @@ int ft_add_list(t_list **env_list, char *str)
 		}
 		tmp = tmp->next;
 	}
-	free_split(split);
 	free(tmp_str); //free everything
 	return (0);
 }
 
+//handle adding a new one if it sis 
+//TODO: two problems: it writes character twice + it should add the variable if it is not here + the += should be handeled
+//TODO: Norme should be handled
+//TODO :Leaks
 
-
-void append_case(t_list **env_list, char *str)
+int append_case(t_list **env_list, char *str) //how to break this one
 {
-	char **split;
-	char *str3;
-	char *part;
-	char **split2; //put split 2 is split 1 by freeing
-	char *str2;
+	int index = 0;
+	int flag = 0;
 
-	split2 = ft_split(str, '+');
-	if(split2)
+	while (str[index])
 	{
-		part = split2[0];
-		split = ft_split(str, '=');
+		if (str[index] == '+' && str[index + 1] == '=')
+			break;
+		index++;
 	}
-	str2 = ft_strjoin("=", split[1]);
-	str3 = ft_strjoin(part, str2);
-	puts(str3);
-	if(!append_it(&gen.env, str3))
-		 ft_lstadd_back(&gen.env, ft_lstnew(str3));
-	return ;
-}
-
-int append_it(t_list **env_list, char *str)
-{
-	char *tmp_str;
-	size_t index1;
-	t_list *tmp;
-	size_t index2;
-	char *strr;
-
-	tmp_str = ft_strdup(str);
-	tmp = *env_list;
-	while(tmp)
+	char *var_name = ft_substr(str, 0, index);
+	ft_putendl_fd(var_name,1);
+	char *value = ft_substr(str, index + 2, ft_strlen(str) - (index + 2));
+	t_list *head = *env_list;
+	while(head)
 	{
-		index1 = 0;
-		index2 = 0;
-		while(((char *)tmp->content)[index1] && ((char *)tmp->content)[index1] != '=')
-			index1++;
-		while(str[index2] && str[index2] != '=')
-			index2++;
-		if(!ft_strncmp(tmp->content, str, index1) && index1 == index2)
+		index = 0;
+		while (((char *)head->content)[index] && ((char *)head->content)[index] != '=')
+			index++;
+		// if (((char *)head->content)[index] != '=')
+		// 	value = ft_strdup("");
+		if (!ft_strncmp(ft_substr(((char *)head->content), 0, index), var_name, ft_strlen(var_name)))
 		{
-			if(ft_strchr(str, '='))
-			{
-				strr = tmp->content;
-				free(tmp->content);
-				tmp->content = ft_strjoin(strr, tmp_str);
-			}
-			return (1);
+			// ft_putendl_fd((char *)head->content, 1);
+			free(head->content);
+			char *test = ft_strjoin(&((char *)head->content)[index], value);
+			test = ft_strjoin("=", test);
+			head->content = ft_strjoin(var_name, test);
+			ft_putendl_fd(value, 1);
+			//head->content = ft_strdup(test);
+			flag = 1;
+			break ;
 		}
-		tmp = tmp->next;
+		head = head->next;
 	}
-	free(tmp_str);
-	return (0);
+	if(flag == 0)
+	{
+		ft_putstr_fd("2", 1);
+		char *varr = ft_strjoin(var_name, "=");
+		ft_lstadd_back(&gen.env, ft_lstnew(ft_strjoin(varr, value)));
+		free(varr);
+	}
+	return (1);
 }
