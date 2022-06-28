@@ -39,3 +39,29 @@ int check_arg2(char *next)
 	}
 	return (0);
 }
+
+int	array_len(char **array)
+{
+	int	index;
+
+	index = 0;
+	while (array[index + 1])
+		index++ ;
+	return (index);
+}
+
+char *ft_to_lower(char *str)
+{
+	int index;
+
+	index = 0;
+	while(str[index])
+	{
+		if(str[index] >= 'A' && str[index] <= 'Z')
+        {
+            str[index] = str[index] + 32;
+        }
+		index++;
+	}
+	return str;
+}

@@ -12,9 +12,9 @@ int	ft_cd(char **path)
 	char	*pwd;
 	char	*p;
 
-	if(!strncmp(path[0], "CD", 2))
+	if(!ft_strncmp(path[0], "CD", 2))
 		return (0);
-	if (!path[1] || !strncmp(path[1], "--", 2) || (!strncmp(path[1], "~", 2) && !path[2]))
+	if (!path[1] || !ft_strncmp(path[1], "--", 2) || (!ft_strncmp(path[1], "~", 2) && !path[2]))
 	{
 		p =  find_value("HOME", gen.env);
 		if(!p)
@@ -49,7 +49,6 @@ int change_env(char *p)
 {
 	char *pwd;
 
-	// ft_putstr_fd(gen.pwd, 2);
 	pwd = join_str("OLDPWD=", gen.pwd);
 	if(chdir(p) != -1)
 	{
@@ -115,16 +114,12 @@ int ft_add_list(t_list **env_list, char *str)
 		}
 		tmp = tmp->next;
 	}
-	free(tmp_str); //free everything
+	free(tmp_str);
+	free(tmp);
 	return (0);
 }
 
-//handle adding a new one if it sis 
-//TODO: two problems: it writes character twice + it should add the variable if it is not here + the += should be handeled
-//TODO: Norme should be handled
-//TODO :Leaks
-
-int append_case(t_list **env_list, char *str) //how to break this one
+int append_case(t_list **env_list, char *str)
 {
 	int index = 0;
 	int flag = 0;
@@ -136,7 +131,6 @@ int append_case(t_list **env_list, char *str) //how to break this one
 		index++;
 	}
 	char *var_name = ft_substr(str, 0, index);
-	ft_putendl_fd(var_name,1);
 	char *value = ft_substr(str, index + 2, ft_strlen(str) - (index + 2));
 	t_list *head = *env_list;
 	while(head)
@@ -144,28 +138,26 @@ int append_case(t_list **env_list, char *str) //how to break this one
 		index = 0;
 		while (((char *)head->content)[index] && ((char *)head->content)[index] != '=')
 			index++;
-		// if (((char *)head->content)[index] != '=')
-		// 	value = ft_strdup("");
 		if (!ft_strncmp(ft_substr(((char *)head->content), 0, index), var_name, ft_strlen(var_name)))
 		{
-			// ft_putendl_fd((char *)head->content, 1);
 			free(head->content);
 			char *test = ft_strjoin(&((char *)head->content)[index], value);
 			test = ft_strjoin("=", test);
 			head->content = ft_strjoin(var_name, test);
-			ft_putendl_fd(value, 1);
-			//head->content = ft_strdup(test);
 			flag = 1;
+			free(test);
 			break ;
 		}
 		head = head->next;
 	}
 	if(flag == 0)
 	{
-		ft_putstr_fd("2", 1);
 		char *varr = ft_strjoin(var_name, "=");
 		ft_lstadd_back(&gen.env, ft_lstnew(ft_strjoin(varr, value)));
 		free(varr);
 	}
+	free(head);
+	free(var_name);
+	free(value);
 	return (1);
 }

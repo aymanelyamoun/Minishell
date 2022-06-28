@@ -1,55 +1,55 @@
 #include "../includes/minishell.h"
 
-int ft_unset(char **next)
+int	ft_unset(char **next)
 {
-    int index;
+	int	index;
 
-    if (!gen.env)
-        return (0);
-    if (ft_strlen2(next) == 1)
-        return (0);
-    index = 1;
-    while (next[index])
-    {
-        if (check_arg2(next[index]))
-        {
-            print_err_uns(next[index]);
-            gen.exit_status = 1;
-        }
-        else
-        {
-           start_unset(gen.env, next[index]);
-           gen.exit_status = 0;
-        }
-        index++;
-    }
-    return (0);
+	if (!gen.env)
+		return (0);
+	if (ft_strlen2(next) == 1)
+		return (0);
+	index = 1;
+	while (next[index])
+	{
+		if (check_arg2(next[index]))
+		{
+			print_err_uns(next[index]);
+			gen.exit_status = 1;
+		}
+		else
+		{
+			start_unset(gen.env, next[index]);
+			gen.exit_status = 0;
+		}
+		index++;
+	}
+	return (0);
 }
 
-int start_unset(t_list *env, char *next)
+int	start_unset(t_list *env, char *next)
 {
-    size_t len;
-    t_list *bef;
-    t_list *tmp;
+	size_t	len;
+	t_list	*bef;
+	t_list	*tmp;
 
-    len = ft_strlen(next);
-    tmp = env;
-    bef = (t_list *) NULL;
-    while(tmp)
-    {
-        if(!ft_strncmp((char *)tmp->content, next, len))
-            break ;
-        bef = tmp;
-        tmp = tmp->next;
-    }
-    if (tmp)
-    {
-        if(bef)
-            bef->next = tmp->next;
-        else
-            env = tmp->next;
-        free(tmp->content);
-        free(tmp);
-    }
-    return (0);
+	len = ft_strlen(next);
+	tmp = env;
+	bef = (t_list *) NULL;
+	while (tmp)
+	{
+		if (!ft_strncmp((char *)tmp->content, next, len))
+			break ;
+		bef = tmp;
+		tmp = tmp->next;
+	}
+	if (tmp)
+	{
+		if (bef)
+			bef->next = tmp->next;
+		else
+			env = tmp->next;
+		free(tmp->content);
+		free(tmp);
+	}
+	return (0);
 }

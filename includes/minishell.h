@@ -198,4 +198,11 @@ char *ft_to_lower(char *str);
 int append_case(t_list **env_list, char *str);
 int append_it(t_list **env_list, char *str);
 int find_plus(char *str);
+char	**ft_split2(char const *s, char c);
+int	print(void);
+void	ft_sort(t_gen *gen);
+
+int	len_list(t_list **list);
+t_list	*swap(t_list *ptr1, t_list *ptr2);
+void	bubbleSort(t_list **head, int count);
 #endif

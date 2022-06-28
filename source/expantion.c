@@ -8,7 +8,7 @@ char *find_value(char *str, t_list *env_l)
 
 	while (env_l != NULL)
 	{
-		if (strcmp(str, "?") == 0)
+		if (ft_strcmp(str, "?") == 0)
 		{
 
 			return (ft_itoa(gen.exit_status));
