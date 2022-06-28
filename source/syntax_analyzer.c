@@ -35,6 +35,7 @@ int	check_quotes(token_t *token)
 		if (!check_pairs1(s))
 		{
 			error_free(tmp->data, tmp);
+			gen.exit_status = 258;
 			return (0);
 		}
 		tmp = tmp->next;
@@ -61,6 +62,7 @@ int	check_inside(token_t *tmp)
 			if (tmp && tmp->type == PIPE)
 			{
 				error_free(tmp->data, tmp);
+				gen.exit_status = 258;
 				return (0);
 			}
 		}
@@ -86,7 +88,8 @@ int	check_newline(token_t *c)
 			if ((tmp && is_other2(tmp)) || (tmp == NULL))
 			{
 				ft_putstr_fd("syntax error near unexpected", 2);
-				ft_putstr_fd("token : 'newline'\n", 2);
+				ft_putstr_fd(" token : 'newline'\n", 2);
+				gen.exit_status = 258;
 				return (0);
 			}
 		}
@@ -105,12 +108,15 @@ int	handle_spaces(token_t *c)
 		tmp = tmp->next;
 	if (tmp == NULL)
 	{
-		ft_putstr_fd("syntax error near unexpected token : 'newline'\n", 2);
+		ft_putstr_fd("syntax error near unexpected", 2);
+		ft_putstr_fd(" token : 'newline'\n", 2);
+		gen.exit_status = 258;
 		return (0);
 	}
 	else if (is_other(tmp))
 	{
 		error_free(tmp->data, tmp);
+		gen.exit_status = 258;
 		return (0);
 	}
 	return (1);
