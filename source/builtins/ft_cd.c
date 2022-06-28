@@ -136,6 +136,7 @@ int append_case(t_list **env_list, char *str) //how to break this one
 		index++;
 	}
 	char *var_name = ft_substr(str, 0, index);
+	ft_putendl_fd(var_name,1);
 	char *value = ft_substr(str, index + 2, ft_strlen(str) - (index + 2));
 	t_list *head = *env_list;
 	while(head)
@@ -148,12 +149,13 @@ int append_case(t_list **env_list, char *str) //how to break this one
 		if (!ft_strncmp(ft_substr(((char *)head->content), 0, index), var_name, ft_strlen(var_name)))
 		{
 			// ft_putendl_fd((char *)head->content, 1);
+			free(head->content);
 			char *test = ft_strjoin(&((char *)head->content)[index], value);
 			test = ft_strjoin("=", test);
-			test = ft_strjoin(var_name, test);
-			head->content = test;
+			head->content = ft_strjoin(var_name, test);
+			ft_putendl_fd(value, 1);
+			//head->content = ft_strdup(test);
 			flag = 1;
-			ft_putchar_fd('1', 1);
 			break ;
 		}
 		head = head->next;
@@ -167,37 +169,3 @@ int append_case(t_list **env_list, char *str) //how to break this one
 	}
 	return (1);
 }
-
-// int append_it(t_list **env_list, char *str)
-// {
-// 	char *tmp_str;
-// 	size_t index1;
-// 	t_list *tmp;
-// 	size_t index2;
-// 	char **strr;
-
-// 	tmp_str = ft_strdup(str);
-// 	tmp = *env_list;
-// 	while(tmp)
-// 	{
-// 		index1 = 0;
-// 		index2 = 0;
-// 		while(((char *)tmp->content)[index1] && ((char *)tmp->content)[index1] != '=')
-// 			index1++;
-// 		while(str[index2] && str[index2] != '=')
-// 			index2++;
-// 		if(!ft_strncmp(tmp->content, str, index1) && index1 == index2)
-// 		{
-// 			if(ft_strchr(str, '='))
-// 			{
-// 				strr = ft_split(tmp_str, '=');
-// 				free(tmp->content);
-// 				tmp->content = ft_strjoin(tmp->content, strr[1]);
-// 			}
-// 			return (1);
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// 	free(tmp_str);
-// 	return (0);
-// }
