@@ -161,20 +161,20 @@ void    execution(t_cmd *cmds, int pipes_num)
 				signal(SIGQUIT, SIG_DFL);
 				execut(cmds, pipes, pipes_num, i);
 			}
-		
 			i++;
 		}
 		close_pipes(pipes, pipes_num);
 		free_cmds(cmds, pipes_num);
 		free_pipes(pipes, pipes_num);
-		if (i == pipes_num)
+		if (i == pipes_num + 1)
+		{
 			waitpid(pid, &status, 0);
+		}
 		while (waitpid(-1, 0, 0) != -1)
 			;
 		gen.exit_status = WEXITSTATUS(status);
 		if (WIFSIGNALED(status))
 		{
-			// printf("%d", WTERMSIG(status));
 			if (WTERMSIG(status) == 3)
 				printf("Quit: 3\n");
 			gen.exit_status = 128 + WTERMSIG(status);

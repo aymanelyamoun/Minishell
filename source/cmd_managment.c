@@ -216,6 +216,7 @@ int	get_cmds_path(t_cmd **cmds, int pipes)
     	built_in = str_to_lower((*cmds)[i].cmd_args[0]);
 		if (((*cmds)[i].cmd_path == NULL) && !is_buit_in((*cmds)[i].cmd_args[0]) && (*cmds)[i].exec == 0)
 		{
+			// idea change the cmd.exec to be -1 in default
 			if ((*cmds)[i].cmd_args[0] != NULL)
 				cmd_not_found((*cmds)[i].cmd_args[0]);
 			(*cmds)[i].exec = 127;

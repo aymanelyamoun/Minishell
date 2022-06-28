@@ -1,64 +1,63 @@
 #include "../includes/minishell.h"
 
-t_list *swap(t_list *ptr1, t_list *ptr2)
-{
-    t_list *tmp = ptr2->next;
-    ptr2->next = ptr1;
-    ptr1->next = tmp;
-    return (ptr2);
-}
+// t_list *swap(t_list *ptr1, t_list *ptr2)
+// {
+//     t_list *tmp = ptr2->next;
+//     ptr2->next = ptr1;
+//     ptr1->next = tmp;
+//     return (ptr2);
+// }
 
-void bubbleSort(t_list **head, int count)
-{
-    t_list **h; 
-    t_list *p1;
-    t_list *p2;
-    int index1;
-    int index2;
-    int swapped;
+// void bubbleSort(t_list **head, int count)
+// {
+//     t_list **h; 
+//     t_list *p1;
+//     t_list *p2;
+//     int index1;
+//     int index2;
+//     int swapped;
 
-    for (index1 = 0; index1 <= count; index1++)
-    {
-        h = head;
-        swapped = 0;
+//     for (index1 = 0; index1 <= count; index1++)
+//     {
+//         h = head;
+//         swapped = 0;
+//         for (index2 = 0; index2 < count - index1 - 1; index2++)
+//         {
+//             p1 = *h;
+//             p2 = p1->next;
+//             if (((char *)p1->content)[0] > ((char *)p2->content)[0])
+//             {
+//                 *h = swap(p1, p2);
+//                 swapped = 1;
+//             }
 
-        for (index2 = 0; index2 < count - index1 - 1; index2++)
-        {
-            p1 = *h;
-            p2 = p1->next;
-            if (((char *)p1->content)[0] > ((char *)p2->content)[0])
-            {
-                *h = swap(p1, p2);
-                swapped = 1;
-            }
+//             h = &(*h)->next;
+//         }
+//         if (swapped == 0)
+//             break;
+//     }
+// }
 
-            h = &(*h)->next;
-        }
-        if (swapped == 0)
-            break;
-    }
-}
+// int len_list(t_list **list)
+// {
+//     t_list *tmp;
+//     int index;
 
-int len_list(t_list **list)
-{
-    t_list *tmp;
-    int index;
+//     index = 0;
+//     tmp = *list;
+//     while (tmp)
+//     {
+//         tmp = tmp->next;
+//         index++;
+//     }
+//     return (index);
+// }
 
-    index = 0;
-    tmp = *list;
-    while (tmp)
-    {
-        tmp = tmp->next;
-        index++;
-    }
-    return (index);
-}
-
-void ft_sort (t_gen *gen)
-{
-    bubbleSort(&(gen)->env, len_list(&(gen)->env));
-    print_export((gen)->env);
-}
+// void ft_sort (t_gen *gen)
+// {
+//     bubbleSort(&(gen)->env, len_list(&(gen)->env));
+//     print_export((gen)->env);
+// }
 
 void	print_export(t_list *env)
 {
@@ -100,18 +99,18 @@ void	print_export(t_list *env)
     free_split(split);
 }
 
-void	free_split(char **array)
-{
-	int	index;
+// void	free_split(char **array)
+// {
+// 	int	index;
 
-	index = 0;
-	while (array[index])
-	{
-		free(array[index]);
-		index++;
-	}
-	free(array);
-}
+// 	index = 0;
+// 	while (array[index])
+// 	{
+// 		free(array[index]);
+// 		index++;
+// 	}
+// 	free(array);
+// }
 
 
 int ft_export(char **next)
@@ -131,7 +130,7 @@ int ft_export(char **next)
     if(find_plus(next[index]) >= 1)
 	{
 		append_case(&gen.env, next[index]);
-        ft_putendl_fd("mm", 1);
+        ft_putchar_fd('1', 1);
 		return (0);
 	}
     while (next[index])

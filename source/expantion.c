@@ -11,6 +11,11 @@ char *find_value(char *str, t_list *env_l)
 	while (env_l != NULL)
 	{
 		flag = 1;
+		if (ft_strcmp(str, "?") == 0)
+		{
+
+			return (ft_itoa(gen.exit_status));
+		}
 		tmp = ft_strjoin(str, "=");
 		if (ft_strncmp(tmp, env_l->content, ft_strlen(tmp)) == 0)
 		{
@@ -435,6 +440,7 @@ int main(int argc, char **argv, char **envp)
 				rm_spaces(&tokens);
 				rm_quotes_tokens(&tokens);
 				get_path_and_execute(&tokens);
+				
 			}
 		}
 		else

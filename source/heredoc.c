@@ -45,7 +45,7 @@ char	*expander_heredoc(char *line)
 	return (final_quote);
 }
 
-int heredoc(char *limiter)
+int heredoc(char *limiter, int *exit_status)
 {
     char	*line;
 	int		pipe_fd[2];
@@ -58,15 +58,16 @@ int heredoc(char *limiter)
 		return (-1);
 	}
 	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
+	// signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid == 0)
     {
+		signal(SIGINT, SIG_DFL);
+		// signal(SIGQUIT, SIG_DFL);
 		line = readline("> ");
 		while (line != NULL && ft_strcmp(line, limiter))
 		{
-			signal(SIGINT, SIG_DFL);
-			signal(SIGQUIT, SIG_DFL);
+
 			line = expander_heredoc(line);
 			write_to_fd(pipe_fd[1], line);
 			free(line);
@@ -78,13 +79,14 @@ int heredoc(char *limiter)
 			free(limiter);
 		exit (0);
 	}
-	signal(SIGQUIT, handler);
+	// signal(SIGQUIT, handler);
 	signal(SIGINT, handler);
 	waitpid(pid, &status, 0);
-	// if (WIFSIGNALED(status))
-	// {
-	// 	return ()
-	// }
+	*exit_status = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+	{
+		*exit_status = 128 + WTERMSIG(status);
+	}
 	close(pipe_fd[1]);
 	return (pipe_fd[0]);
 }
