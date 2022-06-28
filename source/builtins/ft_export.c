@@ -131,7 +131,7 @@ int ft_export(char **next)
     if(find_plus(next[index]) >= 1)
 	{
 		append_case(&gen.env, next[index]);
-        ft_putchar_fd('1', 1);
+        ft_putendl_fd("mm", 1);
 		return (0);
 	}
     while (next[index])

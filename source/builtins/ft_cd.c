@@ -93,7 +93,6 @@ int ft_add_list(t_list **env_list, char *str)
 	size_t index1;
 	size_t index2;
 	char *tmp_str;
-	//char **split;
 
 	tmp = *env_list;
 	tmp_str = ft_strdup(str);
@@ -116,7 +115,6 @@ int ft_add_list(t_list **env_list, char *str)
 		}
 		tmp = tmp->next;
 	}
-	//free_split(split);
 	free(tmp_str); //free everything
 	return (0);
 }
@@ -129,8 +127,8 @@ int ft_add_list(t_list **env_list, char *str)
 int append_case(t_list **env_list, char *str) //how to break this one
 {
 	int index = 0;
+	int flag = 0;
 
-	ft_putendl_fd(str, 1);
 	while (str[index])
 	{
 		if (str[index] == '+' && str[index + 1] == '=')
@@ -138,80 +136,68 @@ int append_case(t_list **env_list, char *str) //how to break this one
 		index++;
 	}
 	char *var_name = ft_substr(str, 0, index);
-	ft_putendl_fd(var_name, 1);
 	char *value = ft_substr(str, index + 2, ft_strlen(str) - (index + 2));
-	ft_putendl_fd(value, 1);
 	t_list *head = *env_list;
 	while(head)
 	{
 		index = 0;
-		while (((char *)head->content)[index] != '=')
+		while (((char *)head->content)[index] && ((char *)head->content)[index] != '=')
 			index++;
+		// if (((char *)head->content)[index] != '=')
+		// 	value = ft_strdup("");
 		if (!ft_strncmp(ft_substr(((char *)head->content), 0, index), var_name, ft_strlen(var_name)))
 		{
-			ft_putendl_fd("was here", 1);
+			// ft_putendl_fd((char *)head->content, 1);
 			char *test = ft_strjoin(&((char *)head->content)[index], value);
 			test = ft_strjoin("=", test);
-			ft_putendl_fd("was here2", 1);
-			(head->content) = ft_strjoin(var_name, test);
+			test = ft_strjoin(var_name, test);
+			head->content = test;
+			flag = 1;
+			ft_putchar_fd('1', 1);
 			break ;
 		}
-		else if(head == NULL && ft_strncmp(ft_substr(((char *)head->content), 0, index), var_name, ft_strlen(var_name))) //i need to say , if there is match, create one idk how
-		{
-			ft_putendl_fd("was here3", 1);
-			ft_lstadd_back(&gen.env, ft_lstnew(str));
-		}
 		head = head->next;
+	}
+	if(flag == 0)
+	{
+		ft_putstr_fd("2", 1);
+		char *varr = ft_strjoin(var_name, "=");
+		ft_lstadd_back(&gen.env, ft_lstnew(ft_strjoin(varr, value)));
+		free(varr);
 	}
 	return (1);
 }
 
-int append_it(t_list **env_list, char *str)
-{
-	char *tmp_str;
-	size_t index1;
-	t_list *tmp;
-	size_t index2;
-	char **strr;
+// int append_it(t_list **env_list, char *str)
+// {
+// 	char *tmp_str;
+// 	size_t index1;
+// 	t_list *tmp;
+// 	size_t index2;
+// 	char **strr;
 
-	tmp_str = ft_strdup(str);
-	tmp = *env_list;
-	while(tmp)
-	{
-		index1 = 0;
-		index2 = 0;
-		while(((char *)tmp->content)[index1] && ((char *)tmp->content)[index1] != '=')
-			index1++;
-		while(str[index2] && str[index2] != '=')
-			index2++;
-		if(!ft_strncmp(tmp->content, str, index1) && index1 == index2)
-		{
-			if(ft_strchr(str, '='))
-			{
-				strr = ft_split(tmp_str, '=');
-				free(tmp->content);
-				tmp->content = ft_strjoin(tmp->content, strr[1]);
-			}
-			return (1);
-		}
-		tmp = tmp->next;
-	}
-	free(tmp_str);
-	return (0);
-}
-	// char **split;
-	// char *str3;
-	// char *part;
-	// char **split2; //put split 2 is split 1 by freeing
-	// char *str2;
-
-	// split2 = ft_split(str, '+');
-	// if(split2)
-	// {
-	// 	part = split2[0];
-	// 	split = ft_split(str, '=');
-	// }
-	// str2 = ft_strjoin("=", split[1]);
-	// str3 = ft_strjoin(part, str2);
-	// if(!append_it(&gen.env, str3))
-	// 	 ft_lstadd_back(&gen.env, ft_lstnew(str3));
+// 	tmp_str = ft_strdup(str);
+// 	tmp = *env_list;
+// 	while(tmp)
+// 	{
+// 		index1 = 0;
+// 		index2 = 0;
+// 		while(((char *)tmp->content)[index1] && ((char *)tmp->content)[index1] != '=')
+// 			index1++;
+// 		while(str[index2] && str[index2] != '=')
+// 			index2++;
+// 		if(!ft_strncmp(tmp->content, str, index1) && index1 == index2)
+// 		{
+// 			if(ft_strchr(str, '='))
+// 			{
+// 				strr = ft_split(tmp_str, '=');
+// 				free(tmp->content);
+// 				tmp->content = ft_strjoin(tmp->content, strr[1]);
+// 			}
+// 			return (1);
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// 	free(tmp_str);
+// 	return (0);
+// }
