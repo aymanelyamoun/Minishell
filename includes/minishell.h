@@ -5,7 +5,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <unistd.h>
-
+#include <sys/stat.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <sys/types.h>

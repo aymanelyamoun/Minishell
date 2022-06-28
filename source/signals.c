@@ -9,8 +9,7 @@ int    terminal_settings(void)
     tcsetattr(0, TCSANOW, &term); // it sets back the attributes / TCSANOW The change should take place immediately.
     signal(SIGQUIT, handler);
     signal(SIGINT, handler);
-    return (0); 
-
+    return (0);
 }
 int handle_signals(void)
 {

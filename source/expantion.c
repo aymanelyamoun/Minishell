@@ -6,13 +6,11 @@ char *find_value(char *str, t_list *env_l)
 	int flag = 0;
 	char *tmp;
 
+	if (strcmp(str, "?") == 0)
+		return (ft_itoa(gen.exit_status));
 	while (env_l != NULL)
 	{
 		flag = 1;
-		if (strcmp(str, "?") == 0)
-		{
-			return (ft_itoa(gen.exit_status));
-		}
 		tmp = ft_strjoin(str, "=");
 		if (ft_strncmp(tmp, env_l->content, ft_strlen(tmp)) == 0)
 		{
@@ -390,7 +388,6 @@ t_cmd *cmds_and_redirections(token_t **tokens, int *pipes)
 	check_file_direcitons(&cmds, *pipes);
 	rm_redirecitons(&cmds, *pipes);
 	creat_cmd_args(&cmds, *pipes);
-	
 	return (cmds);
 }
 
@@ -400,10 +397,9 @@ void	get_path_and_execute(token_t **toknes)
 	int		pipes_num;
 
 	cmds = cmds_and_redirections(toknes, &pipes_num);
-	if (get_cmds_path(&cmds, pipes_num) == 0)
-	{
+
+	if (get_cmds_path(&cmds, pipes_num) == 0) 
 		execution(cmds, pipes_num);
-	}
 }
 // t_gen	*gen;
 

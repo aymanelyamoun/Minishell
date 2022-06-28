@@ -144,7 +144,19 @@ void	cmd_not_found(char *cmd)
         && ft_strcmp(built_in, "env") && ft_strcmp(built_in, "exit") 
         && ft_strcmp(built_in, "export") && ft_strcmp(built_in, "pwd") 
         && ft_strcmp(built_in, "unset")))
-		printf("minishell: %s: command not found :\n", cmd);
+		printf("minishell: %s: command not found\n", cmd);
+}
+
+int isDirectory(const char *path) {
+   struct stat statbuf;
+   if (stat(path, &statbuf) != 0)
+       return 0;
+   return S_ISDIR(statbuf.st_mode);
+}
+
+void	is_a_dir(char *dir)
+{
+	printf("minishell: %s is a directory\n", dir);
 }
 
 char	*get_cmd_path(char *path, char *cmd)
@@ -156,9 +168,7 @@ char	*get_cmd_path(char *path, char *cmd)
 	i = 0;
 	paths = ft_split(path, ':');
 	if (paths == NULL)
-	{
 		return (NULL);
-	}
 	while (paths[i] != NULL)
 	{
 		cmd_path = join_cmd(paths[i], cmd);
@@ -175,7 +185,6 @@ char	*get_cmd_path(char *path, char *cmd)
 	free_arr(paths);
 	if (access(cmd, F_OK | X_OK) == 0)
 		return (ft_strdup(cmd));
-	cmd_not_found(cmd);
 	return (NULL);
 }
 
@@ -188,25 +197,29 @@ int	get_cmds_path(t_cmd **cmds, int pipes)
 
 	status = 0;
 	i = 0;
+
 	path = find_value("PATH", gen.env);
 	if (path == NULL)
-	{
-		// printf("PATH not found\n");
 		return 1;
-	}
 	while (i <= pipes)
 	{
-		// (*cmds)[i].cmd_path = ft_strdup((*cmds)[i].cmd_args[0]);
-		if ((*cmds)[i].cmd_args[0] != NULL)
+		if (isDirectory((*cmds)[i].cmd_args[0]))
 		{
-			(*cmds)[i].cmd_path = get_cmd_path(path, (*cmds)[i].cmd_args[0]);
+			if ((*cmds)[i].exec == 0)
+				is_a_dir((*cmds)[i].cmd_args[0]);
+			(*cmds)[i].exec = 126;
 		}
+		else if ((*cmds)[i].cmd_args[0] != NULL)
+			(*cmds)[i].cmd_path = get_cmd_path(path, (*cmds)[i].cmd_args[0]);
 		else
 			(*cmds)[i].cmd_path = NULL;
-
     	built_in = str_to_lower((*cmds)[i].cmd_args[0]);
 		if (((*cmds)[i].cmd_path == NULL) && !is_buit_in((*cmds)[i].cmd_args[0]) && (*cmds)[i].exec == 0)
+		{
+			if ((*cmds)[i].cmd_args[0] != NULL)
+				cmd_not_found((*cmds)[i].cmd_args[0]);
 			(*cmds)[i].exec = 127;
+		}
 		i++;
 	}
 	return (status);

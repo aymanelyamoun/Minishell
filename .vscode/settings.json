@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "chrono": "c"
+        "chrono": "c",
+        "__config": "c",
+        "string.h": "c"
     }
 }

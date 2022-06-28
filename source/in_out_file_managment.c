@@ -124,6 +124,8 @@ void    check_file_direcitons(t_cmd **cmds, int pipes)
 				fd = creat_in_files(cmds, tokens, i);
 			else if (tokens->type == GREAT || tokens->type == DGREAT)
 				fd = creat_out_files(cmds, tokens, i);
+			
+
 			if (fd == -1)
 				return ;
 			tokens = tokens->next;
