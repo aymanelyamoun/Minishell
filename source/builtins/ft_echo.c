@@ -1,15 +1,14 @@
 #include "../includes/minishell.h"
 
-
-
-///////TODO: add $? alone without echo
+//TODO: add $ case
 void	ft_echo(char **str) 
 {
 	int index;
 	int flag;
 
 	flag = 0;
-	if(ft_strlen2(str) == 1 || (ft_strlen2(str) == 1 && !str[index + 1]))
+	index = 0;
+	if(ft_strlen2(str) == 1 || (ft_strlen2(str) != 1 && !str[index + 1]))
 	{
 		ft_putchar_fd('\n', 1);
 		return ;
@@ -31,7 +30,6 @@ void	ft_echo(char **str)
 		ft_putchar_fd('\n', 1);
 	return ;
 }
-
 
 int set_flag(char *s)
 {

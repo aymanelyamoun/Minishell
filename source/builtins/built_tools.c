@@ -65,3 +65,17 @@ long long	ft_atoll(const char *dest)
 	}
 	return (result * sign);
 }
+
+void  print_err_exp(char *next)
+{
+    ft_putstr_fd("Minishell: export: `", 2);
+	ft_putstr_fd(next, 2);
+	ft_putstr_fd("': not a valid identifier\n", 2);
+}
+
+void  print_err_uns(char *next)
+{
+    ft_putstr_fd("Minishell: unset: `", 2);
+	ft_putstr_fd(next, 2);
+	ft_putstr_fd("': not a valid identifier\n", 2);
+}

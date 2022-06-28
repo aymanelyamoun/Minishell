@@ -5,7 +5,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <unistd.h>
-
+#include <sys/stat.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <sys/types.h>
@@ -132,7 +132,8 @@ int	get_cmds_path(t_cmd **cmds, int pipes);
 /*********************************/
 
 int	ft_strcmp(char *s1, char *s2);
-int heredoc(char *limiter);
+int heredoc(char *limiter, int *exit_status);
+// int heredoc(char *limiter);
 void check_file_direcitons(t_cmd **cmds, int pipes);
 void rm_redirecitons(t_cmd **cmds, int pipes);
 
@@ -186,11 +187,23 @@ int check_arg2(char *next);
 int start_unset(t_list *env, char *next);
 int ft_strchr1(const char *str, int n);
 int is_alone(char *s);
-int len_list(t_list **list);
+// int len_list(t_list **list);
 int set_flag(char *s);
 
 char **convert_array(t_list **env);
 long long	ft_atoll(const char *dest);
 int check_valid(char *next);
 int is_long(char *next);
+void  print_err_uns(char *next);
+char *ft_to_lower(char *str);
+int append_case(t_list **env_list, char *str);
+int append_it(t_list **env_list, char *str);
+int find_plus(char *str);
+char	**ft_split2(char const *s, char c);
+int	print(void);
+void	ft_sort(t_gen *gen);
+
+int	len_list(t_list **list);
+t_list	*swap(t_list *ptr1, t_list *ptr2);
+void	bubbleSort(t_list **head, int count);
 #endif

@@ -12,17 +12,32 @@ int	ft_cd(char **path)
 	char	*pwd;
 	char	*p;
 
-	if (!path[1] || !strncmp(path[1], "--", 2) || !strncmp(path[1], "-", 2) || (!strncmp(path[1], "~", 2) && !path[2]))
+	if(!ft_strncmp(path[0], "CD", 2))
+		return (0);
+	if (!path[1] || !ft_strncmp(path[1], "--", 2) || (!ft_strncmp(path[1], "~", 2) && !path[2]))
 	{
 		p =  find_value("HOME", gen.env);
 		if(!p)
 			ft_putstr_fd("Home not set\n", 2);
-		if(chdir(p) == -1 && errno == ENOENT)
+		if(chdir(p) == -1)
 		{
 			ft_putstr_fd("Problem in chdir.\n", 2);
 			gen.exit_status = 1;
 			return (1);
 		}
+	}
+	else if(!strncmp(path[1], "-", 1))
+	{
+		p = find_value("OLDPWD", gen.env);
+		if(!p)
+			ft_putstr_fd("OLDPWD not set\n", 2);
+		if(chdir(p) == -1)
+		{
+			ft_putstr_fd("Problem in chdir.\n", 2);
+			gen.exit_status = 1;
+			return (1);
+		}
+		ft_putendl_fd(p, 2);
 	}
 	else if(ft_strlen2(path) == 2)
 		p = ft_strdup(path[1]);
@@ -34,14 +49,12 @@ int change_env(char *p)
 {
 	char *pwd;
 
-	// ft_putstr_fd(gen.pwd, 2);
 	pwd = join_str("OLDPWD=", gen.pwd);
-	ft_putstr_fd(pwd, 1);
 	if(chdir(p) != -1)
 	{
 		modify_env(pwd);
 		free(pwd);
-		if (!getcwd(NULL, 0) && errno == ENOENT)
+		if (!getcwd(NULL, 0))
 		{
 			perror("minishell: cd: error retrieving current directory: "
 				"getcwd: cannot access parent directories");
@@ -56,6 +69,7 @@ int change_env(char *p)
 	gen.pwd = getcwd(NULL, 0);
 	return (0);
 }
+
 
 int ft_add_list(t_list **env_list, char *str)
 {
@@ -85,8 +99,7 @@ int ft_add_list(t_list **env_list, char *str)
 		}
 		tmp = tmp->next;
 	}
-	free(tmp_str); //free everything
+	free(tmp_str);
+	free(tmp);
 	return (0);
 }
-
-
