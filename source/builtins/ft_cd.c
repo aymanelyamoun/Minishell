@@ -70,21 +70,6 @@ int change_env(char *p)
 	return (0);
 }
 
-int find_plus(char *str)
-{
-	int index;
-	int j;
-
-	index = 0;
-	j = 0;
-	while(str[index])
-	{
-		if(str[index] == '+')
-			j++;
-		index++;
-	}
-	return (j);
-}
 
 int ft_add_list(t_list **env_list, char *str)
 {
@@ -117,47 +102,4 @@ int ft_add_list(t_list **env_list, char *str)
 	free(tmp_str);
 	free(tmp);
 	return (0);
-}
-
-int append_case(t_list **env_list, char *str)
-{
-	int index = 0;
-	int flag = 0;
-
-	while (str[index])
-	{
-		if (str[index] == '+' && str[index + 1] == '=')
-			break;
-		index++;
-	}
-	char *var_name = ft_substr(str, 0, index);
-	char *value = ft_substr(str, index + 2, ft_strlen(str) - (index + 2));
-	t_list *head = *env_list;
-	while(head)
-	{
-		index = 0;
-		while (((char *)head->content)[index] && ((char *)head->content)[index] != '=')
-			index++;
-		if (!ft_strncmp(ft_substr(((char *)head->content), 0, index), var_name, ft_strlen(var_name)))
-		{
-			free(head->content);
-			char *test = ft_strjoin(&((char *)head->content)[index], value);
-			test = ft_strjoin("=", test);
-			head->content = ft_strjoin(var_name, test);
-			flag = 1;
-			free(test);
-			break ;
-		}
-		head = head->next;
-	}
-	if(flag == 0)
-	{
-		char *varr = ft_strjoin(var_name, "=");
-		ft_lstadd_back(&gen.env, ft_lstnew(ft_strjoin(varr, value)));
-		free(varr);
-	}
-	free(head);
-	free(var_name);
-	free(value);
-	return (1);
 }
