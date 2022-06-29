@@ -16,33 +16,33 @@
 //     gen.pwd =  getcwd(p, PATH_MAX);
 //     gen.env = env_create(envp); //TODO : put this in a function
 //     handle_signals();
-//     // while (1)
-//     // {
-//     //     line = readline("Minishell: ");
-//     //     if (!line)
-//     //          ctrld();
-//     //     else if (line && !*line)
-//     //     {
-//     //         free(line);
-//     //         continue ;
-//     //     }
-//     //     else if(line != NULL)
-//     //     {
-//     //         arr = ft_split(line, ' '); // imagining i have the splited commads 2d
-//     //         if(line != NULL && commands(arr) == YES)
-//     //             go_commands(arr);
-//     //         free_split(arr);
-//     //         add_history(line);
-//            char **split = ft_split2("a=fr+=o", '=');
-// 			//int i = 0;
-// 			while(split[i])
-// 			{
-// 			    ft_putstr_fd(split[i], 1);
-// 				i++;
-// 			} 
-//     //     }
-//     //     free(line);
-//     // }
+//     while (1)
+//     {
+//         line = readline("Minishell: ");
+//         if (!line)
+//              ctrld();
+//         else if (line && !*line)
+//         {
+//             free(line);
+//             continue ;
+//         }
+//         else if(line != NULL)
+//         {
+//             arr = ft_split(line, ' '); // imagining i have the splited commads 2d
+//             if(line != NULL && commands(arr) == YES)
+//                 go_commands(arr);
+//             free_split(arr);
+//             add_history(line);
+//         //    char **split = ft_split2("a=fr+=o", '=');
+// 		// 	//int i = 0;
+// 		// 	while(split[i])
+// 		// 	{
+// 		// 	    ft_putstr_fd(split[i], 1);
+// 		// 		i++;
+// 		// 	} 
+//         }
+//         free(line);
+//     }
 // return(0);
 // }
     

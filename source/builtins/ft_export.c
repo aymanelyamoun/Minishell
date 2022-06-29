@@ -62,6 +62,7 @@ int ft_export(char **next)
             ft_lstadd_back(&gen.env, ft_lstnew(ft_strdup(next[index])));
         index++;
     }
+	free_split(next);
     return (0);
 }
 

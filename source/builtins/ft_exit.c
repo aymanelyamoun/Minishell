@@ -19,9 +19,7 @@ int ft_exit(char **next)
             gen.exit_status = 255;
         }
         else if(check_valid(*(next + 1)) == 1)
-        {
             gen.exit_status = ft_atoll(next[1]);
-        }
     }
     if(ft_strlen2(next) > 2)
     {
@@ -30,6 +28,7 @@ int ft_exit(char **next)
         gen.exit_status = 255;
     }
     exit(gen.exit_status);
+    free_split(next);
     return (0);
 }
 

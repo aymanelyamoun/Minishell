@@ -11,6 +11,7 @@ int	ft_strlen2(char **str)
 	return (index);
 }
 
+//how to free this one
 char *join_str(const char *s1, const char *s2)
 {
 	int index;
