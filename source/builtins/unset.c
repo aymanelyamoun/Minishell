@@ -23,7 +23,6 @@ int	ft_unset(char **next)
 		}
 		index++;
 	}
-	
 	return (0);
 }
 

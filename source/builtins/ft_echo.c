@@ -1,19 +1,15 @@
 #include "../includes/minishell.h"
 
 //TODO: add $ case
-void	ft_echo(char **str) 
+
+
+void  suite(char **str)
 {
 	int index;
 	int flag;
 
-	flag = 0;
-	index = 0;
-	if(ft_strlen2(str) == 1 || (ft_strlen2(str) != 1 && !str[index + 1]))
-	{
-		ft_putchar_fd('\n', 1);
-		return ;
-	}
 	index = 1;
+	flag = 0;
 	while (str[index] && set_flag(str[index]))
 	{
 		flag = 1;
@@ -29,7 +25,21 @@ void	ft_echo(char **str)
 	if (flag == 0)
 		ft_putchar_fd('\n', 1);
 	gen.exit_status = 0;
-	 free_split(str);
+}
+//////////not workingh
+void	ft_echo(char **str) 
+{
+	int index;
+
+	index = 0;
+	if(ft_strlen2(str) == 1 || (ft_strlen2(str) != 1 \
+	&& !ft_strcmp(str[index + 1], "\0")))
+	{
+		ft_putchar_fd('\n', 1);
+		gen.exit_status = 0;
+		return ;
+	}
+	suite(str);
 	return ;
 }
 
