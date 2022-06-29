@@ -3,19 +3,12 @@
 
 char *find_value(char *str, t_list *env_l)
 {
-	int flag = 0;
 	char *tmp;
 
 	if (strcmp(str, "?") == 0)
 		return (ft_itoa(gen.exit_status));
 	while (env_l != NULL)
 	{
-		flag = 1;
-		if (ft_strcmp(str, "?") == 0)
-		{
-
-			return (ft_itoa(gen.exit_status));
-		}
 		tmp = ft_strjoin(str, "=");
 		if (ft_strncmp(tmp, env_l->content, ft_strlen(tmp)) == 0)
 		{
@@ -150,8 +143,7 @@ void rm_spaces(token_t **tokens)
 
 void change_data(token_t **tokens, char *data)
 {
-	if (ft_strcmp(data, "") == 0)
-		(*tokens)->old_data = ft_strjoin("$", (*tokens)->next->data);
+	(*tokens)->old_data = ft_strjoin("$", (*tokens)->next->data);
 	free((*tokens)->data);
 	(*tokens)->data = data;
 	(*tokens)->type = WORD;

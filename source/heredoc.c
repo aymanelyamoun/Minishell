@@ -59,6 +59,7 @@ int heredoc(char *limiter, int *exit_status)
 	}
 	signal(SIGINT, SIG_IGN);
 	// signal(SIGQUIT, SIG_IGN);
+	printf(":::%s\n", limiter);
 	pid = fork();
 	if (pid == 0)
     {
