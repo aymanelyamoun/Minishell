@@ -6,6 +6,7 @@ int    open_file(token_t **tokens, int type)
     int fd;
 	int	status;
 	
+	status = 0;
 	if (type == GREAT)
     	fd = open((*tokens)->next->data, O_RDWR | O_CREAT | O_TRUNC, 0777);
 	else if (type == LESS)
@@ -18,13 +19,12 @@ int    open_file(token_t **tokens, int type)
 			fd = heredoc(ft_strdup((*tokens)->next->old_data), &status);
 		else
 			fd = heredoc(ft_strdup((*tokens)->next->data), &status);
-
 		if (status)
 			fd = status * (-1);
 	}
 	if (fd < 0)
 	{
-		if ((*tokens)->next->old_data == NULL && fd == -1)
+		if ((*tokens)->next->old_data == NULL && (fd == -1 && status != 1))
 			perror("minishellllllll");
 		else 
 		{
@@ -82,13 +82,10 @@ int		creat_in_files(t_cmd **cmds, token_t *tokens, int i)
 	int	fd;
 
 	fd = open_file(&tokens, tokens->type);
-	if ((*cmds)[i].infile != -1)
+	if ((*cmds)[i].infile > -1)
 	{
 		if (close((*cmds)[i].infile) == -1)
-		{
 			perror("close : ");
-			exit(3);
-		}
 	}
 	if (fd <= -1)
 		(*cmds)[i].exec = fd * (-1);

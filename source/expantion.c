@@ -174,9 +174,11 @@ void play_with_tokens(token_t **tokens, char *str, t_list *env)
 	new_str = get_var_str(str, &i);
 	second_part = ft_substr(str, i, ft_strlen(str + i));
 	env_var = find_value(new_str, env);
-	env_var = ft_strjoin(env_var, second_part);
-	free(second_part);
 	free(new_str);
+	new_str = env_var;
+	env_var = ft_strjoin(env_var, second_part);
+	free(new_str);
+	free(second_part);
 	if ((*tokens)->next->type == WORD)
 	{
 		if (env_var != NULL)
@@ -252,10 +254,12 @@ char *get_var(char **str, char *final_quote, t_list *env)
 	char *to_free;
 
 	i = 1;
-	if ((*str)[0] == '$' && (*str)[1] != '\0' && ft_isalnum((*str)[1]))
+	if ((*str)[0] == '$' && (*str)[1] != '\0' 
+	&& ((ft_isalnum((*str)[1]) || (*str)[1] == '?' || (*str)[1] == '_')))
 	{
 		while ((*str)[i] != '\0' && (*str)[i] != ' ' && (*str)[i] != '\t' 
-		&& (*str)[i] != '\v' && (*str)[i] != '\f' && ft_isalnum((*str)[i]))
+		&& (*str)[i] != '\v' && (*str)[i] != '\f' && 
+		(ft_isalnum((*str)[i]) || (*str)[i] == '?' || (*str)[i] == '_'))
 		{
 			if (i == 1 && (ft_isdigit((*str)[i]) || (*str)[i] == '?'))
 			{
@@ -301,6 +305,7 @@ void expander_in_quotes_utils(token_t **token, t_list *env)
 	}
 	tmp = ft_substr(str, 0, i);
 	final_quote = join(final_quote, tmp);
+	free((*token)->data);
 	(*token)->data = final_quote;
 }
 
@@ -407,22 +412,21 @@ int main(int argc, char **argv, char **envp)
     char	p[PATH_MAX];
 
 	gen.pwd =  getcwd(p, PATH_MAX);
-    gen.env = env_create(envp); //TODO : put this in a function
-	//fix the case env -i ./mini....
+    gen.env = env_create(envp);
 	gen.envp = NULL;
 	gen.exit_status = 0;
+	gen.exec = 0;
     handle_signals();
 	if(argc != 1)
 	    return (1);
 	while (1)
 	{
-		// no not valid file discribtor;
-		// fix the creation of fd's when a file is not valid
 		line = readline("\033[0;36m\x1B[1mminishell> \033[0;37m");
 		if (line != NULL)
 		{
 			add_history(line);
 			tokens = tokenize(line);
+			free(line);
 			if (syntax_err(tokens))
 			{
 				expander(&tokens);
@@ -430,8 +434,8 @@ int main(int argc, char **argv, char **envp)
 				join_word(&tokens);
 				rm_spaces(&tokens);
 				rm_quotes_tokens(&tokens);
+				gen.exec = 0;
 				get_path_and_execute(&tokens);
-				
 			}
 		}
 		else

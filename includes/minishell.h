@@ -51,11 +51,13 @@ typedef struct s_cmd
     int outfile;
     token_t *tokens_cmd;
     int exec;
+    // int file;
 } t_cmd;
 
 typedef struct s_gen
 {
     int exit_status;
+    int exec;
     t_list *env;
     char **envp;
     char *pwd;

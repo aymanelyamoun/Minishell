@@ -52,8 +52,6 @@ static t_cmd *creat_cmds_utils(token_t **tokens, t_cmd **cmds)
 t_cmd   *creat_cmds(token_t **tokens)
 {
     int		pipes;
-	//token_t	*new_head;
-	//token_t *tmp;
 	t_cmd	*cmds;
 	int		i;
 
@@ -145,6 +143,7 @@ void	cmd_not_found(char *cmd)
         && ft_strcmp(built_in, "export") && ft_strcmp(built_in, "pwd") 
         && ft_strcmp(built_in, "unset")))
 		printf("minishell: %s: command not found\n", cmd);
+	free(built_in);
 }
 
 int isDirectory(const char *path) {
@@ -166,6 +165,8 @@ char	*get_cmd_path(char *path, char *cmd)
 	char	*cmd_path;
 
 	i = 0;
+	if (ft_strcmp(cmd, "") == 0)
+		return (NULL);
 	paths = ft_split(path, ':');
 	if (paths == NULL)
 		return (NULL);
@@ -213,16 +214,18 @@ int	get_cmds_path(t_cmd **cmds, int pipes)
 			(*cmds)[i].cmd_path = get_cmd_path(path, (*cmds)[i].cmd_args[0]);
 		else
 			(*cmds)[i].cmd_path = NULL;
-    	built_in = str_to_lower((*cmds)[i].cmd_args[0]);
 		if (((*cmds)[i].cmd_path == NULL) && !is_buit_in((*cmds)[i].cmd_args[0]) && (*cmds)[i].exec == 0)
 		{
-			// idea change the cmd.exec to be -1 in default
 			if ((*cmds)[i].cmd_args[0] != NULL)
 				cmd_not_found((*cmds)[i].cmd_args[0]);
-			(*cmds)[i].exec = 127;
+			if ((*cmds)[i].cmd_args[0] != NULL)
+				(*cmds)[i].exec = 127;
+			else
+				gen.exec = 1;
 		}
 		i++;
 	}
+	free(path);
 	return (status);
 }
 

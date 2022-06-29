@@ -38,7 +38,7 @@ int	get_word(char **str, int *here)
 			&& (*str)[i] != '\''
 		))
 			i++;
-		*here = 1;
+		*here = 0;
 	}
 	else
     {
@@ -111,7 +111,6 @@ void    get_token(token_t **tokens, char **str)
 			add_token_last(tokens, DOLLAR, get_char(str, "$", 1));
 		else
 			add_token_last(tokens, WORD, ft_substr(*str, 0, get_word(str, &here)));
-		//fix the word if it is folowed by a spectial char as < > | ...
 	}
 }
 
@@ -121,12 +120,12 @@ token_t *tokenize(char *line)
     token_t *tmp;
 
     get_token(&tokens, &line);
-    tmp = tokens;
-    while (tokens != NULL)
-    {
-		// printf("type: %d ... data: %s\n",tokens->type, tokens->data);
-        tokens = tokens->next;
-    }
-    return (tmp);
+    // tmp = tokens;
+    // while (tmp != NULL)
+    // {
+	// 	printf("type: %d ... data: %s\n",tokens->type, tokens->data);
+    //     tmp = tmp->next;
+    // }
+    return (tokens);
 }
 //execv -> waitpid]wait -> 'status' -> macro value return pros $?*
