@@ -398,7 +398,6 @@ void	get_path_and_execute(token_t **toknes)
 	if (get_cmds_path(&cmds, pipes_num) == 0) 
 		execution(cmds, pipes_num);
 }
-// t_gen	*gen;
 
 int main(int argc, char **argv, char **envp)
 {
@@ -441,7 +440,7 @@ int main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-// // t_cmd   *parsing(token_t *kokens)
-// // {
+// // // t_cmd   *parsing(token_t *kokens)
+// // // {
 
-// // }
+// // // }
