@@ -37,7 +37,7 @@ char *rm_quotes(char *str, char c)
 	return (new);
 }
 
-char *join_mix(token_t *token1, token_t *token2)
+char *join_mix(t_token *token1, t_token *token2)
 {
 	char	*tmp;
 
@@ -54,9 +54,9 @@ char *join_mix(token_t *token1, token_t *token2)
 	return (tmp);
 }
 
-void join_word(token_t **tokens)
+void join_word(t_token **tokens)
 {
-	token_t *tmp;
+	t_token *tmp;
 	// char	*to_free;
 
 	tmp = *tokens;
@@ -76,9 +76,9 @@ void join_word(token_t **tokens)
 	}
 }
 
-void	rm_quotes_tokens(token_t **tokens)
+void	rm_quotes_tokens(t_token **tokens)
 {
-	token_t	*tmp;
+	t_token	*tmp;
 
 	tmp = *tokens;
 	while (tmp != NULL)
@@ -92,9 +92,9 @@ void	rm_quotes_tokens(token_t **tokens)
 	}
 }
 
-void rm_token(token_t **tokens)
+void rm_token(t_token **tokens)
 {
-	token_t *token;
+	t_token *token;
 
 	token = *tokens;
 	if (token->prev == NULL && token->next == NULL)
@@ -119,9 +119,9 @@ void rm_token(token_t **tokens)
 	free(token);
 }
 
-void rm_spaces(token_t **tokens)
+void rm_spaces(t_token **tokens)
 {
-	token_t *tmp;
+	t_token *tmp;
 	int i = 0;
 
 	while ((*tokens) != NULL && (*tokens)->type == SPAACE)
@@ -141,7 +141,7 @@ void rm_spaces(token_t **tokens)
 	}
 }
 
-void change_data(token_t **tokens, char *data)
+void change_data(t_token **tokens, char *data)
 {
 	(*tokens)->old_data = ft_strjoin("$", (*tokens)->next->data);
 	free((*tokens)->data);
@@ -164,7 +164,7 @@ char	*get_var_str(char *str, int *i)
 	return (ft_substr(str, 0, *i));
 }
 
-void play_with_tokens(token_t **tokens, char *str, t_list *env)
+void play_with_tokens(t_token **tokens, char *str, t_list *env)
 {
 	char	*env_var;
 	char	*second_part;
@@ -200,9 +200,9 @@ void play_with_tokens(token_t **tokens, char *str, t_list *env)
 	rm_token(&((*tokens)->next));
 }
 
-void expander(token_t **tokens)
+void expander(t_token **tokens)
 {
-	token_t *tmp;
+	t_token *tmp;
 	// char    **env = NULL;
 
 	tmp = *tokens;
@@ -277,7 +277,7 @@ char *get_var(char **str, char *final_quote, t_list *env)
 	return (join(final_quote, env_var));
 }
 
-void expander_in_quotes_utils(token_t **token, t_list *env)
+void expander_in_quotes_utils(t_token **token, t_list *env)
 {
 	char *str;
 	int i;
@@ -304,9 +304,9 @@ void expander_in_quotes_utils(token_t **token, t_list *env)
 	(*token)->data = final_quote;
 }
 
-void expander_in_quotes(token_t **tokens)
+void expander_in_quotes(t_token **tokens)
 {
-	token_t *token;
+	t_token *token;
 
 	token = *tokens;
 	while (token != NULL)
@@ -319,7 +319,7 @@ void expander_in_quotes(token_t **tokens)
 	}
 }
 
-int count_tokens(token_t *tokens)
+int count_tokens(t_token *tokens)
 {
 	int count;
 
@@ -332,7 +332,7 @@ int count_tokens(token_t *tokens)
 	return (count);
 }
 
-char **get_cmds(token_t *tokens)
+char **get_cmds(t_token *tokens)
 {
 	char	**cmds;
 	int		i;
@@ -351,7 +351,7 @@ char **get_cmds(token_t *tokens)
 	return (cmds);
 }
 
-void	clear_tokens(token_t **tokens)
+void	clear_tokens(t_token **tokens)
 {
 	if (*tokens == NULL)
 		return ;
@@ -375,7 +375,7 @@ void creat_cmd_args(t_cmd **cmds, int pipe)
 	}
 }
 
-t_cmd *cmds_and_redirections(token_t **tokens, int *pipes)
+t_cmd *cmds_and_redirections(t_token **tokens, int *pipes)
 {
 	t_cmd	*cmds;
 	int		status;
@@ -388,7 +388,7 @@ t_cmd *cmds_and_redirections(token_t **tokens, int *pipes)
 	return (cmds);
 }
 
-void	get_path_and_execute(token_t **toknes)
+void	get_path_and_execute(t_token **toknes)
 {
 	t_cmd	*cmds;
 	int		pipes_num;
@@ -402,7 +402,7 @@ void	get_path_and_execute(token_t **toknes)
 int main(int argc, char **argv, char **envp)
 {
 	char	*line;
-	token_t *tokens;
+	t_token *tokens;
 	t_cmd	*cmds;
     char	p[PATH_MAX];
 
@@ -440,7 +440,7 @@ int main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-// // // t_cmd   *parsing(token_t *kokens)
+// // // t_cmd   *parsing(t_token *kokens)
 // // // {
 
 // // // }

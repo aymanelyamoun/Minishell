@@ -20,8 +20,7 @@ int	check_arg(char *next)
 	return (0);
 }
 
-
-int check_arg2(char *next)
+int	check_arg2(char *next)
 {
 	int	index;
 
@@ -52,7 +51,7 @@ int	array_len(char **array)
 
 char	*ft_to_lower(char *str)
 {
-	int index;
+	int	index;
 
 	index = 0;
 	while (str[index])

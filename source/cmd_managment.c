@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-int	count_pipes(token_t *tokens)
+int	count_pipes(t_token *tokens)
 {
 	int	i;
 
@@ -15,10 +15,10 @@ int	count_pipes(token_t *tokens)
 	return (i);
 }
 
-static t_cmd *creat_cmds_utils(token_t **tokens, t_cmd **cmds)
+static t_cmd *creat_cmds_utils(t_token **tokens, t_cmd **cmds)
 {
-    token_t *tmp;
-    token_t *new_head;
+    t_token *tmp;
+    t_token *new_head;
     int     i;
 
     i = 0;
@@ -49,11 +49,11 @@ static t_cmd *creat_cmds_utils(token_t **tokens, t_cmd **cmds)
 	return (*cmds);
 }
 
-t_cmd   *creat_cmds(token_t **tokens)
+t_cmd   *creat_cmds(t_token **tokens)
 {
     int		pipes;
-	//token_t	*new_head;
-	//token_t *tmp;
+	//t_token	*new_head;
+	//t_token *tmp;
 	t_cmd	*cmds;
 	int		i;
 

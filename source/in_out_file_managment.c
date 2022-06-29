@@ -1,7 +1,7 @@
 #include "../includes/minishell.h"
 #include <fcntl.h>
 
-int    open_file(token_t **tokens, int type)
+int    open_file(t_token **tokens, int type)
 {
     int fd;
 	int	status;
@@ -38,7 +38,7 @@ int    open_file(token_t **tokens, int type)
 	return (fd);
 }
 
-// void	check_file_direc_rm_token(token_t **tokens, t_cmd **cmds, int i)
+// void	check_file_direc_rm_token(t_token **tokens, t_cmd **cmds, int i)
 // {
 // 	if ((*tokens)->prev == NULL)
 // 		(*cmds)->tokens_cmd = (*tokens)->next->next;
@@ -49,7 +49,7 @@ int    open_file(token_t **tokens, int type)
 void	rm_redirecitons(t_cmd **cmds, int pipes)
 {
 	int	i;
-	token_t	*tmp;
+	t_token	*tmp;
 
 	i = 0;
 	while(i <= pipes)
@@ -77,7 +77,7 @@ void	rm_redirecitons(t_cmd **cmds, int pipes)
 	}
 }
 
-int		creat_in_files(t_cmd **cmds, token_t *tokens, int i)
+int		creat_in_files(t_cmd **cmds, t_token *tokens, int i)
 {
 	int	fd;
 
@@ -96,7 +96,7 @@ int		creat_in_files(t_cmd **cmds, token_t *tokens, int i)
 	return (fd);
 }
 
-int		creat_out_files(t_cmd **cmds, token_t *tokens, int i)
+int		creat_out_files(t_cmd **cmds, t_token *tokens, int i)
 {
 	int	fd;
 
@@ -118,7 +118,7 @@ int		creat_out_files(t_cmd **cmds, token_t *tokens, int i)
 void    check_file_direcitons(t_cmd **cmds, int pipes)
 {
     int i;
-    token_t *tokens;
+    t_token *tokens;
 	int	fd;
 
     i = 0;

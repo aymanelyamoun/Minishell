@@ -47,7 +47,6 @@ long long	ft_atoll(const char *dest)
 	i = 0;
 	sign = 1;
 	result = 0;
-
 	while (((dest[i] == ' ') || (dest[i] >= 9 && dest[i] <= 13)) \
 	&& !(dest[i] == '-' || dest[i] == '+'))
 		i++;

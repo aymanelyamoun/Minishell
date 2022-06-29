@@ -5,7 +5,7 @@
 // int main(int argc, char **argv, char **envp)
 // {
 //     char *line;
-//     token_t *tokens;
+//     t_token *tokens;
 //     char **arr;
 //     (void)argv;
 //     char p[PATH_MAX];

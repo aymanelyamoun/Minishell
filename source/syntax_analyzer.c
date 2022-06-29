@@ -23,9 +23,9 @@ static int	check_pairs1(char *s)
 	return (!q);
 }
 
-int	check_quotes(token_t *token)
+int	check_quotes(t_token *token)
 {
-	token_t	*tmp;
+	t_token	*tmp;
 	char	*s;
 
 	tmp = token;
@@ -43,7 +43,7 @@ int	check_quotes(token_t *token)
 	return (1);
 }
 
-int	check_inside(token_t *tmp)
+int	check_inside(t_token *tmp)
 {
 	if (tmp && tmp->type == PIPE)
 	{
@@ -71,9 +71,9 @@ int	check_inside(token_t *tmp)
 	return (1);
 }
 
-int	check_newline(token_t *c)
+int	check_newline(t_token *c)
 {
-	token_t	*tmp;
+	t_token	*tmp;
 
 	tmp = NULL;
 	tmp = c;
@@ -98,9 +98,9 @@ int	check_newline(token_t *c)
 	return (1);
 }
 
-int	handle_spaces(token_t *c)
+int	handle_spaces(t_token *c)
 {
-	token_t	*tmp;
+	t_token	*tmp;
 
 	tmp = NULL;
 	tmp = c;

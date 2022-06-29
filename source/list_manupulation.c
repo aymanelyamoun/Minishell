@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   list_manupulation.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 19:19:26 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/06/03 12:51:23 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/06/29 20:07:24 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 
-token_t *new_token(unsigned int type, char *data)
+t_token *new_token(unsigned int type, char *data)
 {
-	token_t *token;
+	t_token *token;
 
-	token = malloc(sizeof(token_t));
+	token = malloc(sizeof(t_token));
 	if (token == NULL)
 		return (NULL);
 	token->type = type;
@@ -28,9 +28,9 @@ token_t *new_token(unsigned int type, char *data)
 	return token;
 }
 
-void	add_at_end(token_t **tokens_head, token_t *token)
+void	add_at_end(t_token **tokens_head, t_token *token)
 {
-	token_t	*tmp;
+	t_token	*tmp;
 
 	tmp = *tokens_head;
 	while (tmp->next != NULL)
@@ -41,7 +41,7 @@ void	add_at_end(token_t **tokens_head, token_t *token)
 	tmp->next = token;
 }
 
-void	add_token_last(token_t **token_head, unsigned int type, char *data)
+void	add_token_last(t_token **token_head, unsigned int type, char *data)
 {
 	if (*token_head == NULL)
 		*token_head = new_token(type, data);
