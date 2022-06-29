@@ -7,7 +7,7 @@ int	modify_env(char *pwd)
 	return (1);
 }
 
-int small(char **p)
+int	small(char **p)
 {
 	*p = find_value("HOME", gen.env);
 	if (!*p)
@@ -21,7 +21,7 @@ int small(char **p)
 	return (0);
 }
 
-int small2(char **p)
+int	small2(char **p)
 {
 	*p = find_value("OLDPWD", gen.env);
 	if (!*p)
@@ -49,20 +49,20 @@ int	ft_cd(char **path)
 		if (small(&p))
 			return (1);
 	}
-	else if(!strncmp(path[1], "-", 1))
+	else if (!strncmp(path[1], "-", 1))
 	{
 		if (small2(&p))
 			return (1);
 	}
-	else if(ft_strlen2(path) == 2)
+	else if (ft_strlen2(path) == 2)
 		p = ft_strdup(path[1]);
 	change_env(p);
 	return (0);
 }
 
-int small3(char **pwd)
+int	small3(char **pwd)
 {
-	char *cwd;
+	char	*cwd;
 
 	modify_env(*pwd);
 	free(*pwd);
@@ -79,7 +79,7 @@ int small3(char **pwd)
 	modify_env(*pwd);
 	return (0);
 }
-int change_env(char *p)
+int	change_env(char *p)
 {
 	char	*pwd;
 
@@ -91,43 +91,42 @@ int change_env(char *p)
 	}
 	else if (chdir(p) == -1)
 		perror("cd");
-	free(p);
 	gen.pwd = getcwd(NULL, 0);
 	gen.exit_status = 0;
 	free(pwd);
+	free(p);
 	return (0);
 }
 
-//use a structure
-int suite6(char *str1, char *str)
+int	suite6(char *str1, char *str)
 {
-		size_t index1;
-		size_t index2;
+	size_t index1;
+	size_t index2;
 
-		index1 = 0;
-		index2 = 0;
-		while(((char *)str1)[index1] && ((char *)str1)[index1] != '=')
-			index1++;
-		while(str[index2] && str[index2] != '=')
-			index2++;
-		if(!ft_strncmp(str1, str, index1) && index1 == index2)
+	index1 = 0;
+	index2 = 0;
+	while (((char *)str1)[index1] && ((char *)str1)[index1] != '=')
+		index1++;
+	while (str[index2] && str[index2] != '=')
+		index2++;
+	if (!ft_strncmp(str1, str, index1) && index1 == index2)
+	{
+		if (ft_strchr(str, '='))
 		{
-			if(ft_strchr(str, '='))
-			{
-				free(str1);
-				str1 = ft_strdup(str);
-			}
-			return (1);
+			free(str1);
+			str1 = ft_strdup(str);
 		}
-		return (0);
+		return (1);
+	}
+	return (0);
 }
 
-int ft_add_list(t_list **env_list, char *str)
+int	ft_add_list(t_list **env_list, char *str)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	tmp = *env_list;
-	while(tmp)
+	while (tmp)
 	{
 		suite6(tmp->content, str);
 		tmp = tmp->next;

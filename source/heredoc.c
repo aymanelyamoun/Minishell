@@ -44,7 +44,14 @@ char	*expander_heredoc(char *line)
 	final_quote = join(final_quote, tmp);
 	return (final_quote);
 }
-
+void    handler1(int sig)
+{
+    if(sig == SIGINT)
+    {
+		
+   		exit(0);
+    }
+}
 int heredoc(char *limiter, int *exit_status)
 {
     char	*line;
@@ -58,14 +65,13 @@ int heredoc(char *limiter, int *exit_status)
 		return (-1);
 	}
 	signal(SIGINT, SIG_IGN);
-	// signal(SIGQUIT, SIG_IGN);
-	printf(":::%s\n", limiter);
+	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid == 0)
     {
-		signal(SIGINT, SIG_DFL);
-		// signal(SIGQUIT, SIG_DFL);
+		signal(SIGINT, handler1);
 		line = readline("> ");
+		ft_putchar_fd('1', 1);
 		while (line != NULL && ft_strcmp(line, limiter))
 		{
 

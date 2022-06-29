@@ -88,7 +88,7 @@ int	check_newline(token_t *c)
 			if ((tmp && is_other2(tmp)) || (tmp == NULL))
 			{
 				ft_putstr_fd("syntax error near unexpected", 2);
-				ft_putstr_fd(" token : 'newline'\n", 2);
+				ft_putstr_fd("  token : 'newline'\n", 2);
 				gen.exit_status = 258;
 				return (0);
 			}
@@ -109,7 +109,7 @@ int	handle_spaces(token_t *c)
 	if (tmp == NULL)
 	{
 		ft_putstr_fd("syntax error near unexpected", 2);
-		ft_putstr_fd(" token : 'newline'\n", 2);
+		ft_putstr_fd("  token : 'newline'\n", 2);
 		gen.exit_status = 258;
 		return (0);
 	}

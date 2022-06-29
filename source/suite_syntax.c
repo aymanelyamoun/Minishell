@@ -1,22 +1,22 @@
 #include "../includes/minishell.h"
 
-int handle_spaces2(token_t *c)
+int	handle_spaces2(token_t *c)
 {
-	token_t *tmp;
+	token_t	*tmp;
 
 	tmp = NULL;
 	tmp = c;
 	while (tmp && tmp->type == SPAACE)
 		tmp = tmp->next;
 	if ((tmp == NULL || is_other(tmp)))
-    {
-        error_free(tmp->data, tmp);
-        return (0);
-    }
+	{
+		error_free(tmp->data, tmp);
+		return (0);
+	}
 	return (1);
 }
 
-int is_other(token_t *c)
+int	is_other(token_t *c)
 {
 	if (c->type == LESS || c->type == DLESS \
 	|| c->type == DGREAT || c->type == DQUOTE || c->type == QUOTE)
@@ -24,7 +24,7 @@ int is_other(token_t *c)
 	return (0);
 }
 
-int syntax_err(token_t *token)
+int	syntax_err(token_t *token)
 {
 	if (check_quotes(token) == 1 && check_newline(token) == 1 \
 	&& check_inside(token) == 1)
@@ -32,7 +32,7 @@ int syntax_err(token_t *token)
 	return (0);
 }
 
-int is_other2(token_t *c)
+int	is_other2(token_t *c)
 {
 	if (c->type == LESS || c->type == DLESS \
 	|| c->type == DGREAT || c->type == GREAT || c->type == PIPE)

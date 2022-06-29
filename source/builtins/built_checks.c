@@ -1,7 +1,7 @@
 #include "../includes/minishell.h"
 
 int	check_arg(char *next)
-{    
+{
 	int	index;
 
 	index = 0;
