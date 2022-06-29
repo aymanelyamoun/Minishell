@@ -44,7 +44,14 @@ char	*expander_heredoc(char *line)
 	final_quote = join(final_quote, tmp);
 	return (final_quote);
 }
-
+void    handler1(int sig)
+{
+    if(sig == SIGINT)
+    {
+		
+   		exit(1);
+    }
+}
 int heredoc(char *limiter, int *exit_status)
 {
     char	*line;
@@ -58,16 +65,15 @@ int heredoc(char *limiter, int *exit_status)
 		return (-1);
 	}
 	signal(SIGINT, SIG_IGN);
-	// signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid == 0)
     {
-		signal(SIGINT, SIG_DFL);
-		// signal(SIGQUIT, SIG_DFL);
+		signal(SIGINT, handler1);
 		line = readline("> ");
+		// ft_putchar_fd('1', 1);
 		while (line != NULL && ft_strcmp(line, limiter))
 		{
-
 			line = expander_heredoc(line);
 			write_to_fd(pipe_fd[1], line);
 			free(line);
@@ -79,13 +85,13 @@ int heredoc(char *limiter, int *exit_status)
 			free(limiter);
 		exit (0);
 	}
-	// signal(SIGQUIT, handler);
-	signal(SIGINT, handler);
 	waitpid(pid, &status, 0);
+	signal(SIGINT, handler);
 	*exit_status = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
 	{
-		*exit_status = 128 + WTERMSIG(status);
+		if (WTERMSIG(status) == 2)
+			*exit_status = 1;
 	}
 	close(pipe_fd[1]);
 	return (pipe_fd[0]);

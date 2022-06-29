@@ -3,19 +3,12 @@
 
 char *find_value(char *str, t_list *env_l)
 {
-	int flag = 0;
 	char *tmp;
 
 	if (strcmp(str, "?") == 0)
 		return (ft_itoa(gen.exit_status));
 	while (env_l != NULL)
 	{
-		flag = 1;
-		if (ft_strcmp(str, "?") == 0)
-		{
-
-			return (ft_itoa(gen.exit_status));
-		}
 		tmp = ft_strjoin(str, "=");
 		if (ft_strncmp(tmp, env_l->content, ft_strlen(tmp)) == 0)
 		{
@@ -44,7 +37,7 @@ char *rm_quotes(char *str, char c)
 	return (new);
 }
 
-char *join_mix(token_t *token1, token_t *token2)
+char *join_mix(t_token *token1, t_token *token2)
 {
 	char	*tmp;
 
@@ -61,9 +54,9 @@ char *join_mix(token_t *token1, token_t *token2)
 	return (tmp);
 }
 
-void join_word(token_t **tokens)
+void join_word(t_token **tokens)
 {
-	token_t *tmp;
+	t_token *tmp;
 	// char	*to_free;
 
 	tmp = *tokens;
@@ -83,9 +76,9 @@ void join_word(token_t **tokens)
 	}
 }
 
-void	rm_quotes_tokens(token_t **tokens)
+void	rm_quotes_tokens(t_token **tokens)
 {
-	token_t	*tmp;
+	t_token	*tmp;
 
 	tmp = *tokens;
 	while (tmp != NULL)
@@ -99,9 +92,9 @@ void	rm_quotes_tokens(token_t **tokens)
 	}
 }
 
-void rm_token(token_t **tokens)
+void rm_token(t_token **tokens)
 {
-	token_t *token;
+	t_token *token;
 
 	token = *tokens;
 	if (token->prev == NULL && token->next == NULL)
@@ -126,9 +119,9 @@ void rm_token(token_t **tokens)
 	free(token);
 }
 
-void rm_spaces(token_t **tokens)
+void rm_spaces(t_token **tokens)
 {
-	token_t *tmp;
+	t_token *tmp;
 	int i = 0;
 
 	while ((*tokens) != NULL && (*tokens)->type == SPAACE)
@@ -148,10 +141,9 @@ void rm_spaces(token_t **tokens)
 	}
 }
 
-void change_data(token_t **tokens, char *data)
+void change_data(t_token **tokens, char *data)
 {
-	if (ft_strcmp(data, "") == 0)
-		(*tokens)->old_data = ft_strjoin("$", (*tokens)->next->data);
+	(*tokens)->old_data = ft_strjoin("$", (*tokens)->next->data);
 	free((*tokens)->data);
 	(*tokens)->data = data;
 	(*tokens)->type = WORD;
@@ -172,7 +164,7 @@ char	*get_var_str(char *str, int *i)
 	return (ft_substr(str, 0, *i));
 }
 
-void play_with_tokens(token_t **tokens, char *str, t_list *env)
+void play_with_tokens(t_token **tokens, char *str, t_list *env)
 {
 	char	*env_var;
 	char	*second_part;
@@ -182,9 +174,11 @@ void play_with_tokens(token_t **tokens, char *str, t_list *env)
 	new_str = get_var_str(str, &i);
 	second_part = ft_substr(str, i, ft_strlen(str + i));
 	env_var = find_value(new_str, env);
-	env_var = ft_strjoin(env_var, second_part);
-	free(second_part);
 	free(new_str);
+	new_str = env_var;
+	env_var = ft_strjoin(env_var, second_part);
+	free(new_str);
+	free(second_part);
 	if ((*tokens)->next->type == WORD)
 	{
 		if (env_var != NULL)
@@ -208,9 +202,9 @@ void play_with_tokens(token_t **tokens, char *str, t_list *env)
 	rm_token(&((*tokens)->next));
 }
 
-void expander(token_t **tokens)
+void expander(t_token **tokens)
 {
-	token_t *tmp;
+	t_token *tmp;
 	// char    **env = NULL;
 
 	tmp = *tokens;
@@ -260,10 +254,12 @@ char *get_var(char **str, char *final_quote, t_list *env)
 	char *to_free;
 
 	i = 1;
-	if ((*str)[0] == '$' && (*str)[1] != '\0' && ft_isalnum((*str)[1]))
+	if ((*str)[0] == '$' && (*str)[1] != '\0' 
+	&& ((ft_isalnum((*str)[1]) || (*str)[1] == '?' || (*str)[1] == '_')))
 	{
 		while ((*str)[i] != '\0' && (*str)[i] != ' ' && (*str)[i] != '\t' 
-		&& (*str)[i] != '\v' && (*str)[i] != '\f' && ft_isalnum((*str)[i]))
+		&& (*str)[i] != '\v' && (*str)[i] != '\f' && 
+		(ft_isalnum((*str)[i]) || (*str)[i] == '?' || (*str)[i] == '_'))
 		{
 			if (i == 1 && (ft_isdigit((*str)[i]) || (*str)[i] == '?'))
 			{
@@ -285,7 +281,7 @@ char *get_var(char **str, char *final_quote, t_list *env)
 	return (join(final_quote, env_var));
 }
 
-void expander_in_quotes_utils(token_t **token, t_list *env)
+void expander_in_quotes_utils(t_token **token, t_list *env)
 {
 	char *str;
 	int i;
@@ -309,12 +305,13 @@ void expander_in_quotes_utils(token_t **token, t_list *env)
 	}
 	tmp = ft_substr(str, 0, i);
 	final_quote = join(final_quote, tmp);
+	free((*token)->data);
 	(*token)->data = final_quote;
 }
 
-void expander_in_quotes(token_t **tokens)
+void expander_in_quotes(t_token **tokens)
 {
-	token_t *token;
+	t_token *token;
 
 	token = *tokens;
 	while (token != NULL)
@@ -327,7 +324,7 @@ void expander_in_quotes(token_t **tokens)
 	}
 }
 
-int count_tokens(token_t *tokens)
+int count_tokens(t_token *tokens)
 {
 	int count;
 
@@ -340,7 +337,7 @@ int count_tokens(token_t *tokens)
 	return (count);
 }
 
-char **get_cmds(token_t *tokens)
+char **get_cmds(t_token *tokens)
 {
 	char	**cmds;
 	int		i;
@@ -359,7 +356,7 @@ char **get_cmds(token_t *tokens)
 	return (cmds);
 }
 
-void	clear_tokens(token_t **tokens)
+void	clear_tokens(t_token **tokens)
 {
 	if (*tokens == NULL)
 		return ;
@@ -383,7 +380,7 @@ void creat_cmd_args(t_cmd **cmds, int pipe)
 	}
 }
 
-t_cmd *cmds_and_redirections(token_t **tokens, int *pipes)
+t_cmd *cmds_and_redirections(t_token **tokens, int *pipes)
 {
 	t_cmd	*cmds;
 	int		status;
@@ -396,7 +393,7 @@ t_cmd *cmds_and_redirections(token_t **tokens, int *pipes)
 	return (cmds);
 }
 
-void	get_path_and_execute(token_t **toknes)
+void	get_path_and_execute(t_token **toknes)
 {
 	t_cmd	*cmds;
 	int		pipes_num;
@@ -405,33 +402,32 @@ void	get_path_and_execute(token_t **toknes)
 
 	if (get_cmds_path(&cmds, pipes_num) == 0) 
 		execution(cmds, pipes_num);
+	free_cmds(cmds, pipes_num);
 }
-// t_gen	*gen;
 
 int main(int argc, char **argv, char **envp)
 {
 	char	*line;
-	token_t *tokens;
+	t_token *tokens;
 	t_cmd	*cmds;
     char	p[PATH_MAX];
 
 	gen.pwd =  getcwd(p, PATH_MAX);
-    gen.env = env_create(envp); //TODO : put this in a function
-	//fix the case env -i ./mini....
+    gen.env = env_create(envp);
 	gen.envp = NULL;
 	gen.exit_status = 0;
+	gen.exec = 0;
     handle_signals();
 	if(argc != 1)
 	    return (1);
 	while (1)
 	{
-		// no not valid file discribtor;
-		// fix the creation of fd's when a file is not valid
 		line = readline("\033[0;36m\x1B[1mminishell> \033[0;37m");
 		if (line != NULL)
 		{
 			add_history(line);
 			tokens = tokenize(line);
+			free(line);
 			if (syntax_err(tokens))
 			{
 				expander(&tokens);
@@ -439,8 +435,8 @@ int main(int argc, char **argv, char **envp)
 				join_word(&tokens);
 				rm_spaces(&tokens);
 				rm_quotes_tokens(&tokens);
+				gen.exec = 0;
 				get_path_and_execute(&tokens);
-				
 			}
 		}
 		else
@@ -449,7 +445,7 @@ int main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-// // t_cmd   *parsing(token_t *kokens)
-// // {
+// // // t_cmd   *parsing(t_token *kokens)
+// // // {
 
-// // }
+// // // }
