@@ -62,7 +62,7 @@ void    execut(t_cmd *cmds, int **pipes, int pipes_num, int i)
 	if (cmds[i].outfile != STDOUT_FILENO)
 		close(cmds[i].outfile);
 	if ((cmds[i].exec == 0) && is_buit_in(cmds[i].cmd_args[0]))
-				go_commands(cmds[i].cmd_args);
+		go_commands(cmds[i].cmd_args);
 	else if (cmds[i].exec == 0)
 	{
 		free_envp();
@@ -125,10 +125,14 @@ void    execution(t_cmd *cmds, int pipes_num)
 	char *built_in;
 	int in;
 	int out;
+	int status;
 
 	i = 0;
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	pipes = creat_pipes(pipes_num);
-	assign_pipes(pipes, &cmds, pipes_num); 
+	assign_pipes(pipes, &cmds, pipes_num);
+
 	if (cmds[i].exec == 0 && pipes_num == 0 && is_buit_in(cmds[i].cmd_args[0]))
 		{
 			in = dup(STDIN_FILENO);
@@ -147,11 +151,14 @@ void    execution(t_cmd *cmds, int pipes_num)
 	{
 		while (i <= pipes_num)
 		{
+			
 			pid = fork();
 			if (pid == -1)
 				perror("fork : ");
 			if (pid == 0)
 			{
+				signal(SIGINT, SIG_DFL);
+				signal(SIGQUIT, SIG_DFL);
 				execut(cmds, pipes, pipes_num, i);
 			}
 			i++;
@@ -159,9 +166,20 @@ void    execution(t_cmd *cmds, int pipes_num)
 		close_pipes(pipes, pipes_num);
 		free_cmds(cmds, pipes_num);
 		free_pipes(pipes, pipes_num);
-		waitpid(pid, &(gen.exit_status), 0);
-		// while (waitpid(-1, &(gen.exit_status), 0) != -1)
-		// ;
-		gen.exit_status = WEXITSTATUS(gen.exit_status);
+		if (i == pipes_num + 1)
+		{
+			waitpid(pid, &status, 0);
+		}
+		while (waitpid(-1, 0, 0) != -1)
+			;
+		gen.exit_status = WEXITSTATUS(status);
+		if (WIFSIGNALED(status))
+		{
+			if (WTERMSIG(status) == 3)
+				printf("Quit: 3\n");
+			gen.exit_status = 128 + WTERMSIG(status);
+		}
 	}
+	signal(SIGQUIT, handler);
+	signal(SIGINT, handler);
 }

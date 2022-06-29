@@ -5,7 +5,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <unistd.h>
-
+#include <sys/stat.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <sys/types.h>
@@ -132,7 +132,8 @@ int	get_cmds_path(t_cmd **cmds, int pipes);
 /*********************************/
 
 int	ft_strcmp(char *s1, char *s2);
-int heredoc(char *limiter);
+int heredoc(char *limiter, int *exit_status);
+// int heredoc(char *limiter);
 void check_file_direcitons(t_cmd **cmds, int pipes);
 void rm_redirecitons(t_cmd **cmds, int pipes);
 
@@ -186,7 +187,7 @@ int check_arg2(char *next);
 int start_unset(t_list *env, char *next);
 int ft_strchr1(const char *str, int n);
 int is_alone(char *s);
-int len_list(t_list **list);
+// int len_list(t_list **list);
 int set_flag(char *s);
 
 char **convert_array(t_list **env);

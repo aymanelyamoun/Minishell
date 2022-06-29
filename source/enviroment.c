@@ -9,9 +9,9 @@ t_list *env_create(char **envp)
     char *s;
     int index;
     index = 1;
-    if(!(*envp))
-        exit(0);
-    if(!(**envp) || !(envp) || !(envp[0])) //TODO : fix this
+    if(!(envp) || !(*envp))
+        return (NULL);
+    if(!(envp[0]))
     {
         head = ft_lstnew(NULL);
         return (head);

@@ -44,6 +44,7 @@ int check_valid(char *next)
     int index;
 
     index = 0;
+    // printf("----- %s\n", next);
     while(next[index])
     {
         if(ft_isdigit(next[index]) != 1)

@@ -3,16 +3,12 @@
 
 char *find_value(char *str, t_list *env_l)
 {
-	int i;
 	char *tmp;
 
+	if (strcmp(str, "?") == 0)
+		return (ft_itoa(gen.exit_status));
 	while (env_l != NULL)
 	{
-		if (ft_strcmp(str, "?") == 0)
-		{
-
-			return (ft_itoa(gen.exit_status));
-		}
 		tmp = ft_strjoin(str, "=");
 		if (ft_strncmp(tmp, env_l->content, ft_strlen(tmp)) == 0)
 		{
@@ -147,8 +143,7 @@ void rm_spaces(token_t **tokens)
 
 void change_data(token_t **tokens, char *data)
 {
-	if (ft_strcmp(data, "") == 0)
-		(*tokens)->old_data = ft_strjoin("$", (*tokens)->next->data);
+	(*tokens)->old_data = ft_strjoin("$", (*tokens)->next->data);
 	free((*tokens)->data);
 	(*tokens)->data = data;
 	(*tokens)->type = WORD;
@@ -390,7 +385,6 @@ t_cmd *cmds_and_redirections(token_t **tokens, int *pipes)
 	check_file_direcitons(&cmds, *pipes);
 	rm_redirecitons(&cmds, *pipes);
 	creat_cmd_args(&cmds, *pipes);
-	
 	return (cmds);
 }
 
@@ -400,10 +394,9 @@ void	get_path_and_execute(token_t **toknes)
 	int		pipes_num;
 
 	cmds = cmds_and_redirections(toknes, &pipes_num);
-	if (get_cmds_path(&cmds, pipes_num) == 0)
-	{	
+
+	if (get_cmds_path(&cmds, pipes_num) == 0) 
 		execution(cmds, pipes_num);
-	}
 }
 
 int main(int argc, char **argv, char **envp)
@@ -415,6 +408,7 @@ int main(int argc, char **argv, char **envp)
 
 	gen.pwd =  getcwd(p, PATH_MAX);
     gen.env = env_create(envp); //TODO : put this in a function
+	//fix the case env -i ./mini....
 	gen.envp = NULL;
 	gen.exit_status = 0;
     handle_signals();
@@ -437,6 +431,7 @@ int main(int argc, char **argv, char **envp)
 				rm_spaces(&tokens);
 				rm_quotes_tokens(&tokens);
 				get_path_and_execute(&tokens);
+				
 			}
 		}
 		else

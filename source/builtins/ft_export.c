@@ -1,6 +1,5 @@
 #include "../includes/minishell.h"
 
-
 void suite3(char *str)
 {
 	ft_putstr_fd("declare -x ", 1);
@@ -22,6 +21,7 @@ void	suite5(char *str1, char *str2)
 	if (str1)
 		ft_putstr_fd("\"", 1);
 }
+
 void	print_export(t_list *env)
 {
 	int		index;
@@ -74,5 +74,3 @@ int	ft_export(char **next)
 	free_split(next);
 	return (0);
 }
-
-
