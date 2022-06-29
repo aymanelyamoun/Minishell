@@ -7,35 +7,6 @@ int	modify_env(char *pwd)
 	return (1);
 }
 
-int	small(char **p)
-{
-	*p = find_value("HOME", gen.env);
-	if (!*p)
-		ft_putstr_fd("Home not set\n", 2);
-	if (chdir(*p) == -1)
-	{
-		ft_putstr_fd("Problem in chdir.\n", 2);
-		gen.exit_status = 1;
-		return (1);
-	}
-	return (0);
-}
-
-int	small2(char **p)
-{
-	*p = find_value("OLDPWD", gen.env);
-	if (!*p)
-		ft_putstr_fd("OLDPWD not set\n", 2);
-	if (chdir(*p) == -1)
-	{
-		ft_putstr_fd("Problem in chdir.\n", 2);
-		gen.exit_status = 1;
-		return (1);
-	}
-	ft_putendl_fd(*p, 2);
-	return (0);
-}
-
 int	ft_cd(char **path)
 {
 	char	*pwd;
@@ -60,25 +31,6 @@ int	ft_cd(char **path)
 	return (0);
 }
 
-int	small3(char **pwd)
-{
-	char	*cwd;
-
-	modify_env(*pwd);
-	free(*pwd);
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-	{
-		perror("minishell: cd: error retrieving current directory: "
-			"getcwd: cannot access parent directories");
-		gen.exit_status = 1;
-		return (1);
-	}
-	*pwd = join_str("PWD=", cwd);
-	free(cwd);
-	modify_env(*pwd);
-	return (0);
-}
 int	change_env(char *p)
 {
 	char	*pwd;
@@ -98,37 +50,26 @@ int	change_env(char *p)
 	return (0);
 }
 
-int	suite6(char *str1, char *str)
-{
-	size_t index1;
-	size_t index2;
-
-	index1 = 0;
-	index2 = 0;
-	while (((char *)str1)[index1] && ((char *)str1)[index1] != '=')
-		index1++;
-	while (str[index2] && str[index2] != '=')
-		index2++;
-	if (!ft_strncmp(str1, str, index1) && index1 == index2)
-	{
-		if (ft_strchr(str, '='))
-		{
-			free(str1);
-			str1 = ft_strdup(str);
-		}
-		return (1);
-	}
-	return (0);
-}
-
 int	ft_add_list(t_list **env_list, char *str)
 {
 	t_list	*tmp;
+	size_t	index1;
+	size_t	index2;
 
 	tmp = *env_list;
 	while (tmp)
 	{
-		suite6(tmp->content, str);
+		index1 = s1((char *)tmp->content);
+		index2 = s2((char *)tmp->content);
+		if (!ft_strncmp(tmp->content, str, index1) && index1 == index2)
+		{
+			if (ft_strchr(str, '='))
+			{
+				free(tmp->content);
+				tmp->content = ft_strdup(str);
+			}
+			return (1);
+		}
 		tmp = tmp->next;
 	}
 	free(tmp);

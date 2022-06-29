@@ -205,4 +205,10 @@ int	len_list(t_list **list);
 t_list	*swap(t_list *ptr1, t_list *ptr2);
 void	bubbleSort(t_list **head, int count);
 int print(char *s);
+int	small(char **p);
+int	small2(char **p);
+int	small3(char **pwd);
+int	s1(char *str);
+int	s2(char *str);
+
 #endif
