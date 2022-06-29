@@ -79,10 +79,10 @@ int terminal_settings(void);
 token_t *tokenize(char *line);
 void get_token(token_t **tokens, char **str);
 
-void get_sympol_less(token_t **tokens, char **str);
-void get_sympol_great(token_t **tokens, char **str);
+void	get_sympol_less(token_t **tokens, char **str, int *here);
 char *get_char(char **str, char *c, int increment);
-int get_word(char **str);
+int	get_word(char **str, int *here);
+// int get_word(char **str, in);
 int get_quote(char **str, char c);
 int check_quotes(token_t *c);
 void error_free(char *str, token_t *tokens);

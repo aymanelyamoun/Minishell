@@ -58,13 +58,13 @@ int heredoc(char *limiter, int *exit_status)
 		return (-1);
 	}
 	signal(SIGINT, SIG_IGN);
-	// signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	printf(":::%s\n", limiter);
 	pid = fork();
 	if (pid == 0)
     {
 		signal(SIGINT, SIG_DFL);
-		// signal(SIGQUIT, SIG_DFL);
+		signal(SIGQUIT, SIG_IGN);
 		line = readline("> ");
 		while (line != NULL && ft_strcmp(line, limiter))
 		{
@@ -80,9 +80,9 @@ int heredoc(char *limiter, int *exit_status)
 			free(limiter);
 		exit (0);
 	}
+	waitpid(pid, &status, 0);
 	// signal(SIGQUIT, handler);
 	signal(SIGINT, handler);
-	waitpid(pid, &status, 0);
 	*exit_status = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
 	{

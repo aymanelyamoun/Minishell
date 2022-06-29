@@ -25,17 +25,30 @@ int	get_quote(char **str, char c)
 	return (i + 1);
 }
 
-int	get_word(char **str)
+int	get_word(char **str, int *here)
 {
     int	i;
 
     i = 0;
-    while ((*str)[i] != '\0' && ((*str)[i] != ' ' 
-	&& (*str)[i] != '\t' && (*str)[i] != '\v' && (*str)[i] != '\f'
-	&& (*str)[i] != '<' && (*str)[i] != '>' && (*str)[i] != '\"' 
-	&& (*str)[i] != '\'' && (*str)[i] != '|' && (*str)[i] != '$'
-	))
-        i++;
+	if (*here && (*str)[i] == '$')
+	{
+		while (((*str)[i] != '\0' && (*str)[i] != ' ' 
+			&& (*str)[i] != '\t' && (*str)[i] != '\v' && (*str)[i] != '\f'
+			&& (*str)[i] != '<' && (*str)[i] != '>' && (*str)[i] != '\"' 
+			&& (*str)[i] != '\''
+		))
+			i++;
+		*here = 1;
+	}
+	else
+    {
+		while ((*str)[i] != '\0' && ((*str)[i] != ' ' 
+		&& (*str)[i] != '\t' && (*str)[i] != '\v' && (*str)[i] != '\f'
+		&& (*str)[i] != '<' && (*str)[i] != '>' && (*str)[i] != '\"' 
+		&& (*str)[i] != '\'' && (*str)[i] != '|' && (*str)[i] != '$'
+		))
+ 	       i++;
+	}
     *str = *str + i;
 	return (i);
 }
@@ -60,11 +73,12 @@ void	get_sympol_great(token_t **tokens, char **str)
 	}
 }
 
-void	get_sympol_less(token_t **tokens, char **str)
+void	get_sympol_less(token_t **tokens, char **str, int *here)
 {
 	if (**str == '<' && *(*str + 1) != '\0' && *(*str + 1) == '<')
 	{
 		add_token_last(tokens, DLESS, ft_strdup("<<"));
+		*here = 1;
 		*str = *str + 2;
 	}
 	else
@@ -76,6 +90,9 @@ void	get_sympol_less(token_t **tokens, char **str)
 
 void    get_token(token_t **tokens, char **str)
 {
+	int	here;
+
+	here = 0;
 	while (**str != '\0')
 	{
 		if (**str == '\"')
@@ -87,13 +104,13 @@ void    get_token(token_t **tokens, char **str)
 		else if (**str == '>')
 			get_sympol_great(tokens, str);
 		else if (**str == '<')
-			get_sympol_less(tokens, str);
+			get_sympol_less(tokens, str, &here);
 		else if (**str == '|')
 			add_token_last(tokens, PIPE, get_char(str, "|", 1));
-		else if (**str == '$')
+		else if (**str == '$' && here == 0)
 			add_token_last(tokens, DOLLAR, get_char(str, "$", 1));
 		else
-			add_token_last(tokens, WORD, ft_substr(*str, 0, get_word(str)));
+			add_token_last(tokens, WORD, ft_substr(*str, 0, get_word(str, &here)));
 		//fix the word if it is folowed by a spectial char as < > | ...
 	}
 }
