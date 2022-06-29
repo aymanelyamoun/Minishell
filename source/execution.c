@@ -184,7 +184,7 @@ void    execution(t_cmd *cmds, int pipes_num)
 			gen.exit_status = 128 + WTERMSIG(status);
 		}
 	}
-	free_cmds(cmds, pipes_num);
+	// free_cmds(cmds, pipes_num);
 	free_pipes(pipes, pipes_num);
 	signal(SIGQUIT, handler);
 	signal(SIGINT, handler);

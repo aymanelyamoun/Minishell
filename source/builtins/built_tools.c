@@ -11,7 +11,6 @@ int	ft_strlen2(char **str)
 	return (index);
 }
 
-//how to free this one
 char	*join_str(const char *s1, const char *s2)
 {
 	int		index;
@@ -48,7 +47,6 @@ long long	ft_atoll(const char *dest)
 	i = 0;
 	sign = 1;
 	result = 0;
-
 	while (((dest[i] == ' ') || (dest[i] >= 9 && dest[i] <= 13)) \
 	&& !(dest[i] == '-' || dest[i] == '+'))
 		i++;

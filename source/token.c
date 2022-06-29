@@ -6,7 +6,7 @@
 /*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 19:19:26 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/06/14 10:40:46 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/06/29 20:07:24 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char *get_char(char **str, char *c, int increment)
 	return (ft_strdup(c));
 }
 
-void	get_sympol_great(token_t **tokens, char **str)
+void	get_sympol_great(t_token **tokens, char **str)
 {
 	if (**str == '>' && *(*str + 1) != '\0' && *(*str + 1) == '>')
 	{
@@ -73,7 +73,7 @@ void	get_sympol_great(token_t **tokens, char **str)
 	}
 }
 
-void	get_sympol_less(token_t **tokens, char **str, int *here)
+void	get_sympol_less(t_token **tokens, char **str, int *here)
 {
 	if (**str == '<' && *(*str + 1) != '\0' && *(*str + 1) == '<')
 	{
@@ -88,7 +88,7 @@ void	get_sympol_less(token_t **tokens, char **str, int *here)
 	}
 }
 
-void    get_token(token_t **tokens, char **str)
+void    get_token(t_token **tokens, char **str)
 {
 	int	here;
 
@@ -114,10 +114,10 @@ void    get_token(token_t **tokens, char **str)
 	}
 }
 
-token_t *tokenize(char *line)
+t_token *tokenize(char *line)
 {
-    token_t *tokens = NULL;
-    token_t *tmp;
+    t_token *tokens = NULL;
+    t_token *tmp;
 
     get_token(&tokens, &line);
     // tmp = tokens;

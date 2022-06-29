@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-void  suite(char **str)
+void	suite(char **str)
 {
 	int index;
 	int flag;
@@ -24,9 +24,9 @@ void  suite(char **str)
 	gen.exit_status = 0;
 }
 
-void	ft_echo(char **str) 
+void	ft_echo(char **str)
 {
-	int index;
+	int	index;
 
 	index = 0;
 	if (ft_strlen2(str) == 1 || (ft_strlen2(str) != 1 \
