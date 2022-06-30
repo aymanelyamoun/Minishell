@@ -4,7 +4,7 @@ void	suite7(char *str)
 {
 	ft_putstr_fd("Minishell : exit : ", 2);
 	ft_putstr_fd(str, 2);
-	ft_putstr_fd("numeric argument required\n", 2);
+	ft_putstr_fd("  numeric argument required\n", 2);
 }
 
 int	ft_exit(char **next)

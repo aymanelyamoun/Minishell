@@ -38,7 +38,6 @@ void	suite4(char *str)
 void	print_export(t_list *env)
 {
 	int		index;
-	char	**split;
 
 	index = 0;
 	if (!env)

@@ -10,7 +10,6 @@ SRC = main cmd_managment builtins/go_build in_out_file_managment \
    syntax_analyzer builtins/more_func export_tool suite_syntax builtins/built_tools builtins/built_checks builtins/unset builtins/ft_export error_free expantion signals enviroment builtins/ft_pwd builtins/ft_cd
 
 OBJ = $(addprefix $(DIRBUILD)/, $(SRC:=.o))
-OBJ = $(addprefix $(DIRBUILD)/, $(SRC:=.o))
 
 all : $(NAME)
 $(NAME) : $(OBJ) $(LIBFT)

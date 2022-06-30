@@ -55,15 +55,13 @@ int	change_env(char *p)
 int	ft_add_list(t_list **env_list, char *str)
 {
 	t_list	*tmp;
-	size_t	index1;
 	size_t	index2;
 
 	tmp = *env_list;
 	while (tmp)
 	{
-		index1 = s1((char *)tmp->content);
-		index2 = s2((char *)tmp->content);
-		if (!ft_strncmp(tmp->content, str, index1) && index1 == index2)
+		index2 = s1(str);
+		if (!ft_strncmp(tmp->content, str, index2))
 		{
 			if (ft_strchr(str, '='))
 			{
