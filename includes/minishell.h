@@ -157,7 +157,7 @@ void    execution(t_cmd *cmds, int pipes_num);
 int	ft_cd(char **path);
 void	cd_home(t_gen gen);
 void	ft_echo(char **str) ;
-void	ft_env(void);
+void	ft_env(char **str);
 int ft_exit(char **arg);
 void	ft_pwd(void);
 int syntax_err(t_token *token);
