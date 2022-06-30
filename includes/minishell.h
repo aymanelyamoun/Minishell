@@ -67,6 +67,7 @@ typedef struct s_gen
 {
 	int exit_status;
     int exec;
+	int skip_all;
 	t_list *env;
 	char **envp;
 	char *pwd;
@@ -187,6 +188,7 @@ int ft_add_list(t_list **alst, char *str);
 void    free_env(t_list **env);
 int	ft_strlen2(char **str);
 char *join_str(char const *s1, char const *s2);
+void    free_envp(void);
 
 ////////////////////////////////////////////////
 int ft_export(char **next);

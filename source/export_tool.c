@@ -2,15 +2,15 @@
 
 void	bubbleSort(t_list **head, int count)
 {
-	t_var var;
+	t_var	var;
 
 	var.index1 = 0;
-	while(var.index1 <= count)
+	while (var.index1 <= count)
 	{
 		var.h = head;
 		var.swapped = 0;
 		var.index2 = 0;
-		while(var.index2 < count - var.index1 - 1)
+		while (var.index2 < count - var.index1 - 1)
 		{
 			var.p1 = *var.h;
 			var.p2 = var.p1->next;
@@ -23,7 +23,7 @@ void	bubbleSort(t_list **head, int count)
 			var.index2++;
 		}
 		if (var.swapped == 0)
-			break;
+			break ;
 		var.index1++;
 	}
 }
@@ -58,4 +58,3 @@ void	ft_sort(t_gen *gen)
 	bubbleSort(&(gen)->env, len_list(&(gen)->env));
 	print_export((gen)->env);
 }
-

@@ -1,14 +1,13 @@
 #include "../includes/minishell.h"
 
-
-void suite7(char *str)
+void	suite7(char *str)
 {
 	ft_putstr_fd("Minishell : exit : ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd("numeric argument required\n", 2);
 }
 
-int ft_exit(char **next)
+int	ft_exit(char **next)
 {
 	if (ft_strlen2(next) == 1)
 	{
@@ -36,7 +35,7 @@ int ft_exit(char **next)
 	return (0);
 }
 
-int is_long(char *next)
+int	is_long(char *next)
 {
 	if (ft_atoll(next) > 2147483647 || ft_atoll(next) < -2147483648)
 		return (1);
