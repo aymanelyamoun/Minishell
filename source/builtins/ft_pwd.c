@@ -7,6 +7,8 @@ void	ft_pwd(void)
 	getcwd(pwd, PATH_MAX);
 	ft_putstr_fd(pwd, 1);
 	ft_putchar_fd('\n', 1);
+	if (gen.pwd != NULL)
+		free(gen.pwd);
 	gen.pwd = ft_strdup(pwd);
 	gen.exit_status = 0;
 }
