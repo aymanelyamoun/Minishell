@@ -115,6 +115,11 @@ void rm_token(t_token **tokens)
 		(*tokens)->next->prev = token->prev;
 		(*tokens)->prev->next = token->next;
 	}
+	if (token->old_data != NULL)
+	{
+		puts("-_-");
+		free(token->old_data);
+	}
 	free(token->data);
 	free(token);
 }
