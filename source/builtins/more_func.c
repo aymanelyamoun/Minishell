@@ -3,11 +3,9 @@
 int	small(char **p)
 {
 	*p = find_value("HOME", gen.env);
-	if (!*p)
-		ft_putstr_fd("Home not set\n", 2);
 	if (chdir(*p) == -1)
 	{
-		ft_putstr_fd("Problem in chdir.\n", 2);
+		ft_putstr_fd("Home not set.\n", 2);
 		gen.exit_status = 1;
 		return (1);
 	}
