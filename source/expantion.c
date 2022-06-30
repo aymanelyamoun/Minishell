@@ -145,6 +145,8 @@ void rm_spaces(t_token **tokens)
 
 void change_data(t_token **tokens, char *data)
 {
+	// if ((*tokens)->old_data)
+	// 	free((*tokens)->old_data);
 	(*tokens)->old_data = ft_strjoin("$", (*tokens)->next->data);
 	free((*tokens)->data);
 	(*tokens)->data = data;
@@ -405,6 +407,7 @@ void	get_path_and_execute(t_token **toknes)
 
 	if (get_cmds_path(&cmds, pipes_num) == 0 && gen.skip_all == 0) 
 		execution(cmds, pipes_num);
+	
 	free_cmds(cmds, pipes_num);
 }
 

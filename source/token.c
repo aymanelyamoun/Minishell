@@ -25,20 +25,20 @@ int	get_quote(char **str, char c)
 	return (i + 1);
 }
 
-int	get_word(char **str, int *here)
+int	get_word(char **str, int *here, int *here2)
 {
     int	i;
 
     i = 0;
-	if (*here && (*str)[i] == '$')
+	if (*here)
 	{
 		while (((*str)[i] != '\0' && (*str)[i] != ' ' 
 			&& (*str)[i] != '\t' && (*str)[i] != '\v' && (*str)[i] != '\f'
-			&& (*str)[i] != '<' && (*str)[i] != '>' && (*str)[i] != '\"' 
-			&& (*str)[i] != '\''
+			&& (*str)[i] != '<' && (*str)[i] != '>' 
 		))
 			i++;
 		*here = 0;
+		*here2 = 1;
 	}
 	else
     {
@@ -88,16 +88,34 @@ void	get_sympol_less(t_token **tokens, char **str, int *here)
 	}
 }
 
+void	add_old_at_end(t_token **tokens_head, char *old_data)
+{
+// void	add_at_end(t_token **tokens_head, t_token *token)
+// {
+	t_token	*tmp;
+
+	tmp = *tokens_head;
+	while (tmp->next != NULL)
+	{
+		tmp = tmp->next;
+	}
+	tmp->old_data = old_data;
+// }
+
+}
 void    get_token(t_token **tokens, char **str)
 {
 	int	here;
+	int	here2;
+	t_token *tmp;
 
 	here = 0;
+	here2 = 0;
 	while (**str != '\0')
 	{
-		if (**str == '\"')
+		if (**str == '\"' && here == 0)
 			add_token_last(tokens, DQUOTE, ft_substr(*str, 0, get_quote(str, '\"')));
-		else if (**str == '\'')
+		else if (**str == '\'' && here == 0)
 			add_token_last(tokens, QUOTE, ft_substr(*str, 0, get_quote(str, '\'')));
 		else if (**str == ' ' || **str == '\t' || **str == '\v' || **str == '\f') // IS SPAACE!
 			add_token_last(tokens, SPAACE, get_char(str, " ", 1));
@@ -110,7 +128,16 @@ void    get_token(t_token **tokens, char **str)
 		else if (**str == '$' && here == 0)
 			add_token_last(tokens, DOLLAR, get_char(str, "$", 1));
 		else
-			add_token_last(tokens, WORD, ft_substr(*str, 0, get_word(str, &here)));
+		{
+			add_token_last(tokens, WORD, ft_substr(*str, 0, get_word(str, &here, &here2)));
+			if (here2 == 1)
+			{
+				tmp = *tokens;
+				while (tmp->next != NULL)
+					tmp = tmp->next;
+				tmp->old_data = ft_strdup(tmp->data);
+			}
+		}
 	}
 }
 
@@ -123,7 +150,7 @@ t_token *tokenize(char *line)
     // tmp = tokens;
     // while (tmp != NULL)
     // {
-	// 	printf("type: %d ... data: %s\n",tokens->type, tokens->data);
+	// 	printf("type: %d ... data: %s ... old_data: %s\n",tmp->type, tmp->data, tmp->old_data);
     //     tmp = tmp->next;
     // }
     return (tokens);
