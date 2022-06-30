@@ -415,7 +415,8 @@ int main(int argc, char **argv, char **envp)
 	t_cmd	*cmds;
     char	p[PATH_MAX];
 
-	gen.pwd =  getcwd(p, PATH_MAX);
+	getcwd(p, PATH_MAX);
+	gen.pwd = ft_strdup(p);
     gen.env = env_create(envp);
 	gen.envp = NULL;
 	gen.exit_status = 0;

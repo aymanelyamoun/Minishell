@@ -22,7 +22,7 @@ int	commands(char **line)
 void	go_commands(char **line)
 {
 	if (!ft_strncmp("env", line[0], 3))
-		ft_env();
+		ft_env(line);
 	if (!ft_strncmp("pwd", line[0],3))
 		ft_pwd();
 	if (!ft_strncmp("echo", ft_to_lower(line[0]), 5))
