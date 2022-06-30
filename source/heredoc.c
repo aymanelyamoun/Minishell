@@ -71,7 +71,6 @@ int heredoc(char *limiter, int *exit_status)
     {
 		signal(SIGINT, handler1);
 		line = readline("> ");
-		// ft_putchar_fd('1', 1);
 		while (line != NULL && ft_strcmp(line, limiter))
 		{
 			line = expander_heredoc(line);
@@ -81,10 +80,11 @@ int heredoc(char *limiter, int *exit_status)
 		}
 		if (line != NULL)
 			free(line);
-		if (limiter != NULL)
-			free(limiter);
+
 		exit (0);
 	}
+	if (limiter != NULL)
+		free(limiter);
 	waitpid(pid, &status, 0);
 	signal(SIGINT, handler);
 	*exit_status = WEXITSTATUS(status);
