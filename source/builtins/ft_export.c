@@ -24,7 +24,7 @@ void	suite4(char *str)
 
 	i = 0;
 	ft_putstr_fd("declare -x ", 1);
-	if (ft_equal(str))
+	if (has_equal(str))
 		return ;
 	while (str[i] && (str[i] == '_'|| ft_isalpha(str[i])))
 		ft_putchar_fd(str[i++], 1);
@@ -57,8 +57,6 @@ int	ft_export(char **next)
 {
 	int index;
 
-	if (!gen.env)
-		return (0);
 	if (ft_strlen2(next) == 1)
 	{
 		ft_sort(&gen);
