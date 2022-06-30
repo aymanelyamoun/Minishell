@@ -37,6 +37,8 @@ int	ctrld(void)
 	rl_on_new_line();
 	rl_redisplay();
 	ft_putstr_fd("exit\n", 1);
+	free(gen.env);
+	free(gen.pwd);
 	free_envp();
 	exit(0);
 }
