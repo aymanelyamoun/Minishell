@@ -51,5 +51,6 @@ int	start_unset(t_list *env, char *next)
 		free(tmp->content);
 		free(tmp);
 	}
+	gen.env = env;
 	return (0);
 }

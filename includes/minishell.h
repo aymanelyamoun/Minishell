@@ -55,7 +55,7 @@ typedef struct s_cmd
 
 typedef struct s_var
 {
-	t_list	**h; 
+	t_list	**tmp; 
 	t_list	*p1;
 	t_list	*p2;
 	int		index1;
@@ -237,4 +237,5 @@ int	s1(char *str);
 int	s2(char *str);
 void	suite(char **str);
 int    has_equal(char *str);
+//
 #endif

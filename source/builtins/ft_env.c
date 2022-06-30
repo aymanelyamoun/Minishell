@@ -1,9 +1,9 @@
 #include "../includes/minishell.h"
 
-void	ft_env(char  **str)
+void	ft_env(char **str)
 {
 	t_list	*tmp;
-	int index;
+	int		index;
 
 	index = 0;
 	if (str[1])
