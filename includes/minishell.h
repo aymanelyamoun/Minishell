@@ -211,4 +211,5 @@ int	small3(char **pwd);
 int	s1(char *str);
 int	s2(char *str);
 void	suite(char **str);
+int    has_equal(char *str);
 #endif
