@@ -1,6 +1,21 @@
 #include "../includes/minishell.h"
 #include <fcntl.h>
 
+static void open_file_err(t_token **tokens, int fd, int status)
+{
+	if ((*tokens)->next->old_data == NULL && (fd == -1 && status != 1))
+			perror("minishellllllll");
+	else 
+	{
+		if ((ft_strcmp((*tokens)->next->data, "") == 0) 
+		&& (*tokens)->next->old_data != NULL)
+			printf("minishell: %s: ambiguous redirect\n", \
+			(*tokens)->next->old_data);
+		else if ((*tokens)->next->old_data != NULL && status != 1)
+			perror("minishelll");
+	}
+}
+
 int    open_file(t_token **tokens, int type)
 {
     int fd;
@@ -23,18 +38,7 @@ int    open_file(t_token **tokens, int type)
 			fd = status * (-1);
 	}
 	if (fd < 0)
-	{
-		if ((*tokens)->next->old_data == NULL && (fd == -1 && status != 1))
-			perror("minishellllllll");
-		else 
-		{
-			if ((ft_strcmp((*tokens)->next->data, "") == 0) && (*tokens)->next->old_data != NULL)
-				printf("minishell: %s: ambiguous redirect\n", (*tokens)->next->old_data);
-			else if ((*tokens)->next->old_data != NULL)
-				perror("minishelll");
-			// free((*tokens)->next->old_data);
-		}
-	}
+		open_file_err(tokens, fd, status);
 	return (fd);
 }
 
@@ -52,10 +56,17 @@ static void	rm_redi_utils(t_token **token1, t_token **token2)
 	rm_token(token2);
 }
 
-// static	check_con_redi()
-// {
-// 	if ()
-// }
+static int	check_con_redi(t_cmd **cmds, int i)
+{
+	if (((*cmds)[i].tokens_cmd) != NULL 
+		&& ((((*cmds)[i].tokens_cmd))->type == LESS 
+		|| ((*cmds)[i].tokens_cmd)->type == GREAT
+		|| (((*cmds)[i].tokens_cmd))->type == DLESS 
+		|| ((*cmds)[i].tokens_cmd)->type == DGREAT))
+		return (1);
+	return (0);
+}
+
 void	rm_redirecitons(t_cmd **cmds, int pipes)
 {
 	int	i;
@@ -64,11 +75,7 @@ void	rm_redirecitons(t_cmd **cmds, int pipes)
 	i = 0;
 	while(i <= pipes)
 	{
-		while (((*cmds)[i].tokens_cmd) != NULL 
-		&& ((((*cmds)[i].tokens_cmd))->type == LESS 
-		|| ((*cmds)[i].tokens_cmd)->type == GREAT
-		|| (((*cmds)[i].tokens_cmd))->type == DLESS 
-		|| ((*cmds)[i].tokens_cmd)->type == DGREAT))
+		while (check_con_redi(cmds, i))
 			rm_redi_utils(&((*cmds)[i].tokens_cmd), &((*cmds)[i].tokens_cmd));
 		tmp = ((*cmds)[i].tokens_cmd);
 		while (tmp != NULL)

@@ -66,6 +66,22 @@ int	**creat_pipes(int pipes_num)
 	return (pipes);
 }
 
+static void assign_f(t_cmd **cmds, int i, int pipes_num, int **pipes)
+{
+	if ((*cmds)[i].infile == -1)
+		(*cmds)[i].infile = STDIN_FILENO;
+	if ((*cmds)[i].outfile == -1)
+	{
+		if (pipes_num == 0)
+		{
+			(*cmds)[i].outfile = STDOUT_FILENO;
+			return ;
+		}
+		else
+			(*cmds)[i].outfile = pipes[i][1];
+	}
+}
+
 void	assign_pipes(int **pipes, t_cmd **cmds, int pipes_num)
 {
 	int	i;
@@ -74,20 +90,7 @@ void	assign_pipes(int **pipes, t_cmd **cmds, int pipes_num)
 	while (i <= pipes_num)
 	{
 		if (i == 0)
-		{
-			if ((*cmds)[i].infile == -1)
-				(*cmds)[i].infile = STDIN_FILENO;
-			if ((*cmds)[i].outfile == -1)
-			{
-				if (pipes_num == 0)
-				{
-					(*cmds)[i].outfile = STDOUT_FILENO;
-					return ;
-				}
-				else
-					(*cmds)[i].outfile = pipes[i][1];
-			}
-		}
+			assign_f(cmds, i, pipes_num, pipes);
 		if (i == pipes_num)
 		{
 			if ((*cmds)[i].infile == -1)

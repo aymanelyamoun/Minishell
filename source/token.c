@@ -88,21 +88,21 @@ void	get_sympol_less(t_token **tokens, char **str, int *here)
 	}
 }
 
-void	add_old_at_end(t_token **tokens_head, char *old_data)
+void	get_token_utils(t_token **tokens, char **str, int *here, int *here2)
 {
-// void	add_at_end(t_token **tokens_head, t_token *token)
-// {
-	t_token	*tmp;
+	t_token *tmp;
 
-	tmp = *tokens_head;
-	while (tmp->next != NULL)
+	add_token_last(tokens, WORD, ft_substr(*str, 0, get_word(str, here, here2)));
+	if (*here2 == 1)
 	{
-		tmp = tmp->next;
+		tmp = *tokens;
+		while (tmp->next != NULL)
+			tmp = tmp->next;
+		tmp->old_data = ft_strdup(tmp->data);
+		*here2 = 0;
 	}
-	tmp->old_data = old_data;
-// }
-
 }
+
 void    get_token(t_token **tokens, char **str)
 {
 	int	here;
@@ -128,16 +128,7 @@ void    get_token(t_token **tokens, char **str)
 		else if (**str == '$' && here == 0)
 			add_token_last(tokens, DOLLAR, get_char(str, "$", 1));
 		else
-		{
-			add_token_last(tokens, WORD, ft_substr(*str, 0, get_word(str, &here, &here2)));
-			if (here2 == 1)
-			{
-				tmp = *tokens;
-				while (tmp->next != NULL)
-					tmp = tmp->next;
-				tmp->old_data = ft_strdup(tmp->data);
-			}
-		}
+			get_token_utils(tokens, str, &here, &here2);
 	}
 }
 
@@ -147,12 +138,5 @@ t_token *tokenize(char *line)
     t_token *tmp;
 
     get_token(&tokens, &line);
-    // tmp = tokens;
-    // while (tmp != NULL)
-    // {
-	// 	printf("type: %d ... data: %s ... old_data: %s\n",tmp->type, tmp->data, tmp->old_data);
-    //     tmp = tmp->next;
-    // }
     return (tokens);
 }
-//execv -> waitpid]wait -> 'status' -> macro value return pros $?*
