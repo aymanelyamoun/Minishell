@@ -79,21 +79,22 @@ void    free_cmds(t_cmd *cmds, int pipes_num)
 	int	j;
 
 	i = 0;
-	j = 0;
-	if (cmds == NULL)
+	if (cmds != NULL)
 	{
 		while (i <= pipes_num)
 		{
-			if (cmds->cmd_args != NULL)
+			j = 0;
+			if (cmds[i].cmd_args != NULL)
 			{
-				while (cmds->cmd_args[j] != NULL)
+				while (cmds[i].cmd_args[j] != NULL)
 				{
-					free(cmds->cmd_args[j]);
+					free(cmds[i].cmd_args[j]);
 					j++;
 				}
-				if (cmds->cmd_path != NULL)
-					free(cmds->cmd_path);
+				free(cmds[i].cmd_args);
 			}
+			if (cmds[i].cmd_path != NULL)
+				free(cmds[i].cmd_path);
 			i++;
 		}
 		free(cmds);

@@ -5,6 +5,8 @@ void	ft_env()
 	t_list	*tmp;
 
 	tmp = gen.env;
+	if (!tmp)
+		return;
 	if (tmp->content)
 	{
 		while (tmp)

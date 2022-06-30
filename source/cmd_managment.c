@@ -33,6 +33,7 @@ static t_cmd *creat_cmds_utils(t_token **tokens, t_cmd **cmds)
 			(*cmds)[i].infile = -1;
 			(*cmds)[i].outfile = -1;
 			(*cmds)[i].exec = 0;
+			(*cmds)[i].cmd_args = NULL;
 			new_head = tmp->next;
 			new_head->prev = NULL;
 			tmp->next = NULL;
@@ -42,9 +43,11 @@ static t_cmd *creat_cmds_utils(t_token **tokens, t_cmd **cmds)
         else
 		    tmp = tmp->next;
 	}
+	new_head->prev = NULL;
     (*cmds)[i].tokens_cmd = new_head;
 	(*cmds)[i].infile = -1;
 	(*cmds)[i].outfile = -1;
+	(*cmds)[i].cmd_args = NULL;
 	(*cmds)[i].exec = 0;
 	return (*cmds);
 }
@@ -66,6 +69,7 @@ t_cmd   *creat_cmds(t_token **tokens)
 		cmds[i].infile = -1;
 		cmds[i].outfile = -1;
 		cmds[i].exec = 0;
+		cmds[i].cmd_args = NULL;
 		return (cmds);
 	}
     return (creat_cmds_utils(tokens, &cmds));

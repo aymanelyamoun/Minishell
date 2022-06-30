@@ -115,6 +115,8 @@ void rm_token(t_token **tokens)
 		(*tokens)->next->prev = token->prev;
 		(*tokens)->prev->next = token->next;
 	}
+	if (token->old_data != NULL)
+		free(token->old_data);
 	free(token->data);
 	free(token);
 }
@@ -343,7 +345,7 @@ char **get_cmds(t_token *tokens)
 	int		i;
 
 	i = 0;
-	cmds = malloc(sizeof(char *) * (count_tokens(tokens) + 1));
+	cmds = (char **)malloc(sizeof(char *) * (count_tokens(tokens) + 1));
 	if (cmds == NULL)
 		return (NULL);
 	while (tokens)
@@ -372,6 +374,7 @@ void creat_cmd_args(t_cmd **cmds, int pipe)
 	int i;
 
 	i = 0;
+
 	while (i <= pipe)
 	{
 		(*cmds)[i].cmd_args = get_cmds((*cmds)[i].tokens_cmd);

@@ -56,7 +56,10 @@ int	**creat_pipes(int pipes_num)
 	{
 		pipes[i] = malloc(sizeof(int) * 2);
 		if (pipes[i] == NULL)
+		{
 			fail_to_generat_pipes(pipes, i);
+			creat_pipes(pipes_num);
+		}
 		pipe(pipes[i]);
 		i++;
 	}

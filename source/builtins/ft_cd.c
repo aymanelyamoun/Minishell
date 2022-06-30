@@ -28,6 +28,7 @@ int	ft_cd(char **path)
 	else if (ft_strlen2(path) == 2)
 		p = ft_strdup(path[1]);
 	change_env(p);
+	free(p);
 	return (0);
 }
 
@@ -43,10 +44,11 @@ int	change_env(char *p)
 	}
 	else if (chdir(p) == -1)
 		perror("cd");
+	if (gen.pwd)
+		free(gen.pwd);
 	gen.pwd = getcwd(NULL, 0);
 	gen.exit_status = 0;
 	free(pwd);
-	free(p);
 	return (0);
 }
 

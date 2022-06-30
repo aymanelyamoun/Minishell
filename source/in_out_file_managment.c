@@ -32,7 +32,7 @@ int    open_file(t_token **tokens, int type)
 				printf("minishell: %s: ambiguous redirect\n", (*tokens)->next->old_data);
 			else if ((*tokens)->next->old_data != NULL)
 				perror("minishelll");
-			free((*tokens)->next->old_data);
+			// free((*tokens)->next->old_data);
 		}
 	}
 	return (fd);
