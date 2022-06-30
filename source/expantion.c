@@ -168,11 +168,11 @@ char	*get_var_str(char *str, int *i)
 	return (ft_substr(str, 0, *i));
 }
 
-void play_with_tokens(t_token **tokens, char *str, t_list *env)
+char *get_env_var(char *str, t_list *env)
 {
-	char	*env_var;
 	char	*second_part;
 	char	*new_str;
+	char	*env_var;
 	int		i;
 
 	new_str = get_var_str(str, &i);
@@ -183,12 +183,18 @@ void play_with_tokens(t_token **tokens, char *str, t_list *env)
 	env_var = ft_strjoin(env_var, second_part);
 	free(new_str);
 	free(second_part);
+	return (env_var);
+}
+
+void play_with_tokens(t_token **tokens, char *str, t_list *env)
+{
+	char	*env_var;
+
+	env_var = get_env_var(str, env);
 	if ((*tokens)->next->type == WORD)
 	{
 		if (env_var != NULL)
-		{
 			change_data(tokens, env_var);
-		}
 	}
 	else if ((*tokens)->next->type == DOLLAR)
 	{
@@ -251,30 +257,37 @@ int	get_dollars(char *str)
 		return (j);
 }
 
+char *get_var_utils(char **str, int *i, t_list *env)
+{
+	char *env_var;
+	char *to_free;	
+	while ((*str)[*i] != '\0' && (*str)[*i] != ' ' && (*str)[*i] != '\t' 
+	&& (*str)[*i] != '\v' && (*str)[*i] != '\f' && 
+	(ft_isalnum((*str)[*i]) || (*str)[*i] == '?' || (*str)[*i] == '_'))
+	{
+		if (*i == 1 && (ft_isdigit((*str)[*i]) || (*str)[*i] == '?'))
+		{
+			(*i)++;
+			break;
+		}
+		(*i)++;
+	}
+	to_free = ft_substr(*str, 1, *i - 1);
+	env_var = find_value(to_free, env);
+	free(to_free);
+	return (env_var);
+}
+
 char *get_var(char **str, char *final_quote, t_list *env)
 {
 	int i;
 	char *env_var;
-	char *to_free;
 
 	i = 1;
 	if ((*str)[0] == '$' && (*str)[1] != '\0' 
 	&& ((ft_isalnum((*str)[1]) || (*str)[1] == '?' || (*str)[1] == '_')))
 	{
-		while ((*str)[i] != '\0' && (*str)[i] != ' ' && (*str)[i] != '\t' 
-		&& (*str)[i] != '\v' && (*str)[i] != '\f' && 
-		(ft_isalnum((*str)[i]) || (*str)[i] == '?' || (*str)[i] == '_'))
-		{
-			if (i == 1 && (ft_isdigit((*str)[i]) || (*str)[i] == '?'))
-			{
-				i++;
-				break;
-			}
-			i++;
-		}
-		to_free = ft_substr(*str, 1, i - 1);
-		env_var = find_value(to_free, env);
-		free(to_free);
+		env_var = get_var_utils(str, &i, env);
 	}
 	else
 	{
@@ -407,7 +420,6 @@ void	get_path_and_execute(t_token **toknes)
 
 	if (get_cmds_path(&cmds, pipes_num) == 0 && gen.skip_all == 0) 
 		execution(cmds, pipes_num);
-	
 	free_cmds(cmds, pipes_num);
 }
 

@@ -158,6 +158,7 @@ void	sig_handler(void)
 	signal(SIGQUIT, handler);
 	signal(SIGINT, handler);
 }
+
 int		run_cmd(t_cmd *cmds, int **pipes, int pipes_num, int *i)
 {
 	int	pid;
