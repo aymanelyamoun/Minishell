@@ -13,7 +13,7 @@ void    close_cmd_files(t_cmd *cmds, int count)
 	}
 }
 
-void    free_envp()
+void    free_envp(void)
 {
 	int i;
 
@@ -141,19 +141,19 @@ void    execution(t_cmd *cmds, int pipes_num)
 	assign_pipes(pipes, &cmds, pipes_num);
 
 	if (cmds[i].exec == 0 && pipes_num == 0 && is_buit_in(cmds[i].cmd_args[0]))
-		{
-			in = dup(STDIN_FILENO);
-			out = dup(STDOUT_FILENO);
-			dup2(cmds[i].infile, STDIN_FILENO);
-			dup2(cmds[i].outfile, STDOUT_FILENO);
-			go_commands(cmds[i].cmd_args);
-			close(cmds[i].infile);
-			close(cmds[i].outfile);
-			dup2(in, STDIN_FILENO);
-			dup2(out, STDOUT_FILENO);
-			close(in);
-			close(out);
-		}
+	{
+		in = dup(STDIN_FILENO);
+		out = dup(STDOUT_FILENO);
+		dup2(cmds[i].infile, STDIN_FILENO);
+		dup2(cmds[i].outfile, STDOUT_FILENO);
+		go_commands(cmds[i].cmd_args);
+		close(cmds[i].infile);
+		close(cmds[i].outfile);
+		dup2(in, STDIN_FILENO);
+		dup2(out, STDOUT_FILENO);
+		close(in);
+		close(out);
+	}
 	else
 	{
 		while (i <= pipes_num)
@@ -185,7 +185,6 @@ void    execution(t_cmd *cmds, int pipes_num)
 			gen.exit_status = 128 + WTERMSIG(status);
 		}
 	}
-	// free_cmds(cmds, pipes_num);
 	free_pipes(pipes, pipes_num);
 	signal(SIGQUIT, handler);
 	signal(SIGINT, handler);

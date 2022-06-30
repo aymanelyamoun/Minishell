@@ -449,8 +449,3 @@ int main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
-
-// // // t_cmd   *parsing(t_token *kokens)
-// // // {
-
-// // // }
