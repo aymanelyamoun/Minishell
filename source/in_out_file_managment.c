@@ -46,6 +46,16 @@ int    open_file(t_token **tokens, int type)
 // 	rm_token(tokens);
 // 		// printf("--- %s\n", (*tokens)->next->data);
 // }
+static void	rm_redi_utils(t_token **token1, t_token **token2)
+{
+	rm_token(token1);
+	rm_token(token2);
+}
+
+// static	check_con_redi()
+// {
+// 	if ()
+// }
 void	rm_redirecitons(t_cmd **cmds, int pipes)
 {
 	int	i;
@@ -55,20 +65,19 @@ void	rm_redirecitons(t_cmd **cmds, int pipes)
 	while(i <= pipes)
 	{
 		while (((*cmds)[i].tokens_cmd) != NULL 
-		&& ((((*cmds)[i].tokens_cmd))->type == LESS || ((*cmds)[i].tokens_cmd)->type == GREAT
-		|| (((*cmds)[i].tokens_cmd))->type == DLESS || ((*cmds)[i].tokens_cmd)->type == DGREAT))
-		{
-			rm_token(&((*cmds)[i].tokens_cmd));
-			rm_token(&((*cmds)[i].tokens_cmd));
-		}
+		&& ((((*cmds)[i].tokens_cmd))->type == LESS 
+		|| ((*cmds)[i].tokens_cmd)->type == GREAT
+		|| (((*cmds)[i].tokens_cmd))->type == DLESS 
+		|| ((*cmds)[i].tokens_cmd)->type == DGREAT))
+			rm_redi_utils(&((*cmds)[i].tokens_cmd), &((*cmds)[i].tokens_cmd));
 		tmp = ((*cmds)[i].tokens_cmd);
 		while (tmp != NULL)
 		{
-			if ((tmp->next != NULL) && (tmp->next->type == LESS || tmp->next->type == GREAT
+			if ((tmp->next != NULL) && (tmp->next->type == LESS 
+			|| tmp->next->type == GREAT
 			|| tmp->next->type == DLESS || tmp->next->type == DGREAT))
 			{
-				rm_token(&(tmp->next));
-				rm_token(&(tmp->next));
+				rm_redi_utils(&(tmp->next), &(tmp->next));
 				continue;
 			}
 			tmp = tmp->next;

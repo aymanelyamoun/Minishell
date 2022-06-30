@@ -53,6 +53,7 @@ void    handler1(int sig)
    		exit(1);
     }
 }
+
 int	expand_y_n(char **str)
 {
 	char c;
@@ -66,42 +67,10 @@ int	expand_y_n(char **str)
 	return (1);
 }
 
-int heredoc(char *limiter, int *exit_status)
+void	wait_heredoc(int *exit_status, int pid)
 {
-    char	*line;
-	int		pipe_fd[2];
-	int		pid;
-	int		status;
-	int		expand;
+	int	status;
 
-	expand = expand_y_n(&limiter);
-	if (pipe(pipe_fd) < 0)
-	{
-		perror("");
-		return (-1);
-	}
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	pid = fork();
-	if (pid == 0)
-    {
-		printf(":::%s\n", limiter);
-		signal(SIGINT, handler1);
-		line = readline("> ");
-		while (line != NULL && ft_strcmp(line, limiter))
-		{
-			if (expand)
-				line = expander_heredoc(line);
-			write_to_fd(pipe_fd[1], line);
-			free(line);
-			line = readline("> ");
-		}
-		if (line != NULL)
-			free(line);
-		exit (0);
-	}
-	if (limiter != NULL)
-		free(limiter);
 	waitpid(pid, &status, 0);
 	signal(SIGINT, handler);
 	*exit_status = WEXITSTATUS(status);
@@ -112,6 +81,52 @@ int heredoc(char *limiter, int *exit_status)
 		if (WTERMSIG(status) == 2)
 			*exit_status = 1;
 	}
+}
+
+int	heredoc_p(char *limiter, int *pipe_fd)
+{
+	int	expand;
+	char	*line;
+
+	expand = expand_y_n(&limiter);
+	signal(SIGINT, handler1);
+	printf("::%s\n", limiter);
+	line = readline("> ");
+	while (line != NULL && ft_strcmp(line, limiter))
+	{
+		if (expand)
+			line = expander_heredoc(line);
+		write_to_fd(pipe_fd[1], line);
+		free(line);
+		line = readline("> ");
+	}
+	if (line != NULL)
+		free(line);
+	exit (0);
+}
+
+int heredoc(char *limiter, int *exit_status)
+{
+    char	*line;
+	int		pipe_fd[2];
+	int		pid;
+	int		status;
+	int		expand;
+
+	if (pipe(pipe_fd) < 0)
+	{
+		perror("");
+		return (-1);
+	}
+	sig_ign();
+	pid = fork();
+	if (pid == 0)
+    {
+		heredoc_p(limiter, pipe_fd);
+	}
+	if (limiter != NULL)
+		free(limiter);
+	wait_heredoc(exit_status, pid);
 	close(pipe_fd[1]);
 	return (pipe_fd[0]);
 }

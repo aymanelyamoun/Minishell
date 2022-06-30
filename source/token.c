@@ -34,7 +34,7 @@ int	get_word(char **str, int *here, int *here2)
 	{
 		while (((*str)[i] != '\0' && (*str)[i] != ' ' 
 			&& (*str)[i] != '\t' && (*str)[i] != '\v' && (*str)[i] != '\f'
-			&& (*str)[i] != '<' && (*str)[i] != '>' 
+			&& (*str)[i] != '<' && (*str)[i] != '>' && (*str)[i] != '|'
 		))
 			i++;
 		*here = 0;
