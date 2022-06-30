@@ -1,25 +1,38 @@
 #include "../includes/minishell.h"
 
-void suite3(char *str)
+void	suite3(char *str)
 {
 	ft_putstr_fd("declare -x ", 1);
 	ft_putstr_fd(str, 1);
 	ft_putchar_fd('\n', 1);
 }
 
+int	has_equal(char *str)
+{
+	if (!ft_strchr(str, '='))
+	{
+		ft_putstr_fd(str, 1);
+		ft_putchar_fd('\n', 1);
+		return (1);
+	}
+	return (0);
+}
+
 void	suite4(char *str)
 {
+	int	i;
+
+	i = 0;
 	ft_putstr_fd("declare -x ", 1);
-	ft_putstr_fd(str, 1);
-	ft_putstr_fd("=", 1);
-}
-void	suite5(char *str1, char *str2)
-{
-	if (str1)
-		ft_putstr_fd("\"", 1);
-	ft_putstr_fd(str2, 1);
-	if (str1)
-		ft_putstr_fd("\"", 1);
+	if (has_equal(str))
+		return ;
+	while (str[i] && (str[i] == '_'|| ft_isalpha(str[i])))
+		ft_putchar_fd(str[i++], 1);
+	ft_putchar_fd(str[i++], 1);
+	ft_putchar_fd('"', 1);
+	while (str[i])
+		ft_putchar_fd(str[i++], 1);
+	ft_putstr_fd("\"\n", 1);
 }
 
 void	print_export(t_list *env)
@@ -35,26 +48,15 @@ void	print_export(t_list *env)
 		if (!ft_strchr(((char *)env->content), '='))
 			suite3((char *)env->content);
 		else
-		{
-			split = ft_split(env->content, '=');
-			suite4(split[0]);
-			if (split[1])
-				suite5(split[0], split[1]);
-			else
-				ft_putstr_fd("\"\"", 1);
-			ft_putchar_fd('\n', 1);
-		}
+			suite4((char *)env->content);
 		env = env->next;
 	}
-	free_split(split);
 }
 
 int	ft_export(char **next)
 {
 	int index;
 
-	if (!gen.env)
-		return (0);
 	if (ft_strlen2(next) == 1)
 	{
 		ft_sort(&gen);
@@ -71,6 +73,5 @@ int	ft_export(char **next)
 			ft_lstadd_back(&gen.env, ft_lstnew(ft_strdup(next[index])));
 		index++;
 	}
-	free_split(next);
 	return (0);
 }
