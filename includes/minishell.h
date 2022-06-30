@@ -56,6 +56,7 @@ typedef struct s_cmd
 typedef struct s_gen
 {
 	int exit_status;
+    int exec;
 	t_list *env;
 	char **envp;
 	char *pwd;
@@ -79,10 +80,11 @@ int terminal_settings(void);
 t_token *tokenize(char *line);
 void get_token(t_token **tokens, char **str);
 
-void get_sympol_less(t_token **tokens, char **str);
+void get_sympol_less(t_token **tokens, char **str, int *here);
 void get_sympol_great(t_token **tokens, char **str);
 char *get_char(char **str, char *c, int increment);
-int get_word(char **str);
+int	get_word(char **str, int *here);
+// int get_word(char **str, in);
 int get_quote(char **str, char c);
 int check_quotes(t_token *c);
 void error_free(char *str, t_token *tokens);
@@ -126,6 +128,7 @@ int count_pipes(t_token *tokens);
 static t_cmd *creat_cmds_utils(t_token **tokens, t_cmd **cmds);
 t_cmd *creat_cmds(t_token **tokens);
 int	get_cmds_path(t_cmd **cmds, int pipes);
+void    free_cmds(t_cmd *cmds, int pipes_num);
 
 /*********************************/
 /******** FILE MANAGMENT *********/

@@ -6,6 +6,7 @@ int    open_file(t_token **tokens, int type)
     int fd;
 	int	status;
 	
+	status = 0;
 	if (type == GREAT)
     	fd = open((*tokens)->next->data, O_RDWR | O_CREAT | O_TRUNC, 0777);
 	else if (type == LESS)
@@ -18,13 +19,12 @@ int    open_file(t_token **tokens, int type)
 			fd = heredoc(ft_strdup((*tokens)->next->old_data), &status);
 		else
 			fd = heredoc(ft_strdup((*tokens)->next->data), &status);
-
 		if (status)
 			fd = status * (-1);
 	}
 	if (fd < 0)
 	{
-		if ((*tokens)->next->old_data == NULL && fd == -1)
+		if ((*tokens)->next->old_data == NULL && (fd == -1 && status != 1))
 			perror("minishellllllll");
 		else 
 		{
@@ -32,7 +32,7 @@ int    open_file(t_token **tokens, int type)
 				printf("minishell: %s: ambiguous redirect\n", (*tokens)->next->old_data);
 			else if ((*tokens)->next->old_data != NULL)
 				perror("minishelll");
-			free((*tokens)->next->old_data);
+			// free((*tokens)->next->old_data);
 		}
 	}
 	return (fd);
@@ -82,13 +82,10 @@ int		creat_in_files(t_cmd **cmds, t_token *tokens, int i)
 	int	fd;
 
 	fd = open_file(&tokens, tokens->type);
-	if ((*cmds)[i].infile != -1)
+	if ((*cmds)[i].infile > -1)
 	{
 		if (close((*cmds)[i].infile) == -1)
-		{
 			perror("close : ");
-			exit(3);
-		}
 	}
 	if (fd <= -1)
 		(*cmds)[i].exec = fd * (-1);

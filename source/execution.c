@@ -51,9 +51,9 @@ char    *str_to_lower(char *str)
 
 void    execut(t_cmd *cmds, int **pipes, int pipes_num, int i)
 {
-	char    *built_in;
+	// char    *built_in;
 
-	built_in = str_to_lower(cmds[i].cmd_args[0]);
+	// built_in = str_to_lower(cmds[i].cmd_args[0]);
 	dup2(cmds[i].infile, STDIN_FILENO);
 	dup2(cmds[i].outfile, STDOUT_FILENO);
 	close_pipes(pipes, pipes_num);
@@ -63,7 +63,7 @@ void    execut(t_cmd *cmds, int **pipes, int pipes_num, int i)
 		close(cmds[i].outfile);
 	if ((cmds[i].exec == 0) && is_buit_in(cmds[i].cmd_args[0]))
 		go_commands(cmds[i].cmd_args);
-	else if (cmds[i].exec == 0)
+	else if (cmds[i].exec == 0 && gen.exec == 0)
 	{
 		free_envp();
 		gen.envp = convert_to_array(&gen.env);
@@ -79,21 +79,21 @@ void    free_cmds(t_cmd *cmds, int pipes_num)
 	int	j;
 
 	i = 0;
-	j = 0;
-	if (cmds == NULL)
+	if (cmds != NULL)
 	{
 		while (i <= pipes_num)
 		{
-			if (cmds->cmd_args != NULL)
+			j = 0;
+			if (cmds[i].cmd_args != NULL)
 			{
-				while (cmds->cmd_args[j] != NULL)
+				while (cmds[i].cmd_args[j] != NULL)
 				{
-					free(cmds->cmd_args[j]);
+					free(cmds[i].cmd_args[j]);
 					j++;
 				}
-				if (cmds->cmd_path != NULL)
-					free(cmds->cmd_path);
 			}
+			if (cmds[i].cmd_path != NULL)
+				free(cmds[i].cmd_path);
 			i++;
 		}
 		free(cmds);
@@ -112,9 +112,15 @@ int is_buit_in(char *cmd)
 		&& ft_strcmp(built_in, "env") && ft_strcmp(built_in, "exit") 
 		&& ft_strcmp(built_in, "export") && ft_strcmp(built_in, "pwd") 
 		&& ft_strcmp(built_in, "unset")))
-		return (0);
+		{
+			free(built_in);
+			return (0);
+		}
 	else
+	{
+		free(built_in);
 		return (1);
+	}
 }
 
 void    execution(t_cmd *cmds, int pipes_num)
@@ -164,8 +170,6 @@ void    execution(t_cmd *cmds, int pipes_num)
 			i++;
 		}
 		close_pipes(pipes, pipes_num);
-		free_cmds(cmds, pipes_num);
-		free_pipes(pipes, pipes_num);
 		if (i == pipes_num + 1)
 		{
 			waitpid(pid, &status, 0);
@@ -180,6 +184,8 @@ void    execution(t_cmd *cmds, int pipes_num)
 			gen.exit_status = 128 + WTERMSIG(status);
 		}
 	}
+	// free_cmds(cmds, pipes_num);
+	free_pipes(pipes, pipes_num);
 	signal(SIGQUIT, handler);
 	signal(SIGINT, handler);
 }
