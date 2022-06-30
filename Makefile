@@ -12,7 +12,7 @@ OBJ = $(addprefix $(DIRBUILD)/, $(SRC:=.o))
 OBJ = $(addprefix $(DIRBUILD)/, $(SRC:=.o))
 all : $(NAME)
 $(NAME) : $(OBJ) $(LIBFT)
-	@gcc $^ -o $(NAME) -lreadline -g $(LDFLAGS)  $(LIBFT) -fsanitize=address
+	@gcc $^ -o $(NAME) -lreadline -g $(LDFLAGS)  $(LIBFT) 
 
 $(LIBFT) :
 	@make -C includes/libft

@@ -53,6 +53,16 @@ typedef struct s_cmd
 	int exec;
 } t_cmd;
 
+typedef struct s_var
+{
+	t_list	**h; 
+	t_list	*p1;
+	t_list	*p2;
+	int		index1;
+	int		index2;
+	int		swapped;
+} t_var;
+
 typedef struct s_gen
 {
 	int exit_status;
