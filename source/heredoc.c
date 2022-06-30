@@ -42,6 +42,7 @@ char	*expander_heredoc(char *line)
 	}
 	tmp = ft_substr(str, 0, i);
 	final_quote = join(final_quote, tmp);
+	free(line);
 	return (final_quote);
 }
 void    handler1(int sig)
@@ -52,13 +53,28 @@ void    handler1(int sig)
    		exit(1);
     }
 }
+int	expand_y_n(char **str)
+{
+	char c;
+
+	c = (*str)[0];
+	if ((*str)[0] != '\0' && ((*str)[0] == '\'' || (*str)[0] == '\"'))
+	{
+		*str = rm_quotes(*str, c);
+		return (0);
+	}
+	return (1);
+}
+
 int heredoc(char *limiter, int *exit_status)
 {
     char	*line;
 	int		pipe_fd[2];
 	int		pid;
 	int		status;
+	int		expand;
 
+	expand = expand_y_n(&limiter);
 	if (pipe(pipe_fd) < 0)
 	{
 		perror("");
@@ -69,11 +85,13 @@ int heredoc(char *limiter, int *exit_status)
 	pid = fork();
 	if (pid == 0)
     {
+		printf(":::%s\n", limiter);
 		signal(SIGINT, handler1);
 		line = readline("> ");
 		while (line != NULL && ft_strcmp(line, limiter))
 		{
-			line = expander_heredoc(line);
+			if (expand)
+				line = expander_heredoc(line);
 			write_to_fd(pipe_fd[1], line);
 			free(line);
 			line = readline("> ");

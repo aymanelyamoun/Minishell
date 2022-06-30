@@ -82,6 +82,7 @@ t_token *new_token(unsigned int type, char *data);
 void add_at_end(t_token **tokens_head, t_token *token);
 void add_token_last(t_token **token_head, unsigned int type, char *data);
 void rm_token(t_token **tokens);
+char *rm_quotes(char *str, char c);
 
 char **set_env(char **envp);
 void handler(int sig);
@@ -94,7 +95,8 @@ void get_token(t_token **tokens, char **str);
 void get_sympol_less(t_token **tokens, char **str, int *here);
 void get_sympol_great(t_token **tokens, char **str);
 char *get_char(char **str, char *c, int increment);
-int	get_word(char **str, int *here);
+// int	get_word(char **str, int *here);
+int	get_word(char **str, int *here, int *here2);
 // int get_word(char **str, in);
 int get_quote(char **str, char c);
 int check_quotes(t_token *c);
