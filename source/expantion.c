@@ -403,7 +403,7 @@ void	get_path_and_execute(t_token **toknes)
 
 	cmds = cmds_and_redirections(toknes, &pipes_num);
 
-	if (get_cmds_path(&cmds, pipes_num) == 0) 
+	if (get_cmds_path(&cmds, pipes_num) == 0 && gen.skip_all == 0) 
 		execution(cmds, pipes_num);
 	free_cmds(cmds, pipes_num);
 }
@@ -439,6 +439,7 @@ int main(int argc, char **argv, char **envp)
 				rm_spaces(&tokens);
 				rm_quotes_tokens(&tokens);
 				gen.exec = 0;
+				gen.skip_all = 0;
 				get_path_and_execute(&tokens);
 			}
 		}

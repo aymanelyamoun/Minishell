@@ -57,6 +57,7 @@ typedef struct s_gen
 {
 	int exit_status;
     int exec;
+	int skip_all;
 	t_list *env;
 	char **envp;
 	char *pwd;
