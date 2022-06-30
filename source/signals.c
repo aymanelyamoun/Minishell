@@ -36,6 +36,7 @@ int	ctrld(void)
 {
 	rl_on_new_line();
 	rl_redisplay();
-	ft_putstr_fd("exit\n", 2);
+	ft_putstr_fd("exit\n", 1);
+	free_envp();
 	exit(0);
 }

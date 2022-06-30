@@ -44,7 +44,7 @@ int	change_env(char *p)
 	}
 	else if (chdir(p) == -1)
 		perror("cd");
-	if (gen.pwd)
+	if (gen.pwd != NULL)
 		free(gen.pwd);
 	gen.pwd = getcwd(NULL, 0);
 	gen.exit_status = 0;

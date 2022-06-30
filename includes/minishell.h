@@ -53,10 +53,21 @@ typedef struct s_cmd
 	int exec;
 } t_cmd;
 
+typedef struct s_var
+{
+	t_list	**h; 
+	t_list	*p1;
+	t_list	*p2;
+	int		index1;
+	int		index2;
+	int		swapped;
+} t_var;
+
 typedef struct s_gen
 {
 	int exit_status;
     int exec;
+	int skip_all;
 	t_list *env;
 	char **envp;
 	char *pwd;
@@ -157,7 +168,7 @@ void    execution(t_cmd *cmds, int pipes_num);
 int	ft_cd(char **path);
 void	cd_home(t_gen gen);
 void	ft_echo(char **str) ;
-void	ft_env(void);
+void	ft_env(char **str);
 int ft_exit(char **arg);
 void	ft_pwd(void);
 int syntax_err(t_token *token);
@@ -177,6 +188,7 @@ int ft_add_list(t_list **alst, char *str);
 void    free_env(t_list **env);
 int	ft_strlen2(char **str);
 char *join_str(char const *s1, char const *s2);
+void    free_envp(void);
 
 ////////////////////////////////////////////////
 int ft_export(char **next);

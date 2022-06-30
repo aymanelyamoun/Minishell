@@ -80,7 +80,6 @@ int heredoc(char *limiter, int *exit_status)
 		}
 		if (line != NULL)
 			free(line);
-
 		exit (0);
 	}
 	if (limiter != NULL)
@@ -88,6 +87,8 @@ int heredoc(char *limiter, int *exit_status)
 	waitpid(pid, &status, 0);
 	signal(SIGINT, handler);
 	*exit_status = WEXITSTATUS(status);
+	gen.skip_all = *exit_status;
+	gen.exit_status = gen.skip_all;
 	if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == 2)

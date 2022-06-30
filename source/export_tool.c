@@ -2,34 +2,29 @@
 
 void	bubbleSort(t_list **head, int count)
 {
-	t_list	**h; 
-	t_list	*p1;
-	t_list	*p2;
-	int		index1;
-	int		index2;
-	int		swapped;
+	t_var var;
 
-	index1 = 0;
-	while(index1 <= count)
+	var.index1 = 0;
+	while(var.index1 <= count)
 	{
-		h = head;
-		swapped = 0;
-		index2 = 0;
-		while(index2 < count - index1 - 1)
+		var.h = head;
+		var.swapped = 0;
+		var.index2 = 0;
+		while(var.index2 < count - var.index1 - 1)
 		{
-			p1 = *h;
-			p2 = p1->next;
-			if (((char *)p1->content)[0] > ((char *)p2->content)[0])
+			var.p1 = *var.h;
+			var.p2 = var.p1->next;
+			if (((char *)var.p1->content)[0] > ((char *)var.p2->content)[0])
 			{
-				*h = swap(p1, p2);
-				swapped = 1;
+				*var.h = swap(var.p1, var.p2);
+				var.swapped = 1;
 			}
-			h = &(*h)->next;
-			index2++;
+			var.h = &(*var.h)->next;
+			var.index2++;
 		}
-		if (swapped == 0)
+		if (var.swapped == 0)
 			break;
-		index1++;
+		var.index1++;
 	}
 }
 

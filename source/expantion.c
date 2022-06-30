@@ -403,7 +403,7 @@ void	get_path_and_execute(t_token **toknes)
 
 	cmds = cmds_and_redirections(toknes, &pipes_num);
 
-	if (get_cmds_path(&cmds, pipes_num) == 0) 
+	if (get_cmds_path(&cmds, pipes_num) == 0 && gen.skip_all == 0) 
 		execution(cmds, pipes_num);
 	free_cmds(cmds, pipes_num);
 }
@@ -415,7 +415,8 @@ int main(int argc, char **argv, char **envp)
 	t_cmd	*cmds;
     char	p[PATH_MAX];
 
-	gen.pwd =  getcwd(p, PATH_MAX);
+	getcwd(p, PATH_MAX);
+	gen.pwd = ft_strdup(p);
     gen.env = env_create(envp);
 	gen.envp = NULL;
 	gen.exit_status = 0;
@@ -439,6 +440,7 @@ int main(int argc, char **argv, char **envp)
 				rm_spaces(&tokens);
 				rm_quotes_tokens(&tokens);
 				gen.exec = 0;
+				gen.skip_all = 0;
 				get_path_and_execute(&tokens);
 			}
 		}
@@ -447,8 +449,3 @@ int main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
-
-// // // t_cmd   *parsing(t_token *kokens)
-// // // {
-
-// // // }

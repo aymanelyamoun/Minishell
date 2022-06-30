@@ -1,12 +1,21 @@
 #include "../includes/minishell.h"
 
-void	ft_env()
+void	ft_env(char  **str)
 {
 	t_list	*tmp;
+	int index;
 
+	index = 0;
+	if (str[1])
+	{
+		ft_putstr_fd("env: ", 2);
+		ft_putstr_fd(str[1], 2);
+		ft_putstr_fd(" : No such file or directory\n", 2);
+		return ;
+	}
 	tmp = gen.env;
 	if (!tmp)
-		return;
+		return ;
 	if (tmp->content)
 	{
 		while (tmp)
