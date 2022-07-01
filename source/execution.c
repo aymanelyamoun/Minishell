@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:51:52 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 02:11:26 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 04:37:11 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	execut(t_cmd *cmds, int **pipes, int pipes_num, int i)
 		close(cmds[i].outfile);
 	if ((cmds[i].exec == 0) && is_buit_in(cmds[i].cmd_args[0]))
 		go_commands(cmds[i].cmd_args);
-	else if (cmds[i].exec == 0 && gen.exec == 0)
+	else if (cmds[i].exec == 0 && g_gen.exec == 0)
 	{
 		free_envp();
-		gen.envp = convert_to_array(&gen.env);
-		execve(cmds[i].cmd_path, cmds[i].cmd_args, gen.envp);
+		g_gen.envp = convert_to_array(&g_gen.env);
+		execve(cmds[i].cmd_path, cmds[i].cmd_args, g_gen.envp);
 		perror("execve : ");
 	}
 	exit(cmds[i].exec);

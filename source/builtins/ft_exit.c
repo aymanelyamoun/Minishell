@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/01 04:27:38 by oufisaou          #+#    #+#             */
+/*   Updated: 2022/07/01 04:27:39 by oufisaou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 void	suite7(char *str)
@@ -12,25 +24,25 @@ int	ft_exit(char **next)
 	if (ft_strlen2(next) == 1)
 	{
 		ft_putstr_fd("exit\n", 2);
-		gen.exit_status = ft_atoll(*next);
+		g_gen.exit_status = ft_atoll(*next);
 	}
 	if (ft_strlen2(next) == 2)
 	{
 		if (check_valid(*(next + 1)) == 0)
 		{
 			suite7(next[1]);
-			gen.exit_status = 255;
+			g_gen.exit_status = 255;
 		}
 		else if (check_valid(*(next + 1)) == 1)
-			gen.exit_status = ft_atoll(next[1]);
+			g_gen.exit_status = ft_atoll(next[1]);
 	}
 	if (ft_strlen2(next) > 2)
 	{
 		ft_putstr_fd("exit\n", 2);
 		ft_putstr_fd("exit : too many arguments\n", 2);
-		gen.exit_status = 255;
+		g_gen.exit_status = 255;
 	}
-	exit(gen.exit_status);
+	exit(g_gen.exit_status);
 	free_split(next);
 	return (0);
 }

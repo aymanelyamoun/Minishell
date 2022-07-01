@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   finding.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:52:02 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 02:12:13 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 03:33:56 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*find_value(char *str, t_list *env_l)
 	char	*tmp;
 
 	if (strcmp(str, "?") == 0)
-		return (ft_itoa(gen.exit_status));
+		return (ft_itoa(g_gen.exit_status));
 	while (env_l != NULL)
 	{
 		tmp = ft_strjoin(str, "=");

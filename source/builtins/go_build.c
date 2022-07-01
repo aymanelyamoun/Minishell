@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   go_build.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/01 04:27:50 by oufisaou          #+#    #+#             */
+/*   Updated: 2022/07/01 04:35:41 by oufisaou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 int	commands(char **line)
@@ -23,7 +35,7 @@ void	go_commands(char **line)
 {
 	if (!ft_strncmp("env", line[0], 3))
 		ft_env(line);
-	if (!ft_strncmp("pwd", line[0],3))
+	if (!ft_strncmp("pwd", line[0], 3))
 		ft_pwd();
 	if (!ft_strncmp("echo", ft_to_lower(line[0]), 5))
 		ft_echo(line);

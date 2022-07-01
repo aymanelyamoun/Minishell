@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/01 04:27:31 by oufisaou          #+#    #+#             */
+/*   Updated: 2022/07/01 04:34:13 by oufisaou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 void	suite(char **str)
 {
-	int index;
-	int flag;
+	int	index;
+	int	flag;
 
 	index = 1;
 	flag = 0;
@@ -21,7 +33,7 @@ void	suite(char **str)
 	}
 	if (flag == 0)
 		ft_putchar_fd('\n', 1);
-	gen.exit_status = 0;
+	g_gen.exit_status = 0;
 }
 
 void	ft_echo(char **str)
@@ -33,7 +45,7 @@ void	ft_echo(char **str)
 	&& !ft_strcmp(str[index + 1], "\0")))
 	{
 		ft_putchar_fd('\n', 1);
-		gen.exit_status = 0;
+		g_gen.exit_status = 0;
 		return ;
 	}
 	suite(str);

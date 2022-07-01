@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:52:47 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 01:53:44 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 04:33:00 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	get_token(t_token **tokens, char **str)
 {
 	int		here;
 	int		here2;
-	t_token *tmp;
+	t_token	*tmp;
 
 	here = 0;
 	here2 = 0;

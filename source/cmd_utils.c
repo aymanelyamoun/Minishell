@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:51:31 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 02:29:35 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 04:36:46 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	free_arr(char **arr)
 	}
 }
 
-static char	*join_cmd(char *path, char *cmd)
+char	*join_cmd(char *path, char *cmd)
 {
 	char	*cmd_path;
 	char	*to_free;

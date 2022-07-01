@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:52:29 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 01:53:38 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 04:32:50 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,16 @@ char	**convert_to_array(t_list **env)
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
-	t_token *tokens;
+	t_token	*tokens;
 	t_cmd	*cmds;
 	char	p[PATH_MAX];
 
 	getcwd(p, PATH_MAX);
-	gen.pwd = ft_strdup(p);
-	gen.env = env_create(envp);
-	gen.envp = NULL;
-	gen.exit_status = 0;
-	gen.exec = 0;
+	g_gen.pwd = ft_strdup(p);
+	g_gen.env = env_create(envp);
+	g_gen.envp = NULL;
+	g_gen.exit_status = 0;
+	g_gen.exec = 0;
 	handle_signals();
 	if (argc != 1)
 		return (1);
@@ -64,8 +64,8 @@ int	main(int argc, char **argv, char **envp)
 				join_word(&tokens);
 				rm_spaces(&tokens);
 				rm_quotes_tokens(&tokens);
-				gen.exec = 0;
-				gen.skip_all = 0;
+				g_gen.exec = 0;
+				g_gen.skip_all = 0;
 				get_path_and_execute(&tokens);
 			}
 		}

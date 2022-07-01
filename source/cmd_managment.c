@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_managment.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:51:19 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 02:07:53 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 03:33:22 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	get_cmds_paht_err(t_cmd **cmds, int i)
 	if ((*cmds)[i].cmd_args[0] != NULL)
 		(*cmds)[i].exec = 127;
 	else
-		gen.exec = 1;
+		g_gen.exec = 1;
 }
 
 int	is_directory_check(t_cmd **cmds, int i)
@@ -72,7 +72,7 @@ int	get_cmds_path(t_cmd **cmds, int pipes)
 
 	status = 0;
 	i = 0;
-	path = find_value("PATH", gen.env);
+	path = find_value("PATH", g_gen.env);
 	if (path == NULL)
 		return (1);
 	while (i <= pipes)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   built_tools.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/01 04:27:19 by oufisaou          #+#    #+#             */
+/*   Updated: 2022/07/01 04:33:51 by oufisaou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 int	ft_strlen2(char **str)
@@ -40,9 +52,9 @@ char	*join_str(const char *s1, const char *s2)
 
 long long	ft_atoll(const char *dest)
 {
-	int	sign;
-	long long 	result;
-	int	i;
+	int			sign;
+	long long	result;
+	int			i;
 
 	i = 0;
 	sign = 1;

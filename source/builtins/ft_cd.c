@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/01 04:27:27 by oufisaou          #+#    #+#             */
+/*   Updated: 2022/07/01 04:27:28 by oufisaou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 int	modify_env(char *pwd)
 {
-	if (!ft_add_list(&gen.env, pwd))
-		ft_lstadd_back(&gen.env, ft_lstnew(pwd));
+	if (!ft_add_list(&g_gen.env, pwd))
+		ft_lstadd_back(&g_gen.env, ft_lstnew(pwd));
 	return (1);
 }
 
@@ -36,7 +48,7 @@ int	change_env(char *p)
 {
 	char	*pwd;
 
-	pwd = join_str("OLDPWD=", gen.pwd);
+	pwd = join_str("OLDPWD=", g_gen.pwd);
 	if (chdir(p) != -1)
 	{
 		if (small3(&pwd))
@@ -44,10 +56,10 @@ int	change_env(char *p)
 	}
 	else if (chdir(p) == -1)
 		perror("cd");
-	if (gen.pwd != NULL)
-		free(gen.pwd);
-	gen.pwd = getcwd(NULL, 0);
-	gen.exit_status = 0;
+	if (g_gen.pwd != NULL)
+		free(g_gen.pwd);
+	g_gen.pwd = getcwd(NULL, 0);
+	g_gen.exit_status = 0;
 	free(pwd);
 	return (0);
 }
@@ -73,6 +85,6 @@ int	ft_add_list(t_list **env_list, char *str)
 		tmp = tmp->next;
 	}
 	free(tmp);
-	gen.exit_status = 0;
+	g_gen.exit_status = 0;
 	return (0);
 }

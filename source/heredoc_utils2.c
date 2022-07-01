@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:31:43 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 02:31:45 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 03:34:24 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*expander_heredoc(char *line)
 			tmp = ft_substr(str, 0, i);
 			final_quote = join(final_quote, tmp);
 			str = str + i;
-			final_quote = get_var(&str, final_quote, gen.env);
+			final_quote = get_var(&str, final_quote, g_gen.env);
 			i = -1;
 		}
 		i++;
@@ -47,8 +47,8 @@ void	wait_heredoc(int *exit_status, int pid)
 	waitpid(pid, &status, 0);
 	signal(SIGINT, handler);
 	*exit_status = WEXITSTATUS(status);
-	gen.skip_all = *exit_status;
-	gen.exit_status = gen.skip_all;
+	g_gen.skip_all = *exit_status;
+	g_gen.exit_status = g_gen.skip_all;
 	if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == 2)

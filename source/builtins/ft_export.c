@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/01 04:27:42 by oufisaou          #+#    #+#             */
+/*   Updated: 2022/07/01 04:35:22 by oufisaou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 void	suite3(char *str)
@@ -26,7 +38,7 @@ void	suite4(char *str)
 	ft_putstr_fd("declare -x ", 1);
 	if (has_equal(str))
 		return ;
-	while (str[i] && (str[i] == '_'|| ft_isalpha(str[i])))
+	while (str[i] && (str[i] == '_' || ft_isalpha(str[i])))
 		ft_putchar_fd(str[i++], 1);
 	ft_putchar_fd(str[i++], 1);
 	ft_putchar_fd('"', 1);
@@ -54,11 +66,11 @@ void	print_export(t_list *env)
 
 int	ft_export(char **next)
 {
-	int index;
+	int	index;
 
 	if (ft_strlen2(next) == 1)
 	{
-		ft_sort(&gen);
+		ft_sort(&g_gen);
 		return (0);
 	}
 	index = 1;
@@ -68,8 +80,8 @@ int	ft_export(char **next)
 		{
 			print_err_exp(next[index]);
 		}
-		else if (!ft_add_list(&gen.env, next[index]))
-			ft_lstadd_back(&gen.env, ft_lstnew(ft_strdup(next[index])));
+		else if (!ft_add_list(&g_gen.env, next[index]))
+			ft_lstadd_back(&g_gen.env, ft_lstnew(ft_strdup(next[index])));
 		index++;
 	}
 	return (0);

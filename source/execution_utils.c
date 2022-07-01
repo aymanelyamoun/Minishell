@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:51:46 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 02:29:49 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 03:32:10 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ void	free_envp(void)
 	int	i;
 
 	i = 0;
-	if (gen.envp != NULL)
+	if (g_gen.envp != NULL)
 	{
-		while (gen.envp[i] != NULL)
+		while (g_gen.envp[i] != NULL)
 		{
-			free(gen.envp[i]);
+			free(g_gen.envp[i]);
 			i++;
 		}
-		free(gen.envp);
+		free(g_gen.envp);
 	}
 }
 
