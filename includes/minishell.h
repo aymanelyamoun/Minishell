@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 04:26:50 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/07/01 18:06:59 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 21:00:50 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,4 +224,5 @@ int			count_tokens(t_token *tokens);
 void		clear_tokens(t_token **tokens);
 t_token		*tokenize(char *line);
 char		*join_cmd(char *path, char *cmd);
+int    check_pipe(t_token *c);
 #endif
