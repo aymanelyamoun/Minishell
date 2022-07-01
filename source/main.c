@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:52:29 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 04:44:54 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 15:42:29 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,9 @@ char	**convert_to_array(t_list **env)
 	return (arr);
 }
 
-int	main(int argc, char **argv, char **envp)
+void	init_minishell(char **envp)
 {
-	char	*line;
-	t_token	*tokens;
-	t_cmd	*cmds;
-	char	p[PATH_MAX];
+char	p[PATH_MAX];
 
 	getcwd(p, PATH_MAX);
 	g_gen.pwd = ft_strdup(p);
@@ -47,27 +44,41 @@ int	main(int argc, char **argv, char **envp)
 	g_gen.exit_status = 0;
 	g_gen.exec = 0;
 	handle_signals();
+}
+
+void	minishell(t_token **tokens)
+{
+	expander(tokens);
+	expander_in_quotes(tokens);
+	join_word(tokens);
+	rm_spaces(tokens);
+	rm_quotes_tokens(tokens);
+	g_gen.exec = 0;
+	g_gen.skip_all = 0;
+	get_path_and_execute(tokens);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	char	*line;
+	t_token	*tokens;
+	t_cmd	*cmds;
+
 	if (argc != 1)
 		return (1);
+	init_minishell(envp);
 	while (1)
 	{
-		line = readline("\033[0;36m\x1B[1mminishell> \033[0;37m");
+		line = readline("minishell> ");
 		if (line != NULL)
 		{
 			add_history(line);
 			tokens = tokenize(line);
 			free(line);
 			if (syntax_err(tokens))
-			{
-				expander(&tokens);
-				expander_in_quotes(&tokens);
-				join_word(&tokens);
-				rm_spaces(&tokens);
-				rm_quotes_tokens(&tokens);
-				g_gen.exec = 0;
-				g_gen.skip_all = 0;
-				get_path_and_execute(&tokens);
-			}
+				minishell(&tokens);
+			else
+				clear_tokens(&tokens);
 		}
 		else
 			ctrld();
