@@ -1,16 +1,14 @@
 #include "../includes/minishell.h"
 
-void change_data(t_token **tokens, char *data)
+void	change_data(t_token **tokens, char *data)
 {
-	// if ((*tokens)->old_data)
-	// 	free((*tokens)->old_data);
 	(*tokens)->old_data = ft_strjoin("$", (*tokens)->next->data);
 	free((*tokens)->data);
 	(*tokens)->data = data;
 	(*tokens)->type = WORD;
 }
 
-void play_with_tokens(t_token **tokens, char *str, t_list *env)
+void	play_with_tokens(t_token **tokens, char *str, t_list *env)
 {
 	char	*env_var;
 
@@ -36,18 +34,20 @@ void play_with_tokens(t_token **tokens, char *str, t_list *env)
 	rm_token(&((*tokens)->next));
 }
 
-char *get_var_utils(char **str, int *i, t_list *env)
+char	*get_var_utils(char **str, int *i, t_list *env)
 {
-	char *env_var;
-	char *to_free;	
-	while ((*str)[*i] != '\0' && (*str)[*i] != ' ' && (*str)[*i] != '\t' 
-	&& (*str)[*i] != '\v' && (*str)[*i] != '\f' && 
+	char	*env_var;
+	char	*to_free;
+
+	while ((*str)[*i] != '\0' && (*str)[*i] != ' ' \
+	&& (*str)[*i] != '\t' \
+	&& (*str)[*i] != '\v' && (*str)[*i] != '\f' && \
 	(ft_isalnum((*str)[*i]) || (*str)[*i] == '?' || (*str)[*i] == '_'))
 	{
 		if (*i == 1 && (ft_isdigit((*str)[*i]) || (*str)[*i] == '?'))
 		{
 			(*i)++;
-			break;
+			break ;
 		}
 		(*i)++;
 	}
@@ -57,10 +57,10 @@ char *get_var_utils(char **str, int *i, t_list *env)
 	return (env_var);
 }
 
-char *get_var(char **str, char *final_quote, t_list *env)
+char	*get_var(char **str, char *final_quote, t_list *env)
 {
-	int i;
-	char *env_var;
+	int		i;
+	char	*env_var;
 
 	i = 1;
 	if ((*str)[0] == '$' && (*str)[1] != '\0' 

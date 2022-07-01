@@ -1,12 +1,11 @@
-
 #include "../includes/minishell.h"
 
-char **convert_to_array(t_list **env)
+char	**convert_to_array(t_list **env)
 {
-	int     index;
-	int     size;
-	char    **arr;
-	t_list  *tmp;
+	int		index;
+	int		size;
+	char	**arr;
+	t_list	*tmp;
 
 	size = len_list(env);
 	tmp = *env;
@@ -22,7 +21,7 @@ char **convert_to_array(t_list **env)
 	return (arr);
 }
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	t_token *tokens;

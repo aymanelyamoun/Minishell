@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-char *join_mix(t_token *token1, t_token *token2)
+char	*join_mix(t_token *token1, t_token *token2)
 {
 	char	*tmp;
 
@@ -17,17 +17,18 @@ char *join_mix(t_token *token1, t_token *token2)
 	return (tmp);
 }
 
-void join_word(t_token **tokens)
+void	join_word(t_token **tokens)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = *tokens;
 	while (tmp != NULL)
 	{
 		if (tmp->type == WORD || tmp->type == DQUOTE || tmp->type == QUOTE)
 		{
-			while (tmp->next != NULL &&
-				   (tmp->next->type == WORD || tmp->next->type == DQUOTE || tmp->next->type == QUOTE))
+			while (tmp->next != NULL && \
+			(tmp->next->type == WORD || tmp->next->type == DQUOTE \
+			|| tmp->next->type == QUOTE))
 			{
 				tmp->data = join_mix(tmp, tmp->next);
 				tmp->type = WORD;
@@ -38,9 +39,9 @@ void join_word(t_token **tokens)
 	}
 }
 
-char *join(char *final_quote, char *tmp)
+char	*join(char *final_quote, char *tmp)
 {
-	char *to_free;
+	char	*to_free;
 
 	to_free = final_quote;
 	final_quote = ft_strjoin(final_quote, tmp);

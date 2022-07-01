@@ -20,10 +20,10 @@ void	write_to_fd(int fd, char *str)
 
 char	*expander_heredoc(char *line)
 {
-	char *str;
-	int i;
-	char *final_quote;
-	char *tmp;
+	char	*str;
+	int		i;
+	char	*final_quote;
+	char	*tmp;
 
 	str = line;
 	i = 0;
@@ -45,13 +45,11 @@ char	*expander_heredoc(char *line)
 	free(line);
 	return (final_quote);
 }
-void    handler1(int sig)
+
+void	handler1(int sig)
 {
-    if(sig == SIGINT)
-    {
-		
-   		exit(1);
-    }
+	if (sig == SIGINT)
+		exit(1);
 }
 
 int	expand_y_n(char **str)
@@ -85,7 +83,7 @@ void	wait_heredoc(int *exit_status, int pid)
 
 int	heredoc_p(char *limiter, int *pipe_fd)
 {
-	int	expand;
+	int		expand;
 	char	*line;
 
 	expand = expand_y_n(&limiter);
@@ -107,7 +105,7 @@ int	heredoc_p(char *limiter, int *pipe_fd)
 
 int heredoc(char *limiter, int *exit_status)
 {
-    char	*line;
+	char	*line;
 	int		pipe_fd[2];
 	int		pid;
 	int		status;
@@ -121,7 +119,7 @@ int heredoc(char *limiter, int *exit_status)
 	sig_ign();
 	pid = fork();
 	if (pid == 0)
-    {
+	{
 		heredoc_p(limiter, pipe_fd);
 	}
 	if (limiter != NULL)

@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-char **get_cmds(t_token *tokens)
+char	**get_cmds(t_token *tokens)
 {
 	char	**cmds;
 	int		i;
@@ -19,12 +19,11 @@ char **get_cmds(t_token *tokens)
 	return (cmds);
 }
 
-void creat_cmd_args(t_cmd **cmds, int pipe)
+void	creat_cmd_args(t_cmd **cmds, int pipe)
 {
-	int i;
+	int	i;
 
 	i = 0;
-
 	while (i <= pipe)
 	{
 		(*cmds)[i].cmd_args = get_cmds((*cmds)[i].tokens_cmd);
@@ -33,7 +32,7 @@ void creat_cmd_args(t_cmd **cmds, int pipe)
 	}
 }
 
-t_cmd *cmds_and_redirections(t_token **tokens, int *pipes)
+t_cmd	*cmds_and_redirections(t_token **tokens, int *pipes)
 {
 	t_cmd	*cmds;
 	int		status;
@@ -52,7 +51,6 @@ void	get_path_and_execute(t_token **toknes)
 	int		pipes_num;
 
 	cmds = cmds_and_redirections(toknes, &pipes_num);
-
 	if (get_cmds_path(&cmds, pipes_num) == 0 && gen.skip_all == 0) 
 		execution(cmds, pipes_num);
 	free_cmds(cmds, pipes_num);

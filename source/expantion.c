@@ -2,29 +2,31 @@
 
 void expander(t_token **tokens)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = *tokens;
 	while (tmp != NULL)
 	{
 		if (tmp->type == DOLLAR)
 		{
-			if (tmp->next != NULL && tmp->next->type != SPAACE &&
-				(tmp->next->type == WORD || tmp->next->type == DQUOTE || tmp->next->type == DOLLAR))
+			if (tmp->next != NULL && tmp->next->type != SPAACE && \
+				(tmp->next->type == WORD || tmp->next->type == DQUOTE \
+				|| tmp->next->type == DOLLAR))
 				play_with_tokens(&tmp, ft_strdup(tmp->next->data), gen.env);
-			else if ((tmp->next != NULL && tmp->next->type == SPAACE) || (tmp->next == NULL))
+			else if ((tmp->next != NULL && tmp->next->type == SPAACE) \
+			|| (tmp->next == NULL))
 				tmp->type = WORD;
 		}
 		tmp = tmp->next;
 	}
 }
 
-void expander_in_quotes_utils(t_token **token, t_list *env)
+void	expander_in_quotes_utils(t_token **token, t_list *env)
 {
-	char *str;
-	int i;
-	char *final_quote;
-	char *tmp;
+	char	*str;
+	int		i;
+	char	*final_quote;
+	char	*tmp;
 
 	str = (*token)->data;
 	i = 0;
@@ -47,9 +49,9 @@ void expander_in_quotes_utils(t_token **token, t_list *env)
 	(*token)->data = final_quote;
 }
 
-void expander_in_quotes(t_token **tokens)
+void	expander_in_quotes(t_token **tokens)
 {
-	t_token *token;
+	t_token	*token;
 
 	token = *tokens;
 	while (token != NULL)
@@ -61,4 +63,3 @@ void expander_in_quotes(t_token **tokens)
 		token = token->next;
 	}
 }
-

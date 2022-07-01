@@ -5,7 +5,6 @@ int	count_pipes(t_token *tokens)
 	int	i;
 
 	i = 0;
-
 	while (tokens != NULL)
 	{
 		if (tokens->type == PIPE)

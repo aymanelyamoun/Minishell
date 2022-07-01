@@ -1,13 +1,12 @@
 #include "../includes/minishell.h"
-#include <fcntl.h>
 
-static void open_file_err(t_token **tokens, int fd, int status)
+static void	open_file_err(t_token **tokens, int fd, int status)
 {
 	if ((*tokens)->next->old_data == NULL && (fd == -1 && status != 1))
-			perror("minishellllllll");
-	else 
+		perror("minishellllllll");
+	else
 	{
-		if ((ft_strcmp((*tokens)->next->data, "") == 0) 
+		if ((ft_strcmp((*tokens)->next->data, "") == 0) \
 		&& (*tokens)->next->old_data != NULL)
 			printf("minishell: %s: ambiguous redirect\n", \
 			(*tokens)->next->old_data);
@@ -16,18 +15,18 @@ static void open_file_err(t_token **tokens, int fd, int status)
 	}
 }
 
-int    open_file(t_token **tokens, int type)
+int	open_file(t_token **tokens, int type)
 {
-    int fd;
+	int	fd;
 	int	status;
-	
+
 	status = 0;
 	if (type == GREAT)
-    	fd = open((*tokens)->next->data, O_RDWR | O_CREAT | O_TRUNC, 0777);
+		fd = open((*tokens)->next->data, O_RDWR | O_CREAT | O_TRUNC, 0777);
 	else if (type == LESS)
-    	fd = open((*tokens)->next->data, O_RDWR, 0777);
+		fd = open((*tokens)->next->data, O_RDWR, 0777);
 	else if (type == DGREAT)
-    	fd = open((*tokens)->next->data, O_RDWR | O_CREAT | O_APPEND, 0777);
+		fd = open((*tokens)->next->data, O_RDWR | O_CREAT | O_APPEND, 0777);
 	else if (type == DLESS)
 	{
 		if ((*tokens)->next->old_data)
@@ -42,14 +41,6 @@ int    open_file(t_token **tokens, int type)
 	return (fd);
 }
 
-// void	check_file_direc_rm_token(t_token **tokens, t_cmd **cmds, int i)
-// {
-// 	if ((*tokens)->prev == NULL)
-// 		(*cmds)->tokens_cmd = (*tokens)->next->next;
-// 	rm_token(&(*tokens)->next);
-// 	rm_token(tokens);
-// 		// printf("--- %s\n", (*tokens)->next->data);
-// }
 static void	rm_redi_utils(t_token **token1, t_token **token2)
 {
 	rm_token(token1);
@@ -69,23 +60,23 @@ static int	check_con_redi(t_cmd **cmds, int i)
 
 void	rm_redirecitons(t_cmd **cmds, int pipes)
 {
-	int	i;
+	int		i;
 	t_token	*tmp;
 
 	i = 0;
-	while(i <= pipes)
+	while (i <= pipes)
 	{
 		while (check_con_redi(cmds, i))
 			rm_redi_utils(&((*cmds)[i].tokens_cmd), &((*cmds)[i].tokens_cmd));
 		tmp = ((*cmds)[i].tokens_cmd);
 		while (tmp != NULL)
 		{
-			if ((tmp->next != NULL) && (tmp->next->type == LESS 
-			|| tmp->next->type == GREAT
+			if ((tmp->next != NULL) && (tmp->next->type == LESS \
+			|| tmp->next->type == GREAT \
 			|| tmp->next->type == DLESS || tmp->next->type == DGREAT))
 			{
 				rm_redi_utils(&(tmp->next), &(tmp->next));
-				continue;
+				continue ;
 			}
 			tmp = tmp->next;
 		}
@@ -93,7 +84,7 @@ void	rm_redirecitons(t_cmd **cmds, int pipes)
 	}
 }
 
-int		creat_in_files(t_cmd **cmds, t_token *tokens, int i)
+int	creat_in_files(t_cmd **cmds, t_token *tokens, int i)
 {
 	int	fd;
 
@@ -109,7 +100,7 @@ int		creat_in_files(t_cmd **cmds, t_token *tokens, int i)
 	return (fd);
 }
 
-int		creat_out_files(t_cmd **cmds, t_token *tokens, int i)
+int	creat_out_files(t_cmd **cmds, t_token *tokens, int i)
 {
 	int	fd;
 
@@ -128,26 +119,26 @@ int		creat_out_files(t_cmd **cmds, t_token *tokens, int i)
 	return (fd);
 }
 
-void    check_file_direcitons(t_cmd **cmds, int pipes)
+void	check_file_direcitons(t_cmd **cmds, int pipes)
 {
-    int i;
-    t_token *tokens;
-	int	fd;
+	int		i;
+	t_token	*tokens;
+	int		fd;
 
-    i = 0;
-    while (i <= pipes)
-    {
-        tokens = (*cmds)[i].tokens_cmd;
-        while (tokens != NULL)
-        {
-            if (tokens->type == LESS || tokens->type == DLESS)
+	i = 0;
+	while (i <= pipes)
+	{
+		tokens = (*cmds)[i].tokens_cmd;
+		while (tokens != NULL)
+		{
+			if (tokens->type == LESS || tokens->type == DLESS)
 				fd = creat_in_files(cmds, tokens, i);
 			else if (tokens->type == GREAT || tokens->type == DGREAT)
 				fd = creat_out_files(cmds, tokens, i);
 			if (fd == -1)
 				return ;
 			tokens = tokens->next;
-        }
-        i++;
-    }
+		}
+		i++;
+	}
 }
