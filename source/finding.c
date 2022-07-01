@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:52:02 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 01:53:26 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 02:12:13 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ char	*get_var_str(char *str, int *i)
 		if ((*i == 0) && (ft_isdigit(str[*i]) || str[*i] == '?'))
 		{
 			(*i)++;
-			break ;	
+			break ;
 		}
 		(*i)++;
 	}
 	return (ft_substr(str, 0, *i));
 }
 
-char *get_env_var(char *str, t_list *env)
+char	*get_env_var(char *str, t_list *env)
 {
 	char	*second_part;
 	char	*new_str;

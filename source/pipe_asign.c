@@ -6,13 +6,13 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:52:36 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 01:53:39 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 02:25:54 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void assign_f(t_cmd **cmds, int i, int pipes_num, int **pipes)
+static void	assign_f(t_cmd **cmds, int i, int pipes_num, int **pipes)
 {
 	if ((*cmds)[i].infile == -1)
 		(*cmds)[i].infile = STDIN_FILENO;

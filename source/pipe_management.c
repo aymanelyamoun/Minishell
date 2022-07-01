@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:52:40 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 01:53:41 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 02:30:34 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	**creat_pipes(int pipes_num)
 	int	i;
 
 	i = 0;
-	pipes = malloc(sizeof(int*) * pipes_num);
+	pipes = malloc(sizeof(int *) * pipes_num);
 	if (pipes == NULL)
 		return (NULL);
 	while (i < pipes_num)
@@ -91,4 +91,3 @@ int	**creat_pipes(int pipes_num)
 	}
 	return (pipes);
 }
-

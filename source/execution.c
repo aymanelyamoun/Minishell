@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:51:52 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 01:53:18 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 02:11:26 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	execut(t_cmd *cmds, int **pipes, int pipes_num, int i)
 	exit(cmds[i].exec);
 }
 
-void    execution(t_cmd *cmds, int pipes_num)
+void	execution(t_cmd *cmds, int pipes_num)
 {
 	int		i;
 	int		pid;

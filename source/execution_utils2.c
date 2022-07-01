@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:51:49 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 01:53:17 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 02:11:16 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	sig_handler(void)
 	signal(SIGINT, handler);
 }
 
-int		run_cmd(t_cmd *cmds, int **pipes, int pipes_num, int *i)
+int	run_cmd(t_cmd *cmds, int **pipes, int pipes_num, int *i)
 {
 	int	pid;
 

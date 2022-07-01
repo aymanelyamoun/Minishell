@@ -6,13 +6,13 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:51:55 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 01:53:20 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 02:11:33 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void expander(t_token **tokens)
+void	expander(t_token **tokens)
 {
 	t_token	*tmp;
 

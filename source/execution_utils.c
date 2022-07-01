@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:51:46 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 01:53:15 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 02:29:49 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,7 @@ void	free_cmds(t_cmd *cmds, int pipes_num)
 				free(cmds[i].cmd_args);
 			}
 			if (cmds[i].cmd_path != NULL)
-			{
 				free(cmds[i].cmd_path);
-			}
 			i++;
 		}
 		free(cmds);
