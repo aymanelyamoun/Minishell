@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_managment.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:51:19 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 03:33:22 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/07/01 05:08:02 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	get_cmds_path(t_cmd **cmds, int pipes)
 		return (1);
 	while (i <= pipes)
 	{
-		if (is_directory_check)
+		if (is_directory_check(cmds, i))
 			(*cmds)[i].exec = 126;
 		else if ((*cmds)[i].cmd_args[0] != NULL)
 			(*cmds)[i].cmd_path = get_cmd_path(path, (*cmds)[i].cmd_args[0]);

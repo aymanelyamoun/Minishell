@@ -8,9 +8,10 @@ SRC =  cmd_creation cmd_managment cmd_utils_ cmd_utils creat_cmds enviroment err
 execution_built execution_utils execution_utils2 execution export_tool finding_ finding\
 get_tokens__ get_tokens_ heredoc_utils heredoc_utils2 heredoc in_out_file_managment\
 in_out_utils joining list_manupulation main pipe_asign pipe_management removing signals\
-suite_syntax syntax_analyzer token/
+suite_syntax syntax_analyzer token expantion \
 builtins/ft_exit builtins/ft_env builtins/ft_echo\
-builtins/more_func export_tool suite_syntax builtins/built_tools builtins/built_checks builtins/unset builtins/ft_export builtins/ft_pwd builtins/ft_cd
+builtins/more_func export_tool suite_syntax builtins/built_tools builtins/built_checks \
+builtins/unset builtins/ft_export builtins/ft_pwd builtins/ft_cd builtins/go_build
 
 OBJ = $(addprefix $(DIRBUILD)/, $(SRC:=.o))
 

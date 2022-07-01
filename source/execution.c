@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:51:52 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 04:37:11 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/07/01 04:49:31 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ void	execut(t_cmd *cmds, int **pipes, int pipes_num, int i)
 	if (cmds[i].outfile != STDOUT_FILENO)
 		close(cmds[i].outfile);
 	if ((cmds[i].exec == 0) && is_buit_in(cmds[i].cmd_args[0]))
+	{
+
+		puts("--_--");
 		go_commands(cmds[i].cmd_args);
+	}
 	else if (cmds[i].exec == 0 && g_gen.exec == 0)
 	{
 		free_envp();
