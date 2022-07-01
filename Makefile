@@ -4,10 +4,13 @@ DIRBUILD = objdir
 INC  = -I ./includes
 HEADERS = includes/minishell.h
 LIBFT = includes/libft/libft.a
-SRC = main cmd_managment builtins/go_build in_out_file_managment \
- heredoc signals list_manupulation token execution pipe_management\
-  builtins/ft_exit builtins/ft_env builtins/ft_echo\
-   syntax_analyzer builtins/more_func export_tool suite_syntax builtins/built_tools builtins/built_checks builtins/unset builtins/ft_export error_free expantion signals enviroment builtins/ft_pwd builtins/ft_cd
+SRC =  cmd_creation cmd_managment cmd_utils_ cmd_utils creat_cmds enviroment error_free\
+execution_built execution_utils execution_utils2 execution export_tool finding_ finding\
+get_tokens__ get_tokens_ heredoc_utils heredoc_utils2 heredoc in_out_file_managment\
+in_out_utils joining list_manupulation main pipe_asign pipe_management removing signals\
+suite_syntax syntax_analyzer token/
+builtins/ft_exit builtins/ft_env builtins/ft_echo\
+builtins/more_func export_tool suite_syntax builtins/built_tools builtins/built_checks builtins/unset builtins/ft_export builtins/ft_pwd builtins/ft_cd
 
 OBJ = $(addprefix $(DIRBUILD)/, $(SRC:=.o))
 
@@ -33,6 +36,3 @@ fclean : clean
 re : fclean all
 
 .PHONY : re fclean clean all
-
-#TODO : SHOULD ADD THE 42 FLAGS TO GCC TO MAKE IT WORK , I REMOVED THEM BCAUSE THERE ARE SO MUCH UNUSED VARS IN YOUR PART
-#TODO : ADOPT IT IN YOUR MAKEFILE
