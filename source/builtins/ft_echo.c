@@ -6,7 +6,7 @@
 /*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 04:27:31 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/07/01 04:34:13 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/07/01 15:25:10 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_echo(char **str)
 
 	index = 0;
 	if (ft_strlen2(str) == 1 || (ft_strlen2(str) != 1 \
-	&& !ft_strcmp(str[index + 1], "\0")))
+	&& !ft_strcmp(str[index + 1], "\0") && !str[index + 2]))
 	{
 		ft_putchar_fd('\n', 1);
 		g_gen.exit_status = 0;

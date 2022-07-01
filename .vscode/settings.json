@@ -2,6 +2,7 @@
     "files.associations": {
         "iterator": "c",
         "minishell.h": "c",
-        "chrono": "c"
+        "chrono": "c",
+        "sstream": "c"
     }
 }
