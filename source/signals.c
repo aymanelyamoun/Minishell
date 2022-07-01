@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 04:28:19 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/07/01 04:28:20 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/07/01 14:59:52 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	ctrld(void)
 	rl_on_new_line();
 	rl_redisplay();
 	ft_putstr_fd("exit\n", 1);
-	free(g_gen.env);
+	// free(g_gen.env);
 	free(g_gen.pwd);
 	free_envp();
 	exit(0);

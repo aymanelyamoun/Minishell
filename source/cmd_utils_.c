@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:51:23 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 04:56:10 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 14:34:35 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ void	is_a_dir(char *dir)
 
 char	*return_path(char **cmd_path, char **paths)
 {
-	free(paths);
+	free_arr(paths);
 	return (*cmd_path);
 }

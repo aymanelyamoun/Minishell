@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 04:26:50 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/07/01 04:37:02 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/07/01 05:39:59 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ int			ft_strcmp(char *s1, char *s2);
 void		write_to_fd(int fd, char *str);
 int			expand_y_n(char **str);
 char		*expander_heredoc(char *line);
+int			heredoc(char *limiter, int *exit_status);
 void		wait_heredoc(int *exit_status, int pid);
 void		handler1(int sig);
 void		rm_redirecitons(t_cmd **cmds, int pipes);

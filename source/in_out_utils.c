@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:23:50 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 02:30:17 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 05:38:06 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	open_file_err(t_token **tokens, int fd, int status)
 {
 	if ((*tokens)->next->old_data == NULL && (fd == -1 && status != 1))
-		perror("minishellllllll");
+		perror("minishell");
 	else
 	{
 		if ((ft_strcmp((*tokens)->next->data, "") == 0) \
@@ -24,6 +24,23 @@ static void	open_file_err(t_token **tokens, int fd, int status)
 			(*tokens)->next->old_data);
 		else if ((*tokens)->next->old_data != NULL && status != 1)
 			perror("minishelll");
+	}
+}
+
+void	open_rest(t_token *token)
+{
+	int	ingnor;
+
+	while (token)
+	{
+		if (token->type == DLESS)
+		{
+			if (token->next->old_data)
+				heredoc(ft_strdup(token->next->old_data), &ingnor);
+			else
+				heredoc(ft_strdup(token->next->data), &ingnor);
+		}
+		token = token->next;
 	}
 }
 
@@ -49,7 +66,10 @@ int	open_file(t_token **tokens, int type)
 			fd = status * (-1);
 	}
 	if (fd < 0)
+	{
+		open_rest(*tokens);
 		open_file_err(tokens, fd, status);
+	}
 	return (fd);
 }
 

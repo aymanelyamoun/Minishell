@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 04:27:38 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/07/01 04:27:39 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/07/01 14:44:01 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <limits.h>
 
 void	suite7(char *str)
 {
@@ -49,7 +50,7 @@ int	ft_exit(char **next)
 
 int	is_long(char *next)
 {
-	if (ft_atoll(next) > 2147483647 || ft_atoll(next) < -2147483648)
+	if (ft_atoll(next) > LONG_MAX || ft_atoll(next) < LONG_MAX)
 		return (1);
 	return (0);
 }
