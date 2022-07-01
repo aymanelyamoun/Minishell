@@ -5,7 +5,6 @@ int	count_pipes(t_token *tokens)
 	int	i;
 
 	i = 0;
-
 	while (tokens != NULL)
 	{
 		if (tokens->type == PIPE)
@@ -54,9 +53,9 @@ static t_cmd *creat_cmds_utils(t_token **tokens, t_cmd **cmds)
 	return (*cmds);
 }
 
-t_cmd   *creat_cmds(t_token **tokens)
+t_cmd	*creat_cmds(t_token **tokens)
 {
-    int		pipes;
+	int		pipes;
 	t_cmd	*cmds;
 	int		i;
 
@@ -75,7 +74,7 @@ t_cmd   *creat_cmds(t_token **tokens)
 		cmds[i].cmd_path = NULL;
 		return (cmds);
 	}
-    return (creat_cmds_utils(tokens, &cmds));
+	return (creat_cmds_utils(tokens, &cmds));
 }
 
 // checking cmds 

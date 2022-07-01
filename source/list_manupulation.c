@@ -6,16 +6,15 @@
 /*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 19:19:26 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/06/29 20:07:24 by oufisaou         ###   ########.fr       */
+/*   Updated: 2022/07/01 01:23:05 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
-t_token *new_token(unsigned int type, char *data)
+t_token	*new_token(unsigned int type, char *data)
 {
-	t_token *token;
+	t_token	*token;
 
 	token = malloc(sizeof(t_token));
 	if (token == NULL)
@@ -25,7 +24,7 @@ t_token *new_token(unsigned int type, char *data)
 	token->old_data = NULL;
 	token->next = NULL;
 	token->prev = NULL;
-	return token;
+	return (token);
 }
 
 void	add_at_end(t_token **tokens_head, t_token *token)

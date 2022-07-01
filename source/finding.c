@@ -1,8 +1,8 @@
 #include "../includes/minishell.h"
 
-char *find_value(char *str, t_list *env_l)
+char	*find_value(char *str, t_list *env_l)
 {
-	char *tmp;
+	char	*tmp;
 
 	if (strcmp(str, "?") == 0)
 		return (ft_itoa(gen.exit_status));
@@ -28,7 +28,7 @@ char	*get_var_str(char *str, int *i)
 		if ((*i == 0) && (ft_isdigit(str[*i]) || str[*i] == '?'))
 		{
 			(*i)++;
-			break;	
+			break ;	
 		}
 		(*i)++;
 	}
@@ -66,5 +66,3 @@ int	get_dollars(char *str)
 	else
 		return (j);
 }
-
-

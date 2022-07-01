@@ -1,16 +1,14 @@
 #include "../includes/minishell.h"
 
-void change_data(t_token **tokens, char *data)
+void	change_data(t_token **tokens, char *data)
 {
-	// if ((*tokens)->old_data)
-	// 	free((*tokens)->old_data);
 	(*tokens)->old_data = ft_strjoin("$", (*tokens)->next->data);
 	free((*tokens)->data);
 	(*tokens)->data = data;
 	(*tokens)->type = WORD;
 }
 
-void play_with_tokens(t_token **tokens, char *str, t_list *env)
+void	play_with_tokens(t_token **tokens, char *str, t_list *env)
 {
 	char	*env_var;
 
@@ -36,37 +34,40 @@ void play_with_tokens(t_token **tokens, char *str, t_list *env)
 	rm_token(&((*tokens)->next));
 }
 
-void expander(t_token **tokens)
+void	expander(t_token **tokens)
 {
-	t_token *tmp;
-	// char    **env = NULL;
+	t_token	*tmp;
 
 	tmp = *tokens;
 	while (tmp != NULL)
 	{
 		if (tmp->type == DOLLAR)
 		{
-			if (tmp->next != NULL && tmp->next->type != SPAACE &&
-				(tmp->next->type == WORD || tmp->next->type == DQUOTE || tmp->next->type == DOLLAR))
+			if (tmp->next != NULL && tmp->next->type != SPAACE && \
+				(tmp->next->type == WORD || tmp->next->type == DQUOTE \
+				|| tmp->next->type == DOLLAR))
 				play_with_tokens(&tmp, ft_strdup(tmp->next->data), gen.env);
-			else if ((tmp->next != NULL && tmp->next->type == SPAACE) || (tmp->next == NULL))
+			else if ((tmp->next != NULL && tmp->next->type == SPAACE) \
+			|| (tmp->next == NULL))
 				tmp->type = WORD;
 		}
 		tmp = tmp->next;
 	}
 }
-char *get_var_utils(char **str, int *i, t_list *env)
+
+char	*get_var_utils(char **str, int *i, t_list *env)
 {
-	char *env_var;
-	char *to_free;	
-	while ((*str)[*i] != '\0' && (*str)[*i] != ' ' && (*str)[*i] != '\t' 
-	&& (*str)[*i] != '\v' && (*str)[*i] != '\f' && 
-	(ft_isalnum((*str)[*i]) || (*str)[*i] == '?' || (*str)[*i] == '_'))
+	char	*env_var;
+	char	*to_free;	
+
+	while ((*str)[*i] != '\0' && (*str)[*i] != ' ' && (*str)[*i] != '\t' && \
+	(*str)[*i] != '\v' && (*str)[*i] != '\f' && (ft_isalnum((*str)[*i]) \
+	|| (*str)[*i] == '?' || (*str)[*i] == '_'))
 	{
 		if (*i == 1 && (ft_isdigit((*str)[*i]) || (*str)[*i] == '?'))
 		{
 			(*i)++;
-			break;
+			break ;
 		}
 		(*i)++;
 	}
@@ -96,7 +97,7 @@ char *get_var(char **str, char *final_quote, t_list *env)
 	return (join(final_quote, env_var));
 }
 
-void expander_in_quotes_utils(t_token **token, t_list *env)
+void	expander_in_quotes_utils(t_token **token, t_list *env)
 {
 	char *str;
 	int i;
@@ -124,9 +125,9 @@ void expander_in_quotes_utils(t_token **token, t_list *env)
 	(*token)->data = final_quote;
 }
 
-void expander_in_quotes(t_token **tokens)
+void	expander_in_quotes(t_token **tokens)
 {
-	t_token *token;
+	t_token	*token;
 
 	token = *tokens;
 	while (token != NULL)
@@ -139,7 +140,7 @@ void expander_in_quotes(t_token **tokens)
 	}
 }
 
-int count_tokens(t_token *tokens)
+int	count_tokens(t_token *tokens)
 {
 	int count;
 
@@ -187,7 +188,6 @@ void creat_cmd_args(t_cmd **cmds, int pipe)
 	int i;
 
 	i = 0;
-
 	while (i <= pipe)
 	{
 		(*cmds)[i].cmd_args = get_cmds((*cmds)[i].tokens_cmd);
@@ -215,7 +215,6 @@ void	get_path_and_execute(t_token **toknes)
 	int		pipes_num;
 
 	cmds = cmds_and_redirections(toknes, &pipes_num);
-
 	if (get_cmds_path(&cmds, pipes_num) == 0 && gen.skip_all == 0) 
 		execution(cmds, pipes_num);
 	free_cmds(cmds, pipes_num);
@@ -235,7 +234,6 @@ int main(int argc, char **argv, char **envp)
 	gen.exit_status = 0;
 	gen.exec = 0;
 	handle_signals();
-	//rl_catch_signals = 0;
 	if (argc != 1)
 		return (1);
 	while (1)

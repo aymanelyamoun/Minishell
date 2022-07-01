@@ -1,11 +1,9 @@
 
 #include "../includes/minishell.h"
 
-
-
-char **convert_to_array(t_list **env)
+char	**convert_to_array(t_list **env)
 {
-	int     index;
+	int		index;
 	int     size;
 	char    **arr;
 	t_list  *tmp;

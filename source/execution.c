@@ -1,8 +1,8 @@
 #include "../includes/minishell.h"
 
-void    close_cmd_files(t_cmd *cmds, int count)
+void	close_cmd_files(t_cmd *cmds, int count)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i <= count)
@@ -13,9 +13,9 @@ void    close_cmd_files(t_cmd *cmds, int count)
 	}
 }
 
-void    free_envp(void)
+void	free_envp(void)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (gen.envp != NULL)
@@ -29,10 +29,10 @@ void    free_envp(void)
 	}
 }
 
-char    *str_to_lower(char *str)
+char	*str_to_lower(char *str)
 {
-	char    *new_str;
-	int     i;
+	char	*new_str;
+	int		i;
 
 	i = 0;
 	if (str != NULL)
@@ -49,7 +49,7 @@ char    *str_to_lower(char *str)
 	return (NULL);
 }
 
-void    execut(t_cmd *cmds, int **pipes, int pipes_num, int i)
+void	execut(t_cmd *cmds, int **pipes, int pipes_num, int i)
 {
 	dup2(cmds[i].infile, STDIN_FILENO);
 	dup2(cmds[i].outfile, STDOUT_FILENO);
@@ -70,7 +70,7 @@ void    execut(t_cmd *cmds, int **pipes, int pipes_num, int i)
 	exit(cmds[i].exec);
 }
 
-void    free_cmds(t_cmd *cmds, int pipes_num)
+void	free_cmds(t_cmd *cmds, int pipes_num)
 {
 	int	i;
 	int	j;
@@ -100,22 +100,21 @@ void    free_cmds(t_cmd *cmds, int pipes_num)
 	}
 }
 
-int is_buit_in(char *cmd)
+int	is_buit_in(char *cmd)
 {
-	char *built_in;
-
+	char	*built_in;
 
 	if (cmd == NULL)
 		return (0);
 	built_in = str_to_lower(cmd);
-	if ((ft_strcmp(built_in, "echo") && ft_strcmp(built_in, "cd") 
-		&& ft_strcmp(built_in, "env") && ft_strcmp(built_in, "exit") 
-		&& ft_strcmp(built_in, "export") && ft_strcmp(built_in, "pwd") 
-		&& ft_strcmp(built_in, "unset")))
-		{
-			free(built_in);
-			return (0);
-		}
+	if ((ft_strcmp(built_in, "echo") && ft_strcmp(built_in, "cd") \
+	&& ft_strcmp(built_in, "env") && ft_strcmp(built_in, "exit") \
+	&& ft_strcmp(built_in, "export") && ft_strcmp(built_in, "pwd") \
+	&& ft_strcmp(built_in, "unset")))
+	{
+		free(built_in);
+		return (0);
+	}
 	else
 	{
 		free(built_in);
@@ -196,10 +195,10 @@ void	wait_all(int pid, int i, int pipes_num)
 
 void    execution(t_cmd *cmds, int pipes_num)
 {
-	int i;
-	int pid;
-	int **pipes;
-	char *built_in;
+	int		i;
+	int		pid;
+	int		**pipes;
+	char	*built_in;
 
 	i = 0;
 	pipes = creat_pipes(pipes_num);
