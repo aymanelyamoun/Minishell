@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:52:29 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 15:42:29 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 17:49:18 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**convert_to_array(t_list **env)
 
 void	init_minishell(char **envp)
 {
-char	p[PATH_MAX];
+	char	p[PATH_MAX];
 
 	getcwd(p, PATH_MAX);
 	g_gen.pwd = ft_strdup(p);

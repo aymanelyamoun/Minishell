@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:51:49 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 04:46:59 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 17:48:47 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	sig_handler(void)
 int	run_cmd(t_cmd *cmds, int **pipes, int pipes_num, int *i)
 {
 	int	pid;
-	
+
 	pid = fork();
 	if (pid == -1)
 		perror("fork : ");
