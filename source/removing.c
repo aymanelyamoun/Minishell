@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   removing.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/01 01:52:43 by ael-yamo          #+#    #+#             */
+/*   Updated: 2022/07/01 02:26:28 by ael-yamo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 char	*rm_quotes(char *str, char c)
@@ -34,7 +46,7 @@ void	rm_quotes_tokens(t_token **tokens)
 
 void	rm_token(t_token **tokens)
 {
-	t_token *token;
+	t_token	*token;
 
 	token = *tokens;
 	if (token->prev == NULL && token->next == NULL)

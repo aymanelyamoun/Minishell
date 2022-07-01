@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmd_managment.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/01 01:51:19 by ael-yamo          #+#    #+#             */
+/*   Updated: 2022/07/01 02:07:53 by ael-yamo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 char	*get_cmd_path(char *path, char *cmd)
@@ -43,7 +55,7 @@ int	is_directory_check(t_cmd **cmds, int i)
 	int	status;
 
 	status = 0;
-	if (isDirectory((*cmds)[i].cmd_args[0]))
+	if (is_directory((*cmds)[i].cmd_args[0]))
 	{
 		if ((*cmds)[i].exec == 0)
 			is_a_dir((*cmds)[i].cmd_args[0]);
@@ -54,15 +66,15 @@ int	is_directory_check(t_cmd **cmds, int i)
 
 int	get_cmds_path(t_cmd **cmds, int pipes)
 {
-	int	i;
-	int	status;
+	int		i;
+	int		status;
 	char	*path;
 
 	status = 0;
 	i = 0;
 	path = find_value("PATH", gen.env);
 	if (path == NULL)
-		return 1;
+		return (1);
 	while (i <= pipes)
 	{
 		if (is_directory_check)
@@ -71,7 +83,7 @@ int	get_cmds_path(t_cmd **cmds, int pipes)
 			(*cmds)[i].cmd_path = get_cmd_path(path, (*cmds)[i].cmd_args[0]);
 		else
 			(*cmds)[i].cmd_path = NULL;
-		if (((*cmds)[i].cmd_path == NULL) && 
+		if (((*cmds)[i].cmd_path == NULL) &&
 		!is_buit_in((*cmds)[i].cmd_args[0]) && (*cmds)[i].exec == 0)
 			get_cmds_paht_err(cmds, i);
 		i++;

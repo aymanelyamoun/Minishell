@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmd_creation.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/01 01:51:12 by ael-yamo          #+#    #+#             */
+/*   Updated: 2022/07/01 02:29:07 by ael-yamo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 char	**get_cmds(t_token *tokens)
@@ -51,7 +63,7 @@ void	get_path_and_execute(t_token **toknes)
 	int		pipes_num;
 
 	cmds = cmds_and_redirections(toknes, &pipes_num);
-	if (get_cmds_path(&cmds, pipes_num) == 0 && gen.skip_all == 0) 
+	if ((get_cmds_path(&cmds, pipes_num) == 0) && (gen.skip_all == 0))
 		execution(cmds, pipes_num);
 	free_cmds(cmds, pipes_num);
 }

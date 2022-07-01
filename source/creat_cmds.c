@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   creat_cmds.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/01 01:51:35 by ael-yamo          #+#    #+#             */
+/*   Updated: 2022/07/01 02:29:40 by ael-yamo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
-static void creat_cmds_utils2(t_cmd **cmds, t_token **new_head, int i, t_token **tmp)
+static void	creat_cmds_utils2(t_cmd **cmds, \
+t_token **new_head, int i, t_token **tmp)
 {
 	rm_token(&((*tmp)->next));
 	(*cmds)[i].tokens_cmd = *new_head;
@@ -15,13 +28,13 @@ static void creat_cmds_utils2(t_cmd **cmds, t_token **new_head, int i, t_token *
 	(*tmp) = (*new_head);
 }
 
-static t_cmd *creat_cmds_utils(t_token **tokens, t_cmd **cmds)
+static t_cmd	*creat_cmds_utils(t_token **tokens, t_cmd **cmds)
 {
-    t_token *tmp;
-    t_token *new_head;
-    int     i;
+	t_token	*tmp;
+	t_token	*new_head;
+	int		i;
 
-    i = 0;
+	i = 0;
 	tmp = *tokens;
 	new_head = tmp;
 	while (tmp != NULL)
@@ -31,11 +44,11 @@ static t_cmd *creat_cmds_utils(t_token **tokens, t_cmd **cmds)
 			creat_cmds_utils2(cmds, &new_head, i, &tmp);
 			i++;
 		}
-        else
-		    tmp = tmp->next;
+		else
+			tmp = tmp->next;
 	}
 	new_head->prev = NULL;
-    (*cmds)[i].tokens_cmd = new_head;
+	(*cmds)[i].tokens_cmd = new_head;
 	(*cmds)[i].infile = -1;
 	(*cmds)[i].outfile = -1;
 	(*cmds)[i].cmd_args = NULL;
@@ -44,9 +57,9 @@ static t_cmd *creat_cmds_utils(t_token **tokens, t_cmd **cmds)
 	return (*cmds);
 }
 
-t_cmd   *creat_cmds(t_token **tokens)
+t_cmd	*creat_cmds(t_token **tokens)
 {
-    int		pipes;
+	int		pipes;
 	t_cmd	*cmds;
 	int		i;
 
@@ -65,5 +78,5 @@ t_cmd   *creat_cmds(t_token **tokens)
 		cmds[i].cmd_path = NULL;
 		return (cmds);
 	}
-    return (creat_cmds_utils(tokens, &cmds));
+	return (creat_cmds_utils(tokens, &cmds));
 }
