@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 02:23:50 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 05:38:06 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 18:52:44 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	open_file(t_token **tokens, int type)
 	}
 	if (fd < 0)
 	{
-		open_rest(*tokens);
+		open_rest((*tokens)->next);
 		open_file_err(tokens, fd, status);
 	}
 	return (fd);
