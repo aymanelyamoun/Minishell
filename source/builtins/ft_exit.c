@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 04:27:38 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/07/01 14:44:01 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 15:28:50 by oufisaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ int	ft_exit(char **next)
 	}
 	if (ft_strlen2(next) == 2)
 	{
-		if (check_valid(*(next + 1)) == 0)
+		if (check_valid(*(next + 1)) == 1)
 		{
 			suite7(next[1]);
 			g_gen.exit_status = 255;
 		}
-		else if (check_valid(*(next + 1)) == 1)
+		else if (check_valid(*(next + 1)) == 0)
 			g_gen.exit_status = ft_atoll(next[1]);
 	}
 	if (ft_strlen2(next) > 2)
