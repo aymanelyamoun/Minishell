@@ -1,4 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe_management.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/01 01:52:40 by ael-yamo          #+#    #+#             */
+/*   Updated: 2022/07/01 02:30:34 by ael-yamo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
+
+int	count_pipes(t_token *tokens)
+{
+	int	i;
+
+	i = 0;
+	while (tokens != NULL)
+	{
+		if (tokens->type == PIPE)
+			i++;
+		tokens = tokens->next;
+	}
+	return (i);
+}
 
 void	fail_to_generat_pipes(int **pipes, int i)
 {
@@ -49,59 +75,19 @@ int	**creat_pipes(int pipes_num)
 	int	i;
 
 	i = 0;
-	pipes = malloc(sizeof(int*) * pipes_num);
+	pipes = malloc(sizeof(int *) * pipes_num);
+	if (pipes == NULL)
+		return (NULL);
 	while (i < pipes_num)
 	{
 		pipes[i] = malloc(sizeof(int) * 2);
-		if (pipes == NULL)
+		if (pipes[i] == NULL)
+		{
 			fail_to_generat_pipes(pipes, i);
+			creat_pipes(pipes_num);
+		}
 		pipe(pipes[i]);
 		i++;
 	}
 	return (pipes);
-}
-
-void	assign_pipes(int **pipes, t_cmd **cmds, int pipes_num)
-{
-	int	i;
-
-	i = 0;
-	while (i <= pipes_num)
-	{
-		if (i == 0)
-		{
-			if ((*cmds)[i].infile == -1)
-				(*cmds)[i].infile = STDIN_FILENO;
-			if ((*cmds)[i].outfile == -1)
-			{
-				if (pipes_num == 0)
-				{
-					(*cmds)[i].outfile = STDIN_FILENO;
-					return ;
-				}
-				else
-					(*cmds)[i].outfile = pipes[i][1];
-			}
-			// else
-				// close(pipes[i][1]);
-
-		}
-		if (i == pipes_num)
-		{
-			if ((*cmds)[i].infile == -1)
-				(*cmds)[i].infile = pipes[i - 1][0];
-			// else
-			// 	close(pipes[i - 1][0]);
-			if ((*cmds)[i].outfile == -1)
-				(*cmds)[i].outfile = STDOUT_FILENO;
-		}
-		if (i < pipes_num)
-		{
-			if ((*cmds)[i].infile == -1)
-				(*cmds)[i].infile = pipes[i - 1][0];
-			if ((*cmds)[i].outfile == -1)
-				(*cmds)[i].outfile = pipes[i][1];
-		}
-		i++;
-	}
 }

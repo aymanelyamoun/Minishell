@@ -1,66 +1,53 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   in_out_file_managment.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/01 01:52:14 by ael-yamo          #+#    #+#             */
+/*   Updated: 2022/07/01 05:09:33 by ael-yamo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
-#include <fcntl.h>
 
-int    open_file(token_t **tokens, int type)
+static void	rm_redi_utils(t_token **token1, t_token **token2)
 {
-    int fd;
-
-	if (type == GREAT)
-    	fd = open((*tokens)->next->data, O_RDWR | O_CREAT, 0777);
-	else if (type == LESS)
-    	fd = open((*tokens)->next->data, O_RDWR | O_TRUNC, 0777);
-	else if (type == DGREAT)
-    	fd = open((*tokens)->next->data, O_RDWR | O_CREAT | O_APPEND, 0777);
-	else if (type == DLESS)
-	{
-		fd = heredoc(ft_strdup((*tokens)->next->data));
-	}
-	if (fd < 0)
-	{
-		if ((*tokens)->next->old_data == NULL)
-			perror("the error");
-		else
-		{
-			printf("minishell: %s: ambiguous redirect\n", (*tokens)->next->old_data);
-			free((*tokens)->next->old_data);
-		}
-	}
-	// close(fd);
-	return (fd);
+	rm_token(token1);
+	rm_token(token2);
 }
 
-// void	check_file_direc_rm_token(token_t **tokens, t_cmd **cmds, int i)
-// {
-// 	if ((*tokens)->prev == NULL)
-// 		(*cmds)->tokens_cmd = (*tokens)->next->next;
-// 	rm_token(&(*tokens)->next);
-// 	rm_token(tokens);
-// 		// printf("--- %s\n", (*tokens)->next->data);
-// }
+static int	check_con_redi(t_cmd **cmds, int i)
+{
+	if (((*cmds)[i].tokens_cmd) != NULL
+		&& ((((*cmds)[i].tokens_cmd))->type == LESS
+		|| ((*cmds)[i].tokens_cmd)->type == GREAT
+		|| (((*cmds)[i].tokens_cmd))->type == DLESS
+		|| ((*cmds)[i].tokens_cmd)->type == DGREAT))
+		return (1);
+	return (0);
+}
+
 void	rm_redirecitons(t_cmd **cmds, int pipes)
 {
-	int	i;
-	token_t	*tmp;
+	int		i;
+	t_token	*tmp;
 
 	i = 0;
-	while(i <= pipes)
+	while (i <= pipes)
 	{
-		while (((*cmds)[i].tokens_cmd) != NULL 
-		&& ((((*cmds)[i].tokens_cmd))->type == LESS || ((*cmds)[i].tokens_cmd)->type == GREAT
-		|| (((*cmds)[i].tokens_cmd))->type == DLESS || ((*cmds)[i].tokens_cmd)->type == DGREAT))
-		{
-			rm_token(&((*cmds)[i].tokens_cmd));
-			rm_token(&((*cmds)[i].tokens_cmd));
-		}
+		while (check_con_redi(cmds, i))
+			rm_redi_utils(&((*cmds)[i].tokens_cmd), &((*cmds)[i].tokens_cmd));
 		tmp = ((*cmds)[i].tokens_cmd);
 		while (tmp != NULL)
 		{
-			if ((tmp->next != NULL) && (tmp->next->type == LESS || tmp->next->type == GREAT
+			if ((tmp->next != NULL) && (tmp->next->type == LESS \
+			|| tmp->next->type == GREAT \
 			|| tmp->next->type == DLESS || tmp->next->type == DGREAT))
 			{
-				rm_token(&(tmp->next));
-				rm_token(&(tmp->next));
-				continue;
+				rm_redi_utils(&(tmp->next), &(tmp->next));
+				continue ;
 			}
 			tmp = tmp->next;
 		}
@@ -68,50 +55,26 @@ void	rm_redirecitons(t_cmd **cmds, int pipes)
 	}
 }
 
-void    check_file_direcitons(t_cmd **cmds, int pipes)
+void	check_file_direcitons(t_cmd **cmds, int pipes)
 {
-    int i;
-    token_t *tokens;
-	int	fd;
+	int		i;
+	t_token	*tokens;
+	int		fd;
 
-    i = 0;
-    while (i <= pipes)
-    {
-        tokens = (*cmds)[i].tokens_cmd;
-        while (tokens != NULL)
-        {
-            if (tokens->type == LESS || tokens->type == DLESS)
-			{
-                fd = open_file(&tokens, tokens->type);
-				if ((*cmds)[i].infile != -1)
-				{
-					if (close((*cmds)[i].infile) == -1)
-					{
-						perror("close : ");
-						exit(3);
-					}
-				}
-				if (fd == -1)
-					(*cmds)[i].exec = 0;
-				(*cmds)[i].infile = fd;
-			}
+	i = 0;
+	while (i <= pipes)
+	{
+		tokens = (*cmds)[i].tokens_cmd;
+		while (tokens != NULL)
+		{
+			if (tokens->type == LESS || tokens->type == DLESS)
+				fd = creat_in_files(cmds, tokens, i);
 			else if (tokens->type == GREAT || tokens->type == DGREAT)
-			{
-                fd = open_file(&tokens, tokens->type);
-				if ((*cmds)[i].outfile != -1)
-				{
-					if (close((*cmds)[i].outfile) == -1)
-					{
-						perror("close : ");
-						exit(3);
-					}
-				}
-				if (fd == -1)
-					(*cmds)[i].exec = 0;
-				(*cmds)[i].outfile = fd;
-			}
+				fd = creat_out_files(cmds, tokens, i);
+			if (fd == -1)
+				return ;
 			tokens = tokens->next;
-        }
-        i++;
-    }
+		}
+		i++;
+	}
 }

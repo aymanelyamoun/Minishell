@@ -1,56 +1,56 @@
-// #include "../includes/minishell.h"
-// int    terminal_settings(void)
-// {
-//     struct termios  term;
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signals.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/01 04:28:19 by oufisaou          #+#    #+#             */
+/*   Updated: 2022/07/01 17:49:50 by ael-yamo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-//     if (tcgetattr(STDIN_FILENO, &term) == -1)
-//         return (1);
-//     term.c_lflag &= ~(ECHOCTL);
-//     tcsetattr(STDIN_FILENO, TCSANOW, &term);
-//     signal(SIGQUIT, handler);
-//     signal(SIGINT, handler);
-//     return (0); 
+#include "../includes/minishell.h"
 
-// }
-// int handle_signals(void)
-// {
-//     terminal_settings();
-//     return (0);
-// }
+int	terminal_settings(void)
+{
+	struct termios	term;
 
-// void    handler(int sig)
-// {
-//     if(sig == SIGINT)
-//     {
-//         ft_putstr_fd("\n", 2);
-//         rl_replace_line("", 1);
-//         rl_on_new_line();
-//     }
-//     rl_on_new_line();
-//     rl_redisplay();
-// }
+	if (tcgetattr(0, &term) == -1)
+		return (1);
+	term.c_lflag &= ~(ECHOCTL);
+	tcsetattr(0, TCSANOW, &term);
+	signal(SIGQUIT, handler);
+	signal(SIGINT, handler);
+	return (0);
+}
 
-// void    free_env(t_list **env)
-// {
-//     t_list *tmp;
-//     t_list *next;
+int	handle_signals(void)
+{
+	terminal_settings();
+	return (0);
+}
 
-//     tmp  = *env;
-//     while(tmp)
-//     {
-//         free(tmp->content);
-//         next = tmp->next;
-//         free(tmp);
-//         tmp = next;
-//     }
-//     env = NULL;
-// }
+void	handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		g_gen.exit_status = 1;
+		ft_putstr_fd("\n", 2);
+		rl_replace_line("", 1);
+		rl_on_new_line();
+	}
+	rl_on_new_line();
+	rl_redisplay();
+}
 
-// int ctrld(void)
-// {
-//     //free_env(env);
-//     rl_on_new_line();
-//     rl_redisplay();
-//     ft_putstr_fd("exit\n", 2);
-//     exit(1);
-// }
+int	ctrld(void)
+{
+	rl_on_new_line();
+	rl_redisplay();
+	ft_putstr_fd("exit\n", 1);
+	// free(g_gen.env);
+	free(g_gen.pwd);
+	free_envp();
+	exit(0);
+}

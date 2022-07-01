@@ -3,113 +3,82 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/18 19:19:26 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/06/14 10:40:46 by oufisaou         ###   ########.fr       */
+/*   Created: 2022/07/01 01:52:47 by ael-yamo          #+#    #+#             */
+/*   Updated: 2022/07/01 18:16:28 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include <readline/readline.h>
 #include "../includes/minishell.h"
 
-
-int	get_quote(char **str, char c)
+void	get_token_check(t_token **tokens, char **str, int *here, int *here2)
 {
-    int	i;
-
-    i = 1;
-    while ((*str)[i] != '\0' && (*str)[i] != c)
-        i++;
-    *str = *str + i + 1;
-	return (i + 1);
-}
-
-int	get_word(char **str)
-{
-    int	i;
-
-    i = 0;
-    while ((*str)[i] != '\0' && ((*str)[i] != ' ' 
-	&& (*str)[i] != '\t' && (*str)[i] != '\v' && (*str)[i] != '\f'
-	&& (*str)[i] != '<' && (*str)[i] != '>' && (*str)[i] != '\"' 
-	&& (*str)[i] != '\'' && (*str)[i] != '|' && (*str)[i] != '$'
-	))
-        i++;
-    *str = *str + i;
-	return (i);
-}
-
-char *get_char(char **str, char *c, int increment)
-{
-	*str = *str + increment;
-	return (ft_strdup(c));
-}
-
-void	get_sympol_great(token_t **tokens, char **str)
-{
-	if (**str == '>' && *(*str + 1) != '\0' && *(*str + 1) == '>')
-	{
-		add_token_last(tokens, DGREAT, ft_strdup(">>"));
-		*str = *str + 2;
-	}
+	if (**str == '\"' && *here == 0)
+		add_token_last(tokens, DQUOTE, \
+		ft_substr(*str, 0, get_quote(str, '\"')));
+	else if (**str == '\'' && *here == 0)
+		add_token_last(tokens, QUOTE, \
+		ft_substr(*str, 0, get_quote(str, '\'')));
+	else if (**str == ' ' || **str == '\t' \
+	|| **str == '\v' || **str == '\f')
+		add_token_last(tokens, SPAACE, get_char(str, " ", 1));
+	else if (**str == '>')
+		get_sympol_great(tokens, str);
+	else if (**str == '<')
+		get_sympol_less(tokens, str, here);
+	else if (**str == '|')
+		add_token_last(tokens, PIPE, get_char(str, "|", 1));
+	else if (**str == '$' && *here == 0)
+		add_token_last(tokens, DOLLAR, get_char(str, "$", 1));
 	else
-	{
-		add_token_last(tokens, GREAT, ft_strdup(">"));
-		*str = *str + 1;
-	}
+		get_token_utils(tokens, str, here, here2);
 }
 
-void	get_sympol_less(token_t **tokens, char **str)
+void	get_token(t_token **tokens, char **str)
 {
-	if (**str == '<' && *(*str + 1) != '\0' && *(*str + 1) == '<')
-	{
-		add_token_last(tokens, DLESS, ft_strdup("<<"));
-		*str = *str + 2;
-	}
-	else
-	{
-		add_token_last(tokens, LESS, ft_strdup("<"));
-		*str = *str + 1;
-	}
-}
+	int		here;
+	int		here2;
+	t_token	*tmp;
 
-void    get_token(token_t **tokens, char **str)
-{
+	here = 0;
+	here2 = 0;
 	while (**str != '\0')
 	{
-		if (**str == '\"')
-			add_token_last(tokens, DQUOTE, ft_substr(*str, 0, get_quote(str, '\"')));
-		else if (**str == '\'')
-			add_token_last(tokens, QUOTE, ft_substr(*str, 0, get_quote(str, '\'')));
-		else if (**str == ' ' || **str == '\t' || **str == '\v' || **str == '\f') // IS SPAACE!
-			add_token_last(tokens, SPAACE, get_char(str, " ", 1));
-		else if (**str == '>')
-			get_sympol_great(tokens, str);
-		else if (**str == '<')
-			get_sympol_less(tokens, str);
-		else if (**str == '|')
-			add_token_last(tokens, PIPE, get_char(str, "|", 1));
-		else if (**str == '$')
-			add_token_last(tokens, DOLLAR, get_char(str, "$", 1));
-		else
-			add_token_last(tokens, WORD, ft_substr(*str, 0, get_word(str)));
-		//fix the word if it is folowed by a spectial char as < > | ...
+		get_token_check(tokens, str, &here, &here2);
 	}
 }
 
-token_t *tokenize(char *line)
+int	count_tokens(t_token *tokens)
 {
-    token_t *tokens = NULL;
-    token_t *tmp;
+	int	count;
 
-    get_token(&tokens, &line);
-    tmp = tokens;
-    while (tokens != NULL)
-    {
-		// printf("type: %d ... data: %s\n",tokens->type, tokens->data);
-        tokens = tokens->next;
-    }
-    return (tmp);
+	count = 0;
+	while (tokens)
+	{
+		tokens = tokens->next;
+		count++;
+	}
+	return (count);
 }
-//execv -> waitpid]wait -> 'status' -> macro value return pros $?*
+
+void	clear_tokens(t_token **tokens)
+{
+	if (*tokens == NULL)
+		return ;
+	if ((*tokens)->next == NULL)
+		rm_token(tokens);
+	else
+		rm_token(&((*tokens)->next));
+	clear_tokens(tokens);
+}
+
+t_token	*tokenize(char *line)
+{
+	t_token	*tokens;
+	t_token	*tmp;
+
+	tokens = NULL;
+	get_token(&tokens, &line);
+	return (tokens);
+}
