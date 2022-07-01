@@ -1,17 +1,18 @@
 #include "../includes/minishell.h"
 
-int	count_pipes(t_token *tokens)
+static void creat_cmds_utils2(t_cmd **cmds, t_token **new_head, int i, t_token **tmp)
 {
-	int	i;
-
-	i = 0;
-	while (tokens != NULL)
-	{
-		if (tokens->type == PIPE)
-			i++;
-		tokens = tokens->next;
-	}
-	return (i);
+	rm_token(&((*tmp)->next));
+	(*cmds)[i].tokens_cmd = *new_head;
+	(*cmds)[i].infile = -1;
+	(*cmds)[i].outfile = -1;
+	(*cmds)[i].exec = 0;
+	(*cmds)[i].cmd_args = NULL;
+	(*cmds)[i].cmd_path = NULL;
+	(*new_head) = (*tmp)->next;
+	(*new_head)->prev = NULL;
+	(*tmp)->next = NULL;
+	(*tmp) = (*new_head);
 }
 
 static t_cmd *creat_cmds_utils(t_token **tokens, t_cmd **cmds)
@@ -27,17 +28,7 @@ static t_cmd *creat_cmds_utils(t_token **tokens, t_cmd **cmds)
 	{
 		if (tmp->next != NULL && tmp->next->type == PIPE)
 		{
-			rm_token(&(tmp->next));
-			(*cmds)[i].tokens_cmd = new_head;
-			(*cmds)[i].infile = -1;
-			(*cmds)[i].outfile = -1;
-			(*cmds)[i].exec = 0;
-			(*cmds)[i].cmd_args = NULL;
-			(*cmds)[i].cmd_path = NULL;
-			new_head = tmp->next;
-			new_head->prev = NULL;
-			tmp->next = NULL;
-			tmp = new_head;
+			creat_cmds_utils2(cmds, &new_head, i, &tmp);
 			i++;
 		}
         else
@@ -77,7 +68,6 @@ t_cmd	*creat_cmds(t_token **tokens)
 	return (creat_cmds_utils(tokens, &cmds));
 }
 
-// checking cmds 
 static void	ft_strcat(char *s1, const char *s2)
 {
 	while (*s1)
@@ -108,7 +98,7 @@ char	*ft_strjoin_1(char const *s1, char const *s2)
 	return (allocat);
 }
 
-static void	free_arr(char **arr)
+void	free_arr(char **arr)
 {
 	int	i;
 
@@ -220,7 +210,8 @@ int	get_cmds_path(t_cmd **cmds, int pipes)
 			(*cmds)[i].cmd_path = get_cmd_path(path, (*cmds)[i].cmd_args[0]);
 		else
 			(*cmds)[i].cmd_path = NULL;
-		if (((*cmds)[i].cmd_path == NULL) && !is_buit_in((*cmds)[i].cmd_args[0]) && (*cmds)[i].exec == 0)
+		if (((*cmds)[i].cmd_path == NULL) && 
+		!is_buit_in((*cmds)[i].cmd_args[0]) && (*cmds)[i].exec == 0)
 		{
 			if ((*cmds)[i].cmd_args[0] != NULL)
 				cmd_not_found((*cmds)[i].cmd_args[0]);
@@ -234,33 +225,3 @@ int	get_cmds_path(t_cmd **cmds, int pipes)
 	free(path);
 	return (status);
 }
-
-// int	commands(char *line)
-// {
-//     if (!ft_strncmp("echo", line, 4))
-// 		return (YES);
-// 	if (!ft_strncmp("export ", line, 7))
-// 		return (YES);
-// 	if (!ft_strncmp("pwd", line, 3) && ft_strlen(line) == 3)
-// 		return (YES);
-// 	if (!ft_strncmp("unset ", line, 6))
-//         return (YES);
-// 	if (!ft_strncmp("env", line, 3))
-// 		return (YES);
-// 	if (!ft_strncmp("exit", line, 4) && ft_strlen(line) == 4)
-// 		return (YES);
-// 	if (!ft_strncmp("cd ", line, 3))
-// 		return (YES);
-// 	return (NO);
-// }
-
-// void	go_commands(t_list *env, char *line)
-// {
-// 	if (!ft_strncmp("pwd", line, 3) && ft_strlen(line) == 3)
-// 		ft_pwd();
-// 	// if (!ft_strncmp("cd ", line, 3))
-// 	// 	ft_cd(env, &line);
-// 	if (!ft_strncmp("env", line, 3))
-// 		ft_env(env);
-// 	return ;
-// }

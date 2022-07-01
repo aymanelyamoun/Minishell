@@ -1,5 +1,19 @@
 #include "../includes/minishell.h"
 
+int	count_pipes(t_token *tokens)
+{
+	int	i;
+
+	i = 0;
+	while (tokens != NULL)
+	{
+		if (tokens->type == PIPE)
+			i++;
+		tokens = tokens->next;
+	}
+	return (i);
+}
+
 void	fail_to_generat_pipes(int **pipes, int i)
 {
 	int	j;

@@ -1,13 +1,12 @@
 #include "../includes/minishell.h"
-#include <fcntl.h>
 
-static void open_file_err(t_token **tokens, int fd, int status)
+static void	open_file_err(t_token **tokens, int fd, int status)
 {
 	if ((*tokens)->next->old_data == NULL && (fd == -1 && status != 1))
-			perror("minishellllllll");
-	else 
+		perror("minishellllllll");
+	else
 	{
-		if ((ft_strcmp((*tokens)->next->data, "") == 0) 
+		if ((ft_strcmp((*tokens)->next->data, "") == 0) \
 		&& (*tokens)->next->old_data != NULL)
 			printf("minishell: %s: ambiguous redirect\n", \
 			(*tokens)->next->old_data);
@@ -123,7 +122,7 @@ int	creat_out_files(t_cmd **cmds, t_token *tokens, int i)
 void	check_file_direcitons(t_cmd **cmds, int pipes)
 {
 	int		i;
-	t_token *tokens;
+	t_token	*tokens;
 	int		fd;
 
 	i = 0;

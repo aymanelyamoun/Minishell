@@ -1,9 +1,9 @@
 #include "../includes/minishell.h"
 
-char *rm_quotes(char *str, char c)
+char	*rm_quotes(char *str, char c)
 {
-	int i;
-	char *new;
+	int		i;
+	char	*new;
 
 	if (str[0] == c)
 	{
@@ -32,7 +32,7 @@ void	rm_quotes_tokens(t_token **tokens)
 	}
 }
 
-void rm_token(t_token **tokens)
+void	rm_token(t_token **tokens)
 {
 	t_token *token;
 
@@ -57,11 +57,12 @@ void rm_token(t_token **tokens)
 	free(token);
 }
 
-void rm_spaces(t_token **tokens)
+void	rm_spaces(t_token **tokens)
 {
-	t_token *tmp;
-	int i = 0;
+	t_token	*tmp;
+	int		i;
 
+	i = 0;
 	while ((*tokens) != NULL && (*tokens)->type == SPAACE)
 	{
 		rm_token(tokens);

@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-char *join_mix(t_token *token1, t_token *token2)
+char	*join_mix(t_token *token1, t_token *token2)
 {
 	char	*tmp;
 
@@ -17,9 +17,9 @@ char *join_mix(t_token *token1, t_token *token2)
 	return (tmp);
 }
 
-void join_word(t_token **tokens)
+void	join_word(t_token **tokens)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = *tokens;
 	while (tmp != NULL)
