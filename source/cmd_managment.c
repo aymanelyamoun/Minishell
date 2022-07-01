@@ -1,159 +1,5 @@
 #include "../includes/minishell.h"
 
-static void creat_cmds_utils2(t_cmd **cmds, t_token **new_head, int i, t_token **tmp)
-{
-	rm_token(&((*tmp)->next));
-	(*cmds)[i].tokens_cmd = *new_head;
-	(*cmds)[i].infile = -1;
-	(*cmds)[i].outfile = -1;
-	(*cmds)[i].exec = 0;
-	(*cmds)[i].cmd_args = NULL;
-	(*cmds)[i].cmd_path = NULL;
-	(*new_head) = (*tmp)->next;
-	(*new_head)->prev = NULL;
-	(*tmp)->next = NULL;
-	(*tmp) = (*new_head);
-}
-
-static t_cmd *creat_cmds_utils(t_token **tokens, t_cmd **cmds)
-{
-    t_token *tmp;
-    t_token *new_head;
-    int     i;
-
-    i = 0;
-	tmp = *tokens;
-	new_head = tmp;
-	while (tmp != NULL)
-	{
-		if (tmp->next != NULL && tmp->next->type == PIPE)
-		{
-			creat_cmds_utils2(cmds, &new_head, i, &tmp);
-			i++;
-		}
-        else
-		    tmp = tmp->next;
-	}
-	new_head->prev = NULL;
-    (*cmds)[i].tokens_cmd = new_head;
-	(*cmds)[i].infile = -1;
-	(*cmds)[i].outfile = -1;
-	(*cmds)[i].cmd_args = NULL;
-	(*cmds)[i].cmd_path = NULL;
-	(*cmds)[i].exec = 0;
-	return (*cmds);
-}
-
-t_cmd	*creat_cmds(t_token **tokens)
-{
-	int		pipes;
-	t_cmd	*cmds;
-	int		i;
-
-	i = 0;
-	pipes = count_pipes(*tokens);
-	cmds = malloc(sizeof(t_cmd) * (pipes + 1));
-	if (cmds == NULL)
-		return (NULL);
-	if (pipes == 0)
-	{
-		cmds[i].tokens_cmd = *tokens;
-		cmds[i].infile = -1;
-		cmds[i].outfile = -1;
-		cmds[i].exec = 0;
-		cmds[i].cmd_args = NULL;
-		cmds[i].cmd_path = NULL;
-		return (cmds);
-	}
-	return (creat_cmds_utils(tokens, &cmds));
-}
-
-static void	ft_strcat(char *s1, const char *s2)
-{
-	while (*s1)
-		s1++;
-	while (*s2)
-	{
-		*s1 = *s2;
-		s1++;
-		s2++;
-	}
-	*s1 = '\0';
-}
-
-char	*ft_strjoin_1(char const *s1, char const *s2)
-{
-	int		total_len;
-	char	*allocat;
-
-	if (!s1 || !s2)
-		return (0);
-	total_len = ft_strlen(s1) + ft_strlen(s2) + 1;
-	allocat = (char *)malloc(total_len);
-	if (!allocat)
-		return (0);
-	*allocat = '\0';
-	ft_strcat(allocat, s1);
-	ft_strcat(allocat, s2);
-	return (allocat);
-}
-
-void	free_arr(char **arr)
-{
-	int	i;
-
-	i = 0;
-	if (arr != NULL)
-	{
-		while (arr[i] != NULL)
-		{
-			free(arr[i]);
-			i++;
-		}
-		free(arr);
-	}
-}
-
-static char	*join_cmd(char *path, char *cmd)
-{
-	char	*cmd_path;
-	char	*to_free;
-
-	to_free = ft_strjoin_1("/", cmd);
-	if (to_free == NULL)
-		return (NULL);
-	cmd_path = ft_strjoin_1(path, to_free);
-	if (cmd_path == NULL)
-		return (NULL);
-	free(to_free);
-	return (cmd_path);
-}
-
-void	cmd_not_found(char *cmd)
-{
-	char	*built_in;
-
-	built_in = str_to_lower(cmd);
-	if ((ft_strcmp(built_in, "echo") && ft_strcmp(built_in, "cd") 
-        && ft_strcmp(built_in, "env") && ft_strcmp(built_in, "exit") 
-        && ft_strcmp(built_in, "export") && ft_strcmp(built_in, "pwd") 
-        && ft_strcmp(built_in, "unset")))
-		printf("minishell: %s: command not found\n", cmd);
-	free(built_in);
-}
-
-int isDirectory(const char *path) {
-   struct stat statbuf;
-   if (stat(path, &statbuf) != 0)
-       return 0;
-   return S_ISDIR(statbuf.st_mode);
-}
-
-void	is_a_dir(char *dir)
-{
-	printf("minishell: %s is a directory\n", dir);
-}
-
 char	*get_cmd_path(char *path, char *cmd)
 {
 	int		i;
@@ -172,10 +18,7 @@ char	*get_cmd_path(char *path, char *cmd)
 		if (cmd_path == NULL)
 			return (NULL);
 		if (access(cmd_path, F_OK | X_OK) == 0)
-		{
-			free_arr(paths);
-			return (cmd_path);
-		}
+			return (return_path(&cmd_path, paths));
 		free(cmd_path);
 		i++;
 	}
@@ -185,41 +28,52 @@ char	*get_cmd_path(char *path, char *cmd)
 	return (NULL);
 }
 
+void	get_cmds_paht_err(t_cmd **cmds, int i)
+{
+	if ((*cmds)[i].cmd_args[0] != NULL)
+		cmd_not_found((*cmds)[i].cmd_args[0]);
+	if ((*cmds)[i].cmd_args[0] != NULL)
+		(*cmds)[i].exec = 127;
+	else
+		gen.exec = 1;
+}
+
+int	is_directory_check(t_cmd **cmds, int i)
+{
+	int	status;
+
+	status = 0;
+	if (isDirectory((*cmds)[i].cmd_args[0]))
+	{
+		if ((*cmds)[i].exec == 0)
+			is_a_dir((*cmds)[i].cmd_args[0]);
+		status = 1;
+	}
+	return (status);
+}
+
 int	get_cmds_path(t_cmd **cmds, int pipes)
 {
 	int	i;
 	int	status;
 	char	*path;
-	char	*built_in;
 
 	status = 0;
 	i = 0;
-
 	path = find_value("PATH", gen.env);
 	if (path == NULL)
 		return 1;
 	while (i <= pipes)
 	{
-		if (isDirectory((*cmds)[i].cmd_args[0]))
-		{
-			if ((*cmds)[i].exec == 0)
-				is_a_dir((*cmds)[i].cmd_args[0]);
+		if (is_directory_check)
 			(*cmds)[i].exec = 126;
-		}
 		else if ((*cmds)[i].cmd_args[0] != NULL)
 			(*cmds)[i].cmd_path = get_cmd_path(path, (*cmds)[i].cmd_args[0]);
 		else
 			(*cmds)[i].cmd_path = NULL;
 		if (((*cmds)[i].cmd_path == NULL) && 
 		!is_buit_in((*cmds)[i].cmd_args[0]) && (*cmds)[i].exec == 0)
-		{
-			if ((*cmds)[i].cmd_args[0] != NULL)
-				cmd_not_found((*cmds)[i].cmd_args[0]);
-			if ((*cmds)[i].cmd_args[0] != NULL)
-				(*cmds)[i].exec = 127;
-			else
-				gen.exec = 1;
-		}
+			get_cmds_paht_err(cmds, i);
 		i++;
 	}
 	free(path);
