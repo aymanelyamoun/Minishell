@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   syntax_analyzer.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/01 04:28:07 by oufisaou          #+#    #+#             */
+/*   Updated: 2022/07/01 04:28:08 by oufisaou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 static int	check_pairs1(char *s)
@@ -35,7 +47,7 @@ int	check_quotes(t_token *token)
 		if (!check_pairs1(s))
 		{
 			error_free(tmp->data, tmp);
-			gen.exit_status = 258;
+			g_gen.exit_status = 258;
 			return (0);
 		}
 		tmp = tmp->next;
@@ -62,7 +74,7 @@ int	check_inside(t_token *tmp)
 			if (tmp && tmp->type == PIPE)
 			{
 				error_free(tmp->data, tmp);
-				gen.exit_status = 258;
+				g_gen.exit_status = 258;
 				return (0);
 			}
 		}
@@ -89,7 +101,7 @@ int	check_newline(t_token *c)
 			{
 				ft_putstr_fd("syntax error near unexpected", 2);
 				ft_putstr_fd("  token : 'newline'\n", 2);
-				gen.exit_status = 258;
+				g_gen.exit_status = 258;
 				return (0);
 			}
 		}
@@ -110,13 +122,13 @@ int	handle_spaces(t_token *c)
 	{
 		ft_putstr_fd("syntax error near unexpected", 2);
 		ft_putstr_fd("  token : 'newline'\n", 2);
-		gen.exit_status = 258;
+		g_gen.exit_status = 258;
 		return (0);
 	}
 	else if (is_other(tmp))
 	{
 		error_free(tmp->data, tmp);
-		gen.exit_status = 258;
+		g_gen.exit_status = 258;
 		return (0);
 	}
 	return (1);

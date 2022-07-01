@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:51:19 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 02:07:53 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 15:23:13 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*get_cmd_path(char *path, char *cmd)
 	{
 		cmd_path = join_cmd(paths[i], cmd);
 		if (cmd_path == NULL)
-			return (NULL);
+			return_path(&cmd_path, paths);
 		if (access(cmd_path, F_OK | X_OK) == 0)
 			return (return_path(&cmd_path, paths));
 		free(cmd_path);
@@ -47,7 +47,7 @@ void	get_cmds_paht_err(t_cmd **cmds, int i)
 	if ((*cmds)[i].cmd_args[0] != NULL)
 		(*cmds)[i].exec = 127;
 	else
-		gen.exec = 1;
+		g_gen.exec = 1;
 }
 
 int	is_directory_check(t_cmd **cmds, int i)
@@ -72,12 +72,12 @@ int	get_cmds_path(t_cmd **cmds, int pipes)
 
 	status = 0;
 	i = 0;
-	path = find_value("PATH", gen.env);
+	path = find_value("PATH", g_gen.env);
 	if (path == NULL)
 		return (1);
 	while (i <= pipes)
 	{
-		if (is_directory_check)
+		if (is_directory_check(cmds, i))
 			(*cmds)[i].exec = 126;
 		else if ((*cmds)[i].cmd_args[0] != NULL)
 			(*cmds)[i].cmd_path = get_cmd_path(path, (*cmds)[i].cmd_args[0]);

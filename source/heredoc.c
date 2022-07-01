@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:52:11 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 02:30:11 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 05:39:03 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	heredoc_p(char *limiter, int *pipe_fd)
 
 	expand = expand_y_n(&limiter);
 	signal(SIGINT, handler1);
-	printf("::%s\n", limiter);
 	line = readline("> ");
 	while (line != NULL && ft_strcmp(line, limiter))
 	{

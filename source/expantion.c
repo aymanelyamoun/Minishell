@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:51:55 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 02:11:33 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 04:57:44 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	expander(t_token **tokens)
 			if (tmp->next != NULL && tmp->next->type != SPAACE && \
 				(tmp->next->type == WORD || tmp->next->type == DQUOTE \
 				|| tmp->next->type == DOLLAR))
-				play_with_tokens(&tmp, ft_strdup(tmp->next->data), gen.env);
+				play_with_tokens(&tmp, ft_strdup(tmp->next->data), g_gen.env);
 			else if ((tmp->next != NULL && tmp->next->type == SPAACE) \
 			|| (tmp->next == NULL))
 				tmp->type = WORD;
@@ -70,7 +70,7 @@ void	expander_in_quotes(t_token **tokens)
 	{
 		if (token->type == DQUOTE)
 		{
-			expander_in_quotes_utils(&token, gen.env);
+			expander_in_quotes_utils(&token, g_gen.env);
 		}
 		token = token->next;
 	}

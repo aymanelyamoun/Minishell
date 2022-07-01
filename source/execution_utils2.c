@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 01:51:49 by ael-yamo          #+#    #+#             */
-/*   Updated: 2022/07/01 02:11:16 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 17:48:47 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ void	wait_all(int pid, int i, int pipes_num)
 	}
 	while (waitpid(-1, 0, 0) != -1)
 		;
-	gen.exit_status = WEXITSTATUS(status);
+	g_gen.exit_status = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == 3)
 			printf("Quit: 3\n");
-		gen.exit_status = 128 + WTERMSIG(status);
+		g_gen.exit_status = 128 + WTERMSIG(status);
 	}
 }

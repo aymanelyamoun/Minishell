@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export_tool.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/01 04:28:31 by oufisaou          #+#    #+#             */
+/*   Updated: 2022/07/01 04:30:56 by oufisaou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
-void	bubbleSort(t_list **head, int count)
+void	bubblesort(t_list **head, int count)
 {
 	t_var	var;
 
@@ -55,6 +67,6 @@ int	len_list(t_list **list)
 
 void	ft_sort(t_gen *gen)
 {
-	bubbleSort(&(gen)->env, len_list(&(gen)->env));
+	bubblesort(&(gen)->env, len_list(&(gen)->env));
 	print_export((gen)->env);
 }

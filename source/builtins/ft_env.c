@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oufisaou <oufisaou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/01 04:34:33 by oufisaou          #+#    #+#             */
+/*   Updated: 2022/07/01 04:34:40 by oufisaou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 void	ft_env(char **str)
@@ -13,7 +25,7 @@ void	ft_env(char **str)
 		ft_putstr_fd(" : No such file or directory\n", 2);
 		return ;
 	}
-	tmp = gen.env;
+	tmp = g_gen.env;
 	if (!tmp)
 		return ;
 	if (tmp->content)
