@@ -132,6 +132,30 @@ void    get_token(t_token **tokens, char **str)
 	}
 }
 
+int count_tokens(t_token *tokens)
+{
+	int count;
+
+	count = 0;
+	while (tokens)
+	{
+		tokens = tokens->next;
+		count++;
+	}
+	return (count);
+}
+
+void	clear_tokens(t_token **tokens)
+{
+	if (*tokens == NULL)
+		return ;
+	if ((*tokens)->next == NULL)
+		rm_token(tokens);
+	else
+		rm_token(&((*tokens)->next));
+	clear_tokens(tokens);
+}
+
 t_token *tokenize(char *line)
 {
     t_token *tokens = NULL;
