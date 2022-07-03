@@ -6,7 +6,7 @@
 /*   By: ael-yamo <ael-yamo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 04:28:19 by oufisaou          #+#    #+#             */
-/*   Updated: 2022/07/01 17:49:50 by ael-yamo         ###   ########.fr       */
+/*   Updated: 2022/07/01 23:05:24 by ael-yamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,23 @@ int	ctrld(void)
 	rl_on_new_line();
 	rl_redisplay();
 	ft_putstr_fd("exit\n", 1);
-	// free(g_gen.env);
+	free_all(g_gen.env);
 	free(g_gen.pwd);
 	free_envp();
 	exit(0);
+}
+
+void	free_all(t_list *tokens)
+{
+	t_list	*tmp;
+
+	while (tokens)
+	{
+		tmp = tokens;
+		tokens = tokens->next;
+		free(tmp->content);
+		tmp->content = NULL;
+		free(tmp);
+		tmp = NULL;
+	}
 }
