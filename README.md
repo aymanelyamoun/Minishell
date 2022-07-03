@@ -3,7 +3,7 @@
 
 # Minishell
 
-## This project is a working implemetation of a mini shel:
+## This project is a working implemetation of a mini shell:
 
 ### This shell does:<br><br>
 • Display a prompt when waiting for a new command.<br>
