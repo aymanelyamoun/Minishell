@@ -1,4 +1,5 @@
 CC = gcc
+FLAGS = -Wall -Wextra -Werror
 NAME = minishell
 DIRBUILD = objdir
 INC  = -I ./includes
@@ -11,20 +12,20 @@ in_out_utils joining list_manupulation main pipe_asign pipe_management removing 
 suite_syntax syntax_analyzer token expantion \
 builtins/ft_exit builtins/ft_env builtins/ft_echo\
 builtins/more_func export_tool suite_syntax builtins/built_tools builtins/built_checks \
-builtins/unset builtins/ft_export builtins/ft_pwd builtins/ft_cd builtins/go_build
+builtins/unset builtins/exit_utils builtins/ft_export builtins/ft_pwd builtins/ft_cd builtins/go_build
 
 OBJ = $(addprefix $(DIRBUILD)/, $(SRC:=.o))
 
 all : $(NAME)
 $(NAME) : $(OBJ) $(LIBFT)
-	@gcc $^ -o $(NAME) -lreadline  $(LDFLAGS)  $(LIBFT) 
+	@$(CC) $(FLAGS) $^ -o $(NAME) -lreadline  $(LDFLAGS)  $(LIBFT)
 
 $(LIBFT) :
 	@make -C includes/libft
 	
 $(DIRBUILD)/%.o : source/%.c $(HEADERS)
 	@mkdir -p $(@D)
-	@gcc $(INC) $(CPPFLAGS) -c $< -o $@
+	@$(CC) $(INC) $(CPPFLAGS) -c $< -o $@
 clean :
 	@rm -rf $(DIRBUILD)
 	@make clean -C includes/libft
